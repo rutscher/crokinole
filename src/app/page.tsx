@@ -1,11 +1,17 @@
 import { getRecentGames, getInProgressGames } from "@/lib/actions/games";
+import { getPlayers } from "@/lib/actions/players";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 
 export default async function HomePage() {
-  const recentGames = await getRecentGames();
-  const inProgressGames = await getInProgressGames();
+  const [recentGames, inProgressGames, players] = await Promise.all([
+    getRecentGames(),
+    getInProgressGames(),
+    getPlayers(),
+  ]);
+
+  const needsPlayers = players.length < 2;
 
   return (
     <div className="min-h-screen bg-background p-4 max-w-md mx-auto">
@@ -15,11 +21,24 @@ export default async function HomePage() {
       </div>
 
       <div className="space-y-3 mb-8">
-        <Link href="/game/new" className="block">
-          <Button className="w-full h-14 text-lg" size="lg">
-            New Game
-          </Button>
-        </Link>
+        {needsPlayers ? (
+          <>
+            <Link href="/players" className="block">
+              <Button className="w-full h-14 text-lg" size="lg">
+                Add Players to Get Started
+              </Button>
+            </Link>
+            <p className="text-sm text-muted-foreground text-center">
+              Add at least 2 players to start a game
+            </p>
+          </>
+        ) : (
+          <Link href="/game/new" className="block">
+            <Button className="w-full h-14 text-lg" size="lg">
+              New Game
+            </Button>
+          </Link>
+        )}
         <div className="grid grid-cols-2 gap-3">
           <Link href="/players">
             <Button variant="secondary" className="w-full h-12">
@@ -48,7 +67,7 @@ export default async function HomePage() {
                         <span className="text-muted-foreground mx-2">vs</span>
                         {game.player2.name} {game.player2Score}
                       </div>
-                      <span className="text-xs text-primary">In Progress</span>
+                      <span className="text-xs text-primary">Tap to resume</span>
                     </div>
                   </CardContent>
                 </Card>
@@ -63,24 +82,26 @@ export default async function HomePage() {
           <h2 className="text-lg font-semibold mb-3">Recent Games</h2>
           <div className="space-y-2">
             {recentGames.map((game) => (
-              <Card key={game.id}>
-                <CardContent className="p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <span className={game.winnerId === game.player1Id ? "font-bold" : ""}>
-                        {game.player1.name} {game.player1Score}
-                      </span>
-                      <span className="text-muted-foreground mx-2">vs</span>
-                      <span className={game.winnerId === game.player2Id ? "font-bold" : ""}>
-                        {game.player2.name} {game.player2Score}
+              <Link key={game.id} href={`/game/${game.id}`}>
+                <Card className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <CardContent className="p-4">
+                    <div className="flex justify-between items-center">
+                      <div>
+                        <span className={game.winnerId === game.player1Id ? "font-bold" : ""}>
+                          {game.player1.name} {game.player1Score}
+                        </span>
+                        <span className="text-muted-foreground mx-2">vs</span>
+                        <span className={game.winnerId === game.player2Id ? "font-bold" : ""}>
+                          {game.player2.name} {game.player2Score}
+                        </span>
+                      </div>
+                      <span className="text-xs text-muted-foreground">
+                        {new Date(game.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      {new Date(game.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             ))}
           </div>
         </div>
