@@ -1,4 +1,4 @@
-import { beforeEach } from "vitest";
+import { beforeEach, afterAll } from "vitest";
 import { db } from "@/lib/db";
 
 beforeEach(async () => {
@@ -6,4 +6,8 @@ beforeEach(async () => {
   await db.round.deleteMany();
   await db.game.deleteMany();
   await db.player.deleteMany();
+});
+
+afterAll(async () => {
+  await db.$disconnect();
 });
