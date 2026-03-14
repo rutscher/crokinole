@@ -127,3 +127,11 @@
     @apply font-sans;
   }
 }
+
+/* Ring button colors for crokinole scoring */
+:root {
+  --ring-20: #ffd700;
+  --ring-15: #c0392b;
+  --ring-10: #2980b9;
+  --ring-5: #27ae60;
+}
