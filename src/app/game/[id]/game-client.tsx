@@ -1,11 +1,19 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useTransition, useEffect, useCallback } from "react";
+import { useTransition, useEffect, useCallback, useState, useRef } from "react";
 import { PlayerHalf } from "@/components/player-half";
 import { CenterBar } from "@/components/center-bar";
 import { GameOverDialog } from "@/components/game-over-dialog";
+import { RoundSummaryDialog } from "@/components/round-summary-dialog";
+import { ExitMenuDialog } from "@/components/exit-menu-dialog";
 import { addDisc, undoDisc, endRound, undoRound } from "@/lib/actions/rounds";
+
+interface Disc {
+  id: number;
+  playerId: number;
+  ringValue: number;
+}
 
 interface GameData {
   id: number;
@@ -23,11 +31,11 @@ interface GameData {
     roundNumber: number;
     hammerPlayerId: number;
     status: string;
-    discs: Array<{
-      id: number;
-      playerId: number;
-      ringValue: number;
-    }>;
+    player1RoundScore: number;
+    player2RoundScore: number;
+    pointsAwarded: number;
+    awardedToPlayerId: number | null;
+    discs: Disc[];
   }>;
 }
 
@@ -35,12 +43,33 @@ interface GameClientProps {
   game: GameData;
 }
 
+interface RoundResult {
+  roundNumber: number;
+  player1Name: string;
+  player2Name: string;
+  player1RoundScore: number;
+  player2RoundScore: number;
+  pointsAwarded: number;
+  winnerName: string | null;
+  newPlayer1Score: number;
+  newPlayer2Score: number;
+}
+
 export function GameClient({ game }: GameClientProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [localDiscs, setLocalDiscs] = useState<Disc[]>([]);
+  const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
+  const [showExitMenu, setShowExitMenu] = useState(false);
+  const nextLocalId = useRef(-1);
 
-  // Keep screen on — must be activated from a user gesture (tap/click)
-  // NoSleep.js plays a hidden video; Wake Lock API is a bonus on top
+  // Sync local discs from server state when game data changes
+  useEffect(() => {
+    const currentRound = game.rounds.find((r) => r.status === "in_progress");
+    setLocalDiscs(currentRound?.discs ?? []);
+  }, [game]);
+
+  // Wake lock
   useEffect(() => {
     let noSleepInstance: { enable: () => void; disable: () => void } | null = null;
     let wakeLock: WakeLockSentinel | null = null;
@@ -49,13 +78,9 @@ export function GameClient({ game }: GameClientProps) {
     async function activate() {
       if (activated) return;
       activated = true;
-
-      // NoSleep.js — requires user gesture to play hidden video
       const NoSleep = (await import("nosleep.js")).default;
       noSleepInstance = new NoSleep();
       noSleepInstance.enable();
-
-      // Also try native Wake Lock API
       try {
         if ("wakeLock" in navigator) {
           wakeLock = await navigator.wakeLock.request("screen");
@@ -63,19 +88,14 @@ export function GameClient({ game }: GameClientProps) {
       } catch {}
     }
 
-    // Activate on first user interaction
     function onInteraction() {
       activate();
-      document.removeEventListener("pointerdown", onInteraction);
-      document.removeEventListener("touchstart", onInteraction);
     }
     document.addEventListener("pointerdown", onInteraction, { once: true });
     document.addEventListener("touchstart", onInteraction, { once: true });
 
-    // Re-acquire wake lock on tab focus
     function onVisibility() {
       if (document.visibilityState === "visible" && activated) {
-        // Re-enable NoSleep in case it was interrupted
         noSleepInstance?.enable();
         navigator.wakeLock?.request("screen").then((wl) => { wakeLock = wl; }).catch(() => {});
       }
@@ -95,40 +115,75 @@ export function GameClient({ game }: GameClientProps) {
   const isGameOver = game.status === "completed";
   const completedRoundCount = game.rounds.filter((r) => r.status === "completed").length;
 
-  const player1RoundScore = currentRound
-    ? currentRound.discs
-        .filter((d) => d.playerId === game.player1Id)
-        .reduce((sum, d) => sum + d.ringValue, 0)
-    : 0;
+  // Use local discs for scores (optimistic)
+  const player1RoundScore = localDiscs
+    .filter((d) => d.playerId === game.player1Id)
+    .reduce((sum, d) => sum + d.ringValue, 0);
 
-  const player2RoundScore = currentRound
-    ? currentRound.discs
-        .filter((d) => d.playerId === game.player2Id)
-        .reduce((sum, d) => sum + d.ringValue, 0)
-    : 0;
+  const player2RoundScore = localDiscs
+    .filter((d) => d.playerId === game.player2Id)
+    .reduce((sum, d) => sum + d.ringValue, 0);
 
   const p1Total = game.player1Score + player1RoundScore;
   const p2Total = game.player2Score + player2RoundScore;
   const leader: "p1" | "p2" | "tied" =
     p1Total > p2Total ? "p1" : p2Total > p1Total ? "p2" : "tied";
 
+  // Optimistic disc tap — update UI instantly, sync with server
   const handleDiscTap = useCallback((playerId: number, ringValue: number) => {
-    addDisc(game.id, playerId, ringValue).then(() => {
-      router.refresh();
+    const tempId = nextLocalId.current--;
+    setLocalDiscs((prev) => [...prev, { id: tempId, playerId, ringValue }]);
+    addDisc(game.id, playerId, ringValue).catch(() => {
+      // Revert on failure
+      setLocalDiscs((prev) => prev.filter((d) => d.id !== tempId));
     });
-  }, [game.id, router]);
+  }, [game.id]);
 
+  // Optimistic undo — remove from local state instantly
   const handleUndo = useCallback((playerId: number) => {
-    undoDisc(game.id, playerId).then(() => {
+    setLocalDiscs((prev) => {
+      const idx = [...prev].reverse().findIndex((d) => d.playerId === playerId);
+      if (idx === -1) return prev;
+      const actualIdx = prev.length - 1 - idx;
+      return prev.filter((_, i) => i !== actualIdx);
+    });
+    undoDisc(game.id, playerId).catch(() => {
+      // On failure, refresh to get true state
       router.refresh();
     });
   }, [game.id, router]);
 
+  // End round — show summary, then advance
   function handleEndRound() {
+    // Capture current round scores for the summary
+    const p1Rs = player1RoundScore;
+    const p2Rs = player2RoundScore;
+    const diff = Math.abs(p1Rs - p2Rs);
+    const winnerName = p1Rs > p2Rs ? game.player1.name
+      : p2Rs > p1Rs ? game.player2.name
+      : null;
+
     startTransition(async () => {
       await endRound(game.id);
-      router.refresh();
+
+      // Show round summary
+      setRoundResult({
+        roundNumber: currentRound?.roundNumber ?? 1,
+        player1Name: game.player1.name,
+        player2Name: game.player2.name,
+        player1RoundScore: p1Rs,
+        player2RoundScore: p2Rs,
+        pointsAwarded: diff,
+        winnerName,
+        newPlayer1Score: game.player1Score + (p1Rs > p2Rs ? diff : 0),
+        newPlayer2Score: game.player2Score + (p2Rs > p1Rs ? diff : 0),
+      });
     });
+  }
+
+  function handleDismissRoundResult() {
+    setRoundResult(null);
+    router.refresh();
   }
 
   function handleUndoRound() {
@@ -140,7 +195,8 @@ export function GameClient({ game }: GameClientProps) {
 
   return (
     <div className="h-dvh flex flex-col bg-background overflow-hidden select-none"
-         style={{ touchAction: "manipulation" }}>
+         style={{ touchAction: "manipulation", overscrollBehavior: "none" }}>
+      {/* Player 1 (top, rotated 180deg) */}
       <div className={`flex-1 flex transition-colors duration-300 ${
         leader === "p1"
           ? "bg-gradient-to-b from-blue-900/60 to-blue-950/20"
@@ -155,10 +211,11 @@ export function GameClient({ game }: GameClientProps) {
           isRotated={true}
           onDiscTap={(v) => handleDiscTap(game.player1Id, v)}
           onUndo={() => handleUndo(game.player1Id)}
-          disabled={isGameOver}
+          disabled={isGameOver || isPending}
         />
       </div>
 
+      {/* Center bar */}
       <CenterBar
         roundNumber={currentRound?.roundNumber ?? game.rounds.length}
         player1Name={game.player1.name}
@@ -167,10 +224,12 @@ export function GameClient({ game }: GameClientProps) {
         player2Total={p2Total}
         onEndRound={handleEndRound}
         onUndoRound={handleUndoRound}
+        onMenuOpen={() => setShowExitMenu(true)}
         canUndoRound={completedRoundCount > 0}
         disabled={isPending || isGameOver}
       />
 
+      {/* Player 2 (bottom, normal orientation) */}
       <div className={`flex-1 flex transition-colors duration-300 ${
         leader === "p2"
           ? "bg-gradient-to-t from-red-900/60 to-red-950/20"
@@ -185,12 +244,26 @@ export function GameClient({ game }: GameClientProps) {
           isRotated={false}
           onDiscTap={(v) => handleDiscTap(game.player2Id, v)}
           onUndo={() => handleUndo(game.player2Id)}
-          disabled={isGameOver}
+          disabled={isGameOver || isPending}
         />
       </div>
 
+      {/* Round summary dialog */}
+      <RoundSummaryDialog
+        result={roundResult}
+        onDismiss={handleDismissRoundResult}
+      />
+
+      {/* Exit menu */}
+      <ExitMenuDialog
+        open={showExitMenu}
+        onClose={() => setShowExitMenu(false)}
+        gameId={game.id}
+      />
+
+      {/* Game over dialog */}
       <GameOverDialog
-        open={isGameOver}
+        open={isGameOver && !roundResult}
         winnerName={game.winner?.name ?? ""}
         player1Name={game.player1.name}
         player1Score={game.player1Score}
