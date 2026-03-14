@@ -26,7 +26,15 @@ export default async function HomePage() {
         {needsPlayers ? (
           <>
             <Link href="/players" className="block">
-              <Button className="w-full h-14 text-lg" size="lg">
+              <Button
+                className="w-full h-14 text-lg font-bold"
+                size="lg"
+                style={{
+                  background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+                  color: "#1a1400",
+                  border: "none",
+                }}
+              >
                 Add Players to Get Started
               </Button>
             </Link>
@@ -36,7 +44,15 @@ export default async function HomePage() {
           </>
         ) : (
           <Link href="/game/new" className="block">
-            <Button className="w-full h-14 text-lg" size="lg">
+            <Button
+              className="w-full h-14 text-lg font-bold"
+              size="lg"
+              style={{
+                background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+                color: "#1a1400",
+                border: "none",
+              }}
+            >
               New Game
             </Button>
           </Link>
