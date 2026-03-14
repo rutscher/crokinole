@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { getRecentGames, getInProgressGames } from "@/lib/actions/games";
 import { getPlayers } from "@/lib/actions/players";
 import { Button } from "@/components/ui/button";
