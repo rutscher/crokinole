@@ -39,32 +39,39 @@ export function GameClient({ game }: GameClientProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  // Keep screen on — NoSleep.js as primary (hidden video fallback for all browsers),
+  // plus native Wake Lock API as bonus where supported
   useEffect(() => {
+    let noSleep: { enable: () => void; disable: () => void } | null = null;
     let wakeLock: WakeLockSentinel | null = null;
-    let interval: ReturnType<typeof setInterval> | null = null;
 
-    async function acquire() {
+    async function setup() {
+      // NoSleep.js — plays a tiny hidden video to prevent screen sleep
+      const NoSleep = (await import("nosleep.js")).default;
+      noSleep = new NoSleep();
+      noSleep.enable();
+
+      // Also try native Wake Lock API as a belt-and-suspenders approach
       try {
         if ("wakeLock" in navigator) {
-          if (wakeLock) { try { await wakeLock.release(); } catch {} }
           wakeLock = await navigator.wakeLock.request("screen");
         }
       } catch {}
     }
 
-    acquire();
+    setup();
 
+    // Re-acquire native wake lock on tab focus
     function onVisibility() {
       if (document.visibilityState === "visible") {
-        acquire();
+        navigator.wakeLock?.request("screen").then((wl) => { wakeLock = wl; }).catch(() => {});
       }
     }
     document.addEventListener("visibilitychange", onVisibility);
-    interval = setInterval(acquire, 30_000);
 
     return () => {
+      noSleep?.disable();
       if (wakeLock) { try { wakeLock.release(); } catch {} }
-      if (interval) clearInterval(interval);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
