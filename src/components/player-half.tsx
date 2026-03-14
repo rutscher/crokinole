@@ -1,6 +1,7 @@
 "use client";
 
 import { RingButton } from "./ring-button";
+import { Button } from "@/components/ui/button";
 
 interface PlayerHalfProps {
   name: string;
@@ -10,6 +11,7 @@ interface PlayerHalfProps {
   isLeading: boolean;
   isRotated: boolean;
   onDiscTap: (ringValue: number) => void;
+  onUndo: () => void;
   disabled?: boolean;
 }
 
@@ -21,6 +23,7 @@ export function PlayerHalf({
   isLeading,
   isRotated,
   onDiscTap,
+  onUndo,
   disabled,
 }: PlayerHalfProps) {
   const ringValues = isRotated ? [5, 10, 15, 20] : [20, 15, 10, 5];
@@ -66,6 +69,16 @@ export function PlayerHalf({
           />
         ))}
       </div>
+
+      <Button
+        onClick={onUndo}
+        disabled={disabled || roundScore === 0}
+        variant="outline"
+        size="sm"
+        className="mt-1"
+      >
+        Undo
+      </Button>
     </div>
   );
 }

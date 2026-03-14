@@ -9,7 +9,6 @@ interface CenterBarProps {
   player1Total: number;
   player2Total: number;
   onEndRound: () => void;
-  onUndo: () => void;
   onUndoRound: () => void;
   canUndoRound: boolean;
   disabled?: boolean;
@@ -22,7 +21,6 @@ export function CenterBar({
   player1Total,
   player2Total,
   onEndRound,
-  onUndo,
   onUndoRound,
   canUndoRound,
   disabled,
@@ -49,22 +47,21 @@ export function CenterBar({
       </div>
 
       <div className="flex items-center justify-between gap-2">
-        <div className="flex gap-2">
-          <Button onClick={onUndo} disabled={disabled} variant="outline" size="sm">
-            Undo
+        {canUndoRound ? (
+          <Button
+            onClick={onUndoRound}
+            disabled={disabled}
+            variant="outline"
+            size="sm"
+            className="text-destructive border-destructive/50"
+          >
+            Undo Round
           </Button>
-          {canUndoRound && (
-            <Button
-              onClick={onUndoRound}
-              disabled={disabled}
-              variant="outline"
-              size="sm"
-              className="text-destructive border-destructive/50"
-            >
-              Undo Round
-            </Button>
-          )}
-        </div>
+        ) : (
+          <span className="text-sm font-medium text-muted-foreground">
+            R{roundNumber}
+          </span>
+        )}
 
         <Button
           onClick={onEndRound}
@@ -74,9 +71,13 @@ export function CenterBar({
           End Round
         </Button>
 
-        <span className="text-sm font-medium text-muted-foreground min-w-[2rem] text-right">
-          R{roundNumber}
-        </span>
+        {canUndoRound ? (
+          <span className="text-sm font-medium text-muted-foreground min-w-[2rem] text-right">
+            R{roundNumber}
+          </span>
+        ) : (
+          <span className="min-w-[2rem]" />
+        )}
       </div>
     </div>
   );

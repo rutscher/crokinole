@@ -26,10 +26,16 @@ export async function addDisc(gameId: number, playerId: number, ringValue: numbe
   });
 }
 
-export async function undoDisc(gameId: number) {
+export async function undoDisc(gameId: number, playerId: number) {
   const currentRound = await db.round.findFirst({
     where: { gameId, status: "in_progress" },
-    include: { discs: { orderBy: [{ createdAt: "desc" }, { id: "desc" }], take: 1 } },
+    include: {
+      discs: {
+        where: { playerId },
+        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+        take: 1,
+      },
+    },
   });
 
   if (!currentRound || currentRound.discs.length === 0) {

@@ -118,12 +118,11 @@ export function GameClient({ game }: GameClientProps) {
     });
   }, [game.id, router]);
 
-  function handleUndo() {
-    startTransition(async () => {
-      await undoDisc(game.id);
+  const handleUndo = useCallback((playerId: number) => {
+    undoDisc(game.id, playerId).then(() => {
       router.refresh();
     });
-  }
+  }, [game.id, router]);
 
   function handleEndRound() {
     startTransition(async () => {
@@ -155,6 +154,7 @@ export function GameClient({ game }: GameClientProps) {
           isLeading={leader === "p1"}
           isRotated={true}
           onDiscTap={(v) => handleDiscTap(game.player1Id, v)}
+          onUndo={() => handleUndo(game.player1Id)}
           disabled={isGameOver}
         />
       </div>
@@ -166,7 +166,6 @@ export function GameClient({ game }: GameClientProps) {
         player1Total={p1Total}
         player2Total={p2Total}
         onEndRound={handleEndRound}
-        onUndo={handleUndo}
         onUndoRound={handleUndoRound}
         canUndoRound={completedRoundCount > 0}
         disabled={isPending || isGameOver}
@@ -185,6 +184,7 @@ export function GameClient({ game }: GameClientProps) {
           isLeading={leader === "p2"}
           isRotated={false}
           onDiscTap={(v) => handleDiscTap(game.player2Id, v)}
+          onUndo={() => handleUndo(game.player2Id)}
           disabled={isGameOver}
         />
       </div>

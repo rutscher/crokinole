@@ -37,14 +37,14 @@ describe("undoDisc", () => {
   it("removes the most recent disc for the game", async () => {
     await addDisc(gameId, player1Id, 20);
     await addDisc(gameId, player1Id, 15);
-    await undoDisc(gameId);
+    await undoDisc(gameId, player1Id);
     const game = await getGame(gameId);
     expect(game!.rounds[0].discs).toHaveLength(1);
     expect(game!.rounds[0].discs[0].ringValue).toBe(20);
   });
 
   it("does nothing if no discs in current round", async () => {
-    await undoDisc(gameId);
+    await undoDisc(gameId, player1Id);
     const game = await getGame(gameId);
     expect(game!.rounds[0].discs).toHaveLength(0);
   });
