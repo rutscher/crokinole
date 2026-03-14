@@ -34,15 +34,22 @@ export function RingButton({ value, onTap, disabled }: RingButtonProps) {
     onTap();
   }, [disabled, onTap]);
 
+  const handlePointerCancel = useCallback(() => {
+    ref.current?.classList.remove("scale-75", "brightness-150");
+  }, []);
+
   return (
     <button
       ref={ref}
       onPointerDown={handlePointerDown}
+      onPointerCancel={handlePointerCancel}
       disabled={disabled}
       style={{ touchAction: "manipulation" }}
+      aria-label={`Score ${value} points`}
       className={`
         w-20 h-20 rounded-full font-bold text-2xl select-none
         transition-all duration-150
+        focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring
         ${RING_COLORS[value] || "bg-gray-500 text-white"}
         ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
       `}
