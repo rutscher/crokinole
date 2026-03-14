@@ -39,19 +39,23 @@ export function GameClient({ game }: GameClientProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  // Keep screen on — NoSleep.js as primary (hidden video fallback for all browsers),
-  // plus native Wake Lock API as bonus where supported
+  // Keep screen on — must be activated from a user gesture (tap/click)
+  // NoSleep.js plays a hidden video; Wake Lock API is a bonus on top
   useEffect(() => {
-    let noSleep: { enable: () => void; disable: () => void } | null = null;
+    let noSleepInstance: { enable: () => void; disable: () => void } | null = null;
     let wakeLock: WakeLockSentinel | null = null;
+    let activated = false;
 
-    async function setup() {
-      // NoSleep.js — plays a tiny hidden video to prevent screen sleep
+    async function activate() {
+      if (activated) return;
+      activated = true;
+
+      // NoSleep.js — requires user gesture to play hidden video
       const NoSleep = (await import("nosleep.js")).default;
-      noSleep = new NoSleep();
-      noSleep.enable();
+      noSleepInstance = new NoSleep();
+      noSleepInstance.enable();
 
-      // Also try native Wake Lock API as a belt-and-suspenders approach
+      // Also try native Wake Lock API
       try {
         if ("wakeLock" in navigator) {
           wakeLock = await navigator.wakeLock.request("screen");
@@ -59,19 +63,30 @@ export function GameClient({ game }: GameClientProps) {
       } catch {}
     }
 
-    setup();
+    // Activate on first user interaction
+    function onInteraction() {
+      activate();
+      document.removeEventListener("pointerdown", onInteraction);
+      document.removeEventListener("touchstart", onInteraction);
+    }
+    document.addEventListener("pointerdown", onInteraction, { once: true });
+    document.addEventListener("touchstart", onInteraction, { once: true });
 
-    // Re-acquire native wake lock on tab focus
+    // Re-acquire wake lock on tab focus
     function onVisibility() {
-      if (document.visibilityState === "visible") {
+      if (document.visibilityState === "visible" && activated) {
+        // Re-enable NoSleep in case it was interrupted
+        noSleepInstance?.enable();
         navigator.wakeLock?.request("screen").then((wl) => { wakeLock = wl; }).catch(() => {});
       }
     }
     document.addEventListener("visibilitychange", onVisibility);
 
     return () => {
-      noSleep?.disable();
+      noSleepInstance?.disable();
       if (wakeLock) { try { wakeLock.release(); } catch {} }
+      document.removeEventListener("pointerdown", onInteraction);
+      document.removeEventListener("touchstart", onInteraction);
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
