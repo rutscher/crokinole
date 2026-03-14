@@ -15,8 +15,11 @@ COPY . .
 # Generate Prisma client
 RUN npx prisma generate
 
-# Build Next.js
-RUN npm run build
+# Need DATABASE_URL at build time for Next.js page data collection
+ENV DATABASE_URL="file:./build.db"
+
+# Run migration to create build DB, then build Next.js
+RUN npx prisma migrate deploy && npm run build && rm -f build.db
 
 # Production image
 FROM base AS runner
