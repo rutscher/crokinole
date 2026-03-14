@@ -83,24 +83,24 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --background: #1f1b17;
+  --foreground: #e8e0d6;
+  --card: #2a2520;
+  --card-foreground: #e8e0d6;
+  --popover: #2a2520;
+  --popover-foreground: #e8e0d6;
+  --primary: #e8e0d6;
+  --primary-foreground: #1a1400;
+  --secondary: #2a2520;
+  --secondary-foreground: #e8e0d6;
+  --muted: #2a2520;
+  --muted-foreground: #8a8078;
+  --accent: #2a2520;
+  --accent-foreground: #e8e0d6;
+  --destructive: #8e5548;
+  --border: #3d362e;
+  --input: #3d362e;
+  --ring: #6b5f53;
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
@@ -116,6 +116,33 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* Crokinole design tokens (dark-mode-only app, safe in :root) */
+/* --text-primary maps to --foreground (#e8e0d6) */
+:root {
+  --surface-deep: #1a1610;
+  --text-secondary: #b8a898;
+  --text-dim: #6b5f53;
+  --lead: #7a9e80;
+  --lead-bg: rgba(90,117,96,0.15);
+  --crk-border-subtle: rgba(180,170,155,0.15);
+  --rail-1: #b59768;
+  --rail-2: #cbb48a;
+  --rail-3: #a8905c;
+  --rail-4: #c4a87a;
+  --ring-5-center: #5a7560;
+  --ring-5-mid: #486050;
+  --ring-5-edge: #3a5040;
+  --ring-10-center: #6a7580;
+  --ring-10-mid: #556570;
+  --ring-10-edge: #485860;
+  --ring-15-center: #8e5548;
+  --ring-15-mid: #7a4438;
+  --ring-15-edge: #663830;
+  --ring-20-center: #c8a862;
+  --ring-20-mid: #b09050;
+  --ring-20-edge: #958040;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
@@ -126,12 +153,4 @@
   html {
     @apply font-sans;
   }
-}
-
-/* Ring button colors for crokinole scoring */
-:root {
-  --ring-20: #ffd700;
-  --ring-15: #c0392b;
-  --ring-10: #2980b9;
-  --ring-5: #27ae60;
 }
