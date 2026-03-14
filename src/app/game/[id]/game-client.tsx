@@ -1,11 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useTransition } from "react";
+import { useTransition, useEffect } from "react";
 import { PlayerHalf } from "@/components/player-half";
 import { CenterBar } from "@/components/center-bar";
 import { GameOverDialog } from "@/components/game-over-dialog";
-import { addDisc, undoDisc, endRound } from "@/lib/actions/rounds";
+import { addDisc, undoDisc, endRound, undoRound } from "@/lib/actions/rounds";
 
 interface GameData {
   id: number;
@@ -39,8 +39,35 @@ export function GameClient({ game }: GameClientProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
+  useEffect(() => {
+    let wakeLock: WakeLockSentinel | null = null;
+
+    async function requestWakeLock() {
+      try {
+        if ("wakeLock" in navigator) {
+          wakeLock = await navigator.wakeLock.request("screen");
+        }
+      } catch {}
+    }
+
+    requestWakeLock();
+
+    function handleVisibilityChange() {
+      if (document.visibilityState === "visible") {
+        requestWakeLock();
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      wakeLock?.release();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
   const currentRound = game.rounds.find((r) => r.status === "in_progress");
   const isGameOver = game.status === "completed";
+  const completedRoundCount = game.rounds.filter((r) => r.status === "completed").length;
 
   const player1RoundScore = currentRound
     ? currentRound.discs
@@ -75,9 +102,15 @@ export function GameClient({ game }: GameClientProps) {
     });
   }
 
+  function handleUndoRound() {
+    startTransition(async () => {
+      await undoRound(game.id);
+      router.refresh();
+    });
+  }
+
   return (
     <div className="h-dvh flex flex-col bg-background overflow-hidden">
-      {/* Player 1 (top, rotated 180deg) */}
       <div className="flex-1 flex bg-gradient-to-b from-blue-950/50 to-background">
         <PlayerHalf
           name={game.player1.name}
@@ -90,15 +123,15 @@ export function GameClient({ game }: GameClientProps) {
         />
       </div>
 
-      {/* Center bar */}
       <CenterBar
         roundNumber={currentRound?.roundNumber ?? game.rounds.length}
         onEndRound={handleEndRound}
         onUndo={handleUndo}
+        onUndoRound={handleUndoRound}
+        canUndoRound={completedRoundCount > 0}
         disabled={isPending || isGameOver}
       />
 
-      {/* Player 2 (bottom, normal orientation) */}
       <div className="flex-1 flex bg-gradient-to-t from-red-950/50 to-background">
         <PlayerHalf
           name={game.player2.name}
@@ -111,7 +144,6 @@ export function GameClient({ game }: GameClientProps) {
         />
       </div>
 
-      {/* Game over dialog */}
       <GameOverDialog
         open={isGameOver}
         winnerName={game.winner?.name ?? ""}
