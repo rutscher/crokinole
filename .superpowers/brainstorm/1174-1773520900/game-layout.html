@@ -1,0 +1,134 @@
+<h2>In-Game Layout</h2>
+<p class="subtitle">How should the scorekeeper look sitting beside the board? Pick the layout that feels right for mid-game use.</p>
+
+<div class="cards">
+  <!-- Option A: Split Screen -->
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex; flex-direction:column; height:400px; font-family:system-ui; background:#0a0a0a; border-radius:12px; overflow:hidden;">
+        <!-- Player 1 half -->
+        <div style="flex:1; background:linear-gradient(135deg, #1e3a5f, #0f1f33); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; border-bottom:2px solid #333;">
+          <div style="font-size:13px; color:#8ab4f8; text-transform:uppercase; letter-spacing:2px;">Rob</div>
+          <div style="font-size:48px; font-weight:700; color:#fff; margin:4px 0;">45</div>
+          <div style="font-size:11px; color:#666;">🔨 Hammer</div>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <div style="width:40px; height:40px; border-radius:50%; background:#ffd700; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#000;">20</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#c0392b; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">15</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#2980b9; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">10</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#27ae60; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">5</div>
+          </div>
+        </div>
+        <!-- Divider -->
+        <div style="background:#1a1a1a; padding:6px; text-align:center;">
+          <span style="color:#666; font-size:11px;">Round 4 &nbsp;|&nbsp; Tap rings to score</span>
+        </div>
+        <!-- Player 2 half -->
+        <div style="flex:1; background:linear-gradient(135deg, #3a1e1e, #1f0f0f); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px;">
+          <div style="font-size:13px; color:#f88a8a; text-transform:uppercase; letter-spacing:2px;">Dave</div>
+          <div style="font-size:48px; font-weight:700; color:#fff; margin:4px 0;">30</div>
+          <div style="font-size:11px; color:#333;">-</div>
+          <div style="display:flex; gap:8px; margin-top:12px;">
+            <div style="width:40px; height:40px; border-radius:50%; background:#ffd700; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#000;">20</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#c0392b; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">15</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#2980b9; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">10</div>
+            <div style="width:40px; height:40px; border-radius:50%; background:#27ae60; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Split Screen</h3>
+      <p>Each player gets half the screen with their own score and tap zones. Like a chess clock — each side "belongs" to a player. Rotated so each player can read their half from their side of the board.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Unified Scoreboard -->
+  <div class="card" data-choice="unified" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex; flex-direction:column; height:400px; font-family:system-ui; background:#0a0a0a; border-radius:12px; overflow:hidden;">
+        <!-- Scores at top -->
+        <div style="display:flex; padding:20px 16px; gap:12px;">
+          <div style="flex:1; background:#111; border-radius:12px; padding:16px; text-align:center; border:2px solid #1e3a5f;">
+            <div style="font-size:12px; color:#8ab4f8; text-transform:uppercase; letter-spacing:2px;">Rob</div>
+            <div style="font-size:44px; font-weight:700; color:#fff;">45</div>
+            <div style="font-size:10px; color:#ffd700;">🔨 Hammer</div>
+          </div>
+          <div style="display:flex; align-items:center; color:#444; font-size:12px;">R4</div>
+          <div style="flex:1; background:#111; border-radius:12px; padding:16px; text-align:center; border:2px solid #3a1e1e;">
+            <div style="font-size:12px; color:#f88a8a; text-transform:uppercase; letter-spacing:2px;">Dave</div>
+            <div style="font-size:44px; font-weight:700; color:#fff;">30</div>
+            <div style="font-size:10px; color:#333;">-</div>
+          </div>
+        </div>
+        <!-- Active scoring area -->
+        <div style="flex:1; background:#111; margin:0 16px; border-radius:12px; padding:16px;">
+          <div style="text-align:center; color:#666; font-size:11px; margin-bottom:12px;">CURRENT ROUND — TAP RINGS TO SCORE</div>
+          <!-- Tabs -->
+          <div style="display:flex; gap:8px; margin-bottom:16px;">
+            <div style="flex:1; background:#1e3a5f; border-radius:8px; padding:8px; text-align:center; color:#8ab4f8; font-size:13px; font-weight:600;">Rob: 20</div>
+            <div style="flex:1; background:#222; border-radius:8px; padding:8px; text-align:center; color:#888; font-size:13px;">Dave: 10</div>
+          </div>
+          <!-- Ring buttons -->
+          <div style="display:flex; gap:10px; justify-content:center; margin-top:8px;">
+            <div style="width:52px; height:52px; border-radius:50%; background:#ffd700; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; color:#000;">20</div>
+            <div style="width:52px; height:52px; border-radius:50%; background:#c0392b; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; color:#fff;">15</div>
+            <div style="width:52px; height:52px; border-radius:50%; background:#2980b9; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; color:#fff;">10</div>
+            <div style="width:52px; height:52px; border-radius:50%; background:#27ae60; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:16px; color:#fff;">5</div>
+          </div>
+        </div>
+        <!-- Bottom bar -->
+        <div style="padding:12px 16px; display:flex; justify-content:space-between; align-items:center;">
+          <span style="color:#444; font-size:11px;">Undo</span>
+          <div style="background:#2563eb; color:#fff; padding:8px 24px; border-radius:8px; font-size:13px; font-weight:600;">End Round</div>
+          <span style="color:#444; font-size:11px;">Menu</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Unified Scoreboard</h3>
+      <p>Scores side-by-side at top, shared scoring zone below. One person operates it (or pass it back and forth). Tab between players to enter their discs. More like a traditional scoreboard.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Carousel / Swipe -->
+  <div class="card" data-choice="carousel" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex; flex-direction:column; height:400px; font-family:system-ui; background:#0a0a0a; border-radius:12px; overflow:hidden;">
+        <!-- Mini scores -->
+        <div style="display:flex; padding:12px 16px; justify-content:space-between; align-items:center;">
+          <div style="color:#8ab4f8; font-size:13px;">Rob: <span style="font-weight:700; font-size:18px; color:#fff;">45</span></div>
+          <div style="color:#666; font-size:11px;">Round 4</div>
+          <div style="color:#f88a8a; font-size:13px;">Dave: <span style="font-weight:700; font-size:18px; color:#fff;">30</span></div>
+        </div>
+        <!-- Active player card (full focus) -->
+        <div style="flex:1; margin:0 16px; background:linear-gradient(135deg, #1e3a5f, #0f1f33); border-radius:16px; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; position:relative;">
+          <div style="position:absolute; top:12px; right:16px; font-size:10px; color:#ffd700;">🔨 Hammer</div>
+          <div style="font-size:14px; color:#8ab4f8; text-transform:uppercase; letter-spacing:3px;">Rob's Turn</div>
+          <div style="font-size:64px; font-weight:700; color:#fff; margin:8px 0;">20</div>
+          <div style="font-size:12px; color:#8ab4f8; margin-bottom:20px;">this round</div>
+          <div style="display:flex; gap:12px;">
+            <div style="width:56px; height:56px; border-radius:50%; background:#ffd700; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#000; box-shadow:0 4px 12px rgba(255,215,0,0.3);">20</div>
+            <div style="width:56px; height:56px; border-radius:50%; background:#c0392b; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff;">15</div>
+            <div style="width:56px; height:56px; border-radius:50%; background:#2980b9; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff;">10</div>
+            <div style="width:56px; height:56px; border-radius:50%; background:#27ae60; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:18px; color:#fff;">5</div>
+          </div>
+          <div style="margin-top:16px; color:#555; font-size:11px;">← swipe to switch player →</div>
+        </div>
+        <!-- Bottom -->
+        <div style="padding:12px 16px; display:flex; justify-content:center; gap:8px;">
+          <div style="width:8px; height:8px; border-radius:50%; background:#8ab4f8;"></div>
+          <div style="width:8px; height:8px; border-radius:50%; background:#333;"></div>
+        </div>
+        <div style="padding:0 16px 12px; display:flex; justify-content:space-between;">
+          <span style="color:#444; font-size:11px;">Undo</span>
+          <div style="background:#2563eb; color:#fff; padding:8px 24px; border-radius:8px; font-size:13px; font-weight:600;">End Round</div>
+          <span style="color:#444; font-size:11px;">Menu</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Swipe Focus</h3>
+      <p>One player fills the screen at a time with big, easy-to-tap buttons. Swipe to switch between players. Compact score bar at top keeps both scores visible. Most touch-friendly for phone use.</p>
+    </div>
+  </div>
+</div>

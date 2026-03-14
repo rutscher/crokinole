@@ -1,0 +1,58 @@
+<h2>Split Screen — Rotated for Each Player</h2>
+<p class="subtitle">Phone lays flat between players. Each half faces its player.</p>
+
+<div class="cards">
+  <div class="card" data-choice="rotated-split" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div style="display:flex; flex-direction:column; height:500px; font-family:system-ui; background:#0a0a0a; border-radius:12px; overflow:hidden;">
+        <!-- Player 1 half (ROTATED 180deg - faces the far player) -->
+        <div style="flex:1; background:linear-gradient(135deg, #1e3a5f, #0f1f33); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; transform:rotate(180deg);">
+          <div style="font-size:11px; color:#ffd700; margin-bottom:2px;">&#x1f528; Hammer</div>
+          <div style="font-size:13px; color:#8ab4f8; text-transform:uppercase; letter-spacing:2px;">Rob</div>
+          <div style="font-size:52px; font-weight:700; color:#fff; margin:4px 0;">45</div>
+          <div style="display:flex; gap:8px; margin-top:10px;">
+            <div style="width:42px; height:42px; border-radius:50%; background:#ffd700; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#000; box-shadow:0 2px 8px rgba(255,215,0,0.3);">20</div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#c0392b; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">15</div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#2980b9; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">10</div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#27ae60; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">5</div>
+          </div>
+          <div style="font-size:10px; color:#4a6fa5; margin-top:8px;">Round score: 20</div>
+        </div>
+        <!-- Center divider -->
+        <div style="background:#1a1a1a; padding:6px 0; text-align:center; display:flex; align-items:center; justify-content:center; gap:12px; border-top:1px solid #333; border-bottom:1px solid #333;">
+          <span style="color:#444; font-size:10px;">Undo</span>
+          <span style="color:#2563eb; font-size:11px; font-weight:600; background:#111; padding:4px 12px; border-radius:6px;">End Round</span>
+          <span style="color:#444; font-size:10px;">R4</span>
+        </div>
+        <!-- Player 2 half (normal orientation - faces the near player) -->
+        <div style="flex:1; background:linear-gradient(135deg, #3a1e1e, #1f0f0f); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px;">
+          <div style="display:flex; gap:8px; margin-bottom:10px;">
+            <div style="width:42px; height:42px; border-radius:50%; background:#ffd700; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#000; box-shadow:0 2px 8px rgba(255,215,0,0.3);">20</div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#c0392b; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">15</div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#2980b9; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">10</div>
+            <div style="width:42px; height:42px; border-radius:50%; background:#27ae60; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:14px; color:#fff;">5</div>
+          </div>
+          <div style="font-size:10px; color:#5a3a3a; margin-bottom:4px;">Round score: 10</div>
+          <div style="font-size:52px; font-weight:700; color:#fff; margin:4px 0;">30</div>
+          <div style="font-size:13px; color:#f88a8a; text-transform:uppercase; letter-spacing:2px;">Dave</div>
+          <div style="font-size:11px; color:#333; margin-top:2px;">-</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Rotated Split</h3>
+      <p>Phone lays flat on the table. Rob's half is flipped 180° so he can read it from across the board. Dave's half reads normally from his side. Each player taps their own ring buttons to score their discs. The center bar has shared controls (End Round, Undo).</p>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:24px;">
+  <h3>How it works in practice</h3>
+  <div style="background:#111; border-radius:12px; padding:20px; color:#ccc; font-size:14px; line-height:1.8;">
+    <strong style="color:#fff;">1.</strong> Phone sits flat between players on the table<br>
+    <strong style="color:#fff;">2.</strong> Each player's name, score, and ring buttons face them<br>
+    <strong style="color:#fff;">3.</strong> After all discs are shot, either player taps <strong style="color:#2563eb;">End Round</strong> in the center<br>
+    <strong style="color:#fff;">4.</strong> App calculates the difference and adds to the leader's game score<br>
+    <strong style="color:#fff;">5.</strong> Hammer indicator moves to the other player
+  </div>
+</div>
