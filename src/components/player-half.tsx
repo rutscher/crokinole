@@ -7,6 +7,7 @@ interface PlayerHalfProps {
   gameScore: number;
   roundScore: number;
   hasHammer: boolean;
+  isLeading: boolean;
   isRotated: boolean;
   onDiscTap: (ringValue: number) => void;
   disabled?: boolean;
@@ -17,6 +18,7 @@ export function PlayerHalf({
   gameScore,
   roundScore,
   hasHammer,
+  isLeading,
   isRotated,
   onDiscTap,
   disabled,
@@ -39,9 +41,16 @@ export function PlayerHalf({
             HAMMER
           </span>
         )}
+        {isLeading && (
+          <span className="text-xs font-bold bg-emerald-500 text-white px-2 py-0.5 rounded-full">
+            LEAD
+          </span>
+        )}
       </div>
 
-      <div className="text-4xl font-bold">{gameScore}</div>
+      <div className={`text-5xl font-bold tabular-nums ${isLeading ? "text-emerald-400" : ""}`}>
+        {gameScore}
+      </div>
 
       <div className="text-3xl font-semibold text-primary tabular-nums">
         +{roundScore}
@@ -52,7 +61,7 @@ export function PlayerHalf({
           <RingButton
             key={value}
             value={value}
-            onClick={() => onDiscTap(value)}
+            onTap={() => onDiscTap(value)}
             disabled={disabled}
           />
         ))}
