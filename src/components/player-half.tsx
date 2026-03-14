@@ -26,18 +26,28 @@ export function PlayerHalf({
   return (
     <div
       className={`
-        flex-1 flex flex-col items-center justify-center p-4 gap-2
+        flex-1 flex flex-col items-center justify-center p-3 gap-1
         ${isRotated ? "rotate-180" : ""}
       `}
     >
-      <div className="text-xs uppercase tracking-widest text-muted-foreground">
-        {name}
+      <div className="flex items-center gap-2">
+        <span className="text-sm uppercase tracking-widest text-muted-foreground">
+          {name}
+        </span>
+        {hasHammer && (
+          <span className="text-xs font-bold bg-amber-500 text-black px-2 py-0.5 rounded-full">
+            HAMMER
+          </span>
+        )}
       </div>
-      <div className="text-5xl font-bold">{gameScore}</div>
-      <div className="text-sm text-muted-foreground">
-        {hasHammer ? "Hammer" : "\u00A0"}
+
+      <div className="text-4xl font-bold">{gameScore}</div>
+
+      <div className="text-3xl font-semibold text-primary tabular-nums">
+        +{roundScore}
       </div>
-      <div className="flex gap-3 mt-2">
+
+      <div className="flex gap-4 mt-1">
         {ringValues.map((value) => (
           <RingButton
             key={value}
@@ -46,9 +56,6 @@ export function PlayerHalf({
             disabled={disabled}
           />
         ))}
-      </div>
-      <div className="text-sm text-muted-foreground mt-1">
-        Round: {roundScore}
       </div>
     </div>
   );
