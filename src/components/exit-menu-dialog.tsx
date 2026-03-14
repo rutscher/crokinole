@@ -22,7 +22,16 @@ export function ExitMenuDialog({ open, onClose, gameId }: ExitMenuDialogProps) {
           <DialogTitle>Game Menu</DialogTitle>
         </DialogHeader>
         <div className="flex flex-col gap-3 mt-2">
-          <Button onClick={onClose} size="lg" className="w-full">
+          <Button
+            onClick={onClose}
+            size="lg"
+            className="w-full"
+            style={{
+              background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+              color: "#1a1400",
+              border: "none",
+            }}
+          >
             Resume Game
           </Button>
           <a href="/">

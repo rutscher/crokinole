@@ -52,7 +52,7 @@ export function RoundSummaryDialog({ result, onDismiss }: RoundSummaryDialogProp
           {/* Outcome */}
           <div className="text-lg">
             {result.winnerName ? (
-              <span className="text-emerald-400 font-semibold">
+              <span className="font-semibold" style={{ color: "var(--lead)" }}>
                 {result.winnerName} +{result.pointsAwarded}
               </span>
             ) : (
@@ -66,7 +66,16 @@ export function RoundSummaryDialog({ result, onDismiss }: RoundSummaryDialogProp
           </div>
         </div>
 
-        <Button onClick={onDismiss} className="w-full" size="lg">
+        <Button
+          onClick={onDismiss}
+          className="w-full"
+          size="lg"
+          style={{
+            background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+            color: "#1a1400",
+            border: "none",
+          }}
+        >
           Next Round
         </Button>
       </DialogContent>

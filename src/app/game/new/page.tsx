@@ -96,7 +96,16 @@ export default async function NewGamePage({ searchParams }: Props) {
           </CardContent>
         </Card>
 
-        <Button type="submit" className="w-full h-14 text-lg" size="lg">
+        <Button
+          type="submit"
+          className="w-full h-14 text-lg font-bold"
+          size="lg"
+          style={{
+            background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+            color: "#1a1400",
+            border: "none",
+          }}
+        >
           Start Game
         </Button>
       </form>

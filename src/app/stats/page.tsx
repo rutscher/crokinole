@@ -57,6 +57,12 @@ export default async function StatsPage({ searchParams }: Props) {
                   type="submit"
                   variant={p.id === selectedPlayerId ? "default" : "outline"}
                   size="sm"
+                  className="rounded-full px-4"
+                  style={p.id === selectedPlayerId ? {
+                    background: "radial-gradient(circle at 40% 35%, #3a3430, #292420 60%, #1f1c19)",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
+                    border: "none",
+                  } : undefined}
                 >
                   {p.name}
                 </Button>
@@ -71,11 +77,11 @@ export default async function StatsPage({ searchParams }: Props) {
           <h2 className="text-lg font-semibold mb-3">{selectedPlayer.name}</h2>
           <div className="grid grid-cols-2 gap-3 mb-6">
             <StatCard label="Record" value={`${stats.wins}W - ${stats.losses}L`} />
-            <StatCard label="Win %" value={`${stats.winPercent}%`} />
-            <StatCard label="Avg Margin" value={stats.avgMargin > 0 ? `+${stats.avgMargin}` : stats.avgMargin} />
-            <StatCard label="Total 20s" value={stats.total20s} />
+            <StatCard label="Win %" value={`${stats.winPercent}%`} variant="positive" />
+            <StatCard label="Avg Margin" value={stats.avgMargin > 0 ? `+${stats.avgMargin}` : stats.avgMargin} variant={stats.avgMargin > 0 ? "positive" : stats.avgMargin < 0 ? "negative" : "neutral"} />
+            <StatCard label="Total 20s" value={stats.total20s} variant="positive" />
             <StatCard label="Avg Round" value={stats.avgRoundScore} />
-            <StatCard label="Best Round" value={stats.highestRoundScore} />
+            <StatCard label="Best Round" value={stats.highestRoundScore} variant="positive" />
             <StatCard label="Games" value={stats.gamesPlayed} />
           </div>
 
@@ -94,6 +100,12 @@ export default async function StatsPage({ searchParams }: Props) {
                         type="submit"
                         variant={p.id === selectedOpponentId ? "default" : "outline"}
                         size="sm"
+                        className="rounded-full px-4"
+                        style={p.id === selectedOpponentId ? {
+                          background: "radial-gradient(circle at 40% 35%, #3a3430, #292420 60%, #1f1c19)",
+                          boxShadow: "0 2px 4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08)",
+                          border: "none",
+                        } : undefined}
                       >
                         {p.name}
                       </Button>

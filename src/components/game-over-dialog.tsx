@@ -44,7 +44,15 @@ export function GameOverDialog({
         </DialogHeader>
         <div className="flex flex-col gap-3 mt-4">
           <a href={`/game/new?p1=${player1Id}&p2=${player2Id}`}>
-            <Button className="w-full" size="lg">
+            <Button
+              className="w-full"
+              size="lg"
+              style={{
+                background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+                color: "#1a1400",
+                border: "none",
+              }}
+            >
               Rematch
             </Button>
           </a>

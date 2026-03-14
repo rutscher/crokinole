@@ -36,7 +36,7 @@ export function GameDetail({ game }: GameDetailProps) {
       <Card className="mb-6">
         <CardContent className="p-6 text-center">
           {game.winner && (
-            <div className="text-lg text-emerald-400 font-semibold mb-2">
+            <div className="text-lg font-semibold mb-2" style={{ color: "var(--lead)" }}>
               {game.winner.name} Wins!
             </div>
           )}
@@ -72,17 +72,17 @@ export function GameDetail({ game }: GameDetailProps) {
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground w-8">R{round.roundNumber}</span>
                   <div className="flex items-center gap-4 tabular-nums">
-                    <span className={`font-semibold ${p1Won ? "text-emerald-400" : ""}`}>
+                    <span className="font-semibold" style={p1Won ? { color: "var(--lead)" } : undefined}>
                       {round.player1RoundScore}
                     </span>
                     <span className="text-xs text-muted-foreground">vs</span>
-                    <span className={`font-semibold ${p2Won ? "text-emerald-400" : ""}`}>
+                    <span className="font-semibold" style={p2Won ? { color: "var(--lead)" } : undefined}>
                       {round.player2RoundScore}
                     </span>
                   </div>
                   <div className="text-right text-xs text-muted-foreground w-20">
                     {round.pointsAwarded > 0 ? (
-                      <span className="text-emerald-400">+{round.pointsAwarded}</span>
+                      <span style={{ color: "var(--lead)" }}>+{round.pointsAwarded}</span>
                     ) : (
                       "Tie"
                     )}
