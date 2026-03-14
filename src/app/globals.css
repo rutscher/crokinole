@@ -123,24 +123,10 @@
   --text-secondary: #b8a898;
   --text-dim: #6b5f53;
   --lead: #7a9e80;
-  --lead-bg: rgba(90,117,96,0.15);
-  --crk-border-subtle: rgba(180,170,155,0.15);
   --rail-1: #b59768;
   --rail-2: #cbb48a;
   --rail-3: #a8905c;
   --rail-4: #c4a87a;
-  --ring-5-center: #5a7560;
-  --ring-5-mid: #486050;
-  --ring-5-edge: #3a5040;
-  --ring-10-center: #6a7580;
-  --ring-10-mid: #556570;
-  --ring-10-edge: #485860;
-  --ring-15-center: #8e5548;
-  --ring-15-mid: #7a4438;
-  --ring-15-edge: #663830;
-  --ring-20-center: #c8a862;
-  --ring-20-mid: #b09050;
-  --ring-20-edge: #958040;
 }
 
 @layer base {

@@ -98,7 +98,15 @@ export function GameDetail({ game }: GameDetailProps) {
       {/* Actions */}
       <div className="flex gap-3 mt-6">
         <a href={`/game/new?p1=${game.player1.id}&p2=${game.player2.id}`} className="flex-1">
-          <Button className="w-full" size="lg">Rematch</Button>
+          <Button
+            className="w-full"
+            size="lg"
+            style={{
+              background: "linear-gradient(135deg, var(--rail-2), var(--rail-3))",
+              color: "#1a1400",
+              border: "none",
+            }}
+          >Rematch</Button>
         </a>
         <Link href="/stats" className="flex-1">
           <Button variant="secondary" className="w-full" size="lg">Stats</Button>
