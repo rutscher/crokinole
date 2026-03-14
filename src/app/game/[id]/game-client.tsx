@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useTransition, useEffect } from "react";
+import { useTransition, useEffect, useCallback } from "react";
 import { PlayerHalf } from "@/components/player-half";
 import { CenterBar } from "@/components/center-bar";
 import { GameOverDialog } from "@/components/game-over-dialog";
@@ -41,27 +41,31 @@ export function GameClient({ game }: GameClientProps) {
 
   useEffect(() => {
     let wakeLock: WakeLockSentinel | null = null;
+    let interval: ReturnType<typeof setInterval> | null = null;
 
-    async function requestWakeLock() {
+    async function acquire() {
       try {
         if ("wakeLock" in navigator) {
+          if (wakeLock) { try { await wakeLock.release(); } catch {} }
           wakeLock = await navigator.wakeLock.request("screen");
         }
       } catch {}
     }
 
-    requestWakeLock();
+    acquire();
 
-    function handleVisibilityChange() {
+    function onVisibility() {
       if (document.visibilityState === "visible") {
-        requestWakeLock();
+        acquire();
       }
     }
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    document.addEventListener("visibilitychange", onVisibility);
+    interval = setInterval(acquire, 30_000);
 
     return () => {
-      wakeLock?.release();
-      document.removeEventListener("visibilitychange", handleVisibilityChange);
+      if (wakeLock) { try { wakeLock.release(); } catch {} }
+      if (interval) clearInterval(interval);
+      document.removeEventListener("visibilitychange", onVisibility);
     };
   }, []);
 
@@ -81,12 +85,16 @@ export function GameClient({ game }: GameClientProps) {
         .reduce((sum, d) => sum + d.ringValue, 0)
     : 0;
 
-  function handleDiscTap(playerId: number, ringValue: number) {
-    startTransition(async () => {
-      await addDisc(game.id, playerId, ringValue);
+  const p1Total = game.player1Score + player1RoundScore;
+  const p2Total = game.player2Score + player2RoundScore;
+  const leader: "p1" | "p2" | "tied" =
+    p1Total > p2Total ? "p1" : p2Total > p1Total ? "p2" : "tied";
+
+  const handleDiscTap = useCallback((playerId: number, ringValue: number) => {
+    addDisc(game.id, playerId, ringValue).then(() => {
       router.refresh();
     });
-  }
+  }, [game.id, router]);
 
   function handleUndo() {
     startTransition(async () => {
@@ -110,21 +118,31 @@ export function GameClient({ game }: GameClientProps) {
   }
 
   return (
-    <div className="h-dvh flex flex-col bg-background overflow-hidden">
-      <div className="flex-1 flex bg-gradient-to-b from-blue-950/50 to-background">
+    <div className="h-dvh flex flex-col bg-background overflow-hidden select-none"
+         style={{ touchAction: "manipulation" }}>
+      <div className={`flex-1 flex transition-colors duration-300 ${
+        leader === "p1"
+          ? "bg-gradient-to-b from-blue-900/60 to-blue-950/20"
+          : "bg-gradient-to-b from-blue-950/30 to-background"
+      }`}>
         <PlayerHalf
           name={game.player1.name}
           gameScore={game.player1Score}
           roundScore={player1RoundScore}
           hasHammer={currentRound?.hammerPlayerId === game.player1Id}
+          isLeading={leader === "p1"}
           isRotated={true}
           onDiscTap={(v) => handleDiscTap(game.player1Id, v)}
-          disabled={isPending || isGameOver}
+          disabled={isGameOver}
         />
       </div>
 
       <CenterBar
         roundNumber={currentRound?.roundNumber ?? game.rounds.length}
+        player1Name={game.player1.name}
+        player2Name={game.player2.name}
+        player1Total={p1Total}
+        player2Total={p2Total}
         onEndRound={handleEndRound}
         onUndo={handleUndo}
         onUndoRound={handleUndoRound}
@@ -132,15 +150,20 @@ export function GameClient({ game }: GameClientProps) {
         disabled={isPending || isGameOver}
       />
 
-      <div className="flex-1 flex bg-gradient-to-t from-red-950/50 to-background">
+      <div className={`flex-1 flex transition-colors duration-300 ${
+        leader === "p2"
+          ? "bg-gradient-to-t from-red-900/60 to-red-950/20"
+          : "bg-gradient-to-t from-red-950/30 to-background"
+      }`}>
         <PlayerHalf
           name={game.player2.name}
           gameScore={game.player2Score}
           roundScore={player2RoundScore}
           hasHammer={currentRound?.hammerPlayerId === game.player2Id}
+          isLeading={leader === "p2"}
           isRotated={false}
           onDiscTap={(v) => handleDiscTap(game.player2Id, v)}
-          disabled={isPending || isGameOver}
+          disabled={isGameOver}
         />
       </div>
 
