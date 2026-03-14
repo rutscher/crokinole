@@ -13,26 +13,19 @@ interface Player {
   name: string;
 }
 
-interface PlayerPickerProps {
+interface HammerPickerProps {
   players: Player[];
-  name: string;
-  placeholder: string;
-  excludeId?: number;
-  defaultValue?: string;
 }
 
-export function PlayerPicker({ players, name, placeholder, excludeId, defaultValue }: PlayerPickerProps) {
-  const filtered = excludeId
-    ? players.filter((p) => p.id !== excludeId)
-    : players;
-
+export function HammerPicker({ players }: HammerPickerProps) {
   return (
-    <Select name={name} required defaultValue={defaultValue}>
+    <Select name="hammer" required defaultValue="Random">
       <SelectTrigger className="h-14 text-lg">
-        <SelectValue placeholder={placeholder} />
+        <SelectValue placeholder="Who gets first hammer?" />
       </SelectTrigger>
       <SelectContent>
-        {filtered.map((player) => (
+        <SelectItem value="Random">Random</SelectItem>
+        {players.map((player) => (
           <SelectItem key={player.id} value={player.name}>
             {player.name}
           </SelectItem>
