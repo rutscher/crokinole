@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.superpowers
+docs
+tests
+prisma/dev.db*
+prisma/test.db*
+.env
