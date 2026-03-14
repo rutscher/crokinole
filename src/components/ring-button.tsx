@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useRef } from "react";
 
 interface RingButtonProps {
   value: number;
-  onClick: () => void;
+  onTap: () => void;
   disabled?: boolean;
 }
 
@@ -15,24 +15,34 @@ const RING_COLORS: Record<number, string> = {
   5: "bg-[#27ae60] text-white shadow-[0_0_12px_rgba(39,174,96,0.4)]",
 };
 
-export function RingButton({ value, onClick, disabled }: RingButtonProps) {
-  const [tapped, setTapped] = useState(false);
+export function RingButton({ value, onTap, disabled }: RingButtonProps) {
+  const ref = useRef<HTMLButtonElement>(null);
 
-  function handleTap() {
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
     if (disabled) return;
-    setTapped(true);
-    onClick();
-    setTimeout(() => setTapped(false), 150);
-  }
+    e.preventDefault();
+    e.stopPropagation();
+
+    const el = ref.current;
+    if (el) {
+      el.classList.add("scale-75", "brightness-150");
+      setTimeout(() => {
+        el.classList.remove("scale-75", "brightness-150");
+      }, 150);
+    }
+
+    onTap();
+  }, [disabled, onTap]);
 
   return (
     <button
-      onClick={handleTap}
+      ref={ref}
+      onPointerDown={handlePointerDown}
       disabled={disabled}
+      style={{ touchAction: "manipulation" }}
       className={`
-        w-20 h-20 rounded-full font-bold text-2xl
+        w-20 h-20 rounded-full font-bold text-2xl select-none
         transition-all duration-150
-        ${tapped ? "scale-75 brightness-150" : "active:scale-90"}
         ${RING_COLORS[value] || "bg-gray-500 text-white"}
         ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
       `}
