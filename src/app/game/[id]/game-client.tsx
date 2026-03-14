@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useTransition, useEffect, useCallback, useState, useRef } from "react";
 import { PlayerHalf } from "@/components/player-half";
 import { CenterBar } from "@/components/center-bar";
+import { WoodRail } from "@/components/wood-rail";
 import { GameOverDialog } from "@/components/game-over-dialog";
 import { RoundSummaryDialog } from "@/components/round-summary-dialog";
 import { ExitMenuDialog } from "@/components/exit-menu-dialog";
@@ -197,11 +198,14 @@ export function GameClient({ game }: GameClientProps) {
     <div className="h-dvh flex flex-col bg-background overflow-hidden select-none"
          style={{ touchAction: "manipulation", overscrollBehavior: "none" }}>
       {/* Player 1 (top, rotated 180deg) */}
-      <div className={`flex-1 flex transition-colors duration-300 ${
-        leader === "p1"
-          ? "bg-gradient-to-b from-blue-900/60 to-blue-950/20"
-          : "bg-gradient-to-b from-blue-950/30 to-background"
-      }`}>
+      <WoodRail height={7} />
+      <div className="flex-1 flex relative overflow-hidden">
+        {/* Inner shadow from rail */}
+        <div className="absolute top-0 left-0 right-0 h-3 z-10"
+          style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.3), transparent)" }} />
+        {/* Vignette */}
+        <div className="absolute inset-0"
+          style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%)" }} />
         <PlayerHalf
           name={game.player1.name}
           gameScore={game.player1Score}
@@ -216,6 +220,7 @@ export function GameClient({ game }: GameClientProps) {
       </div>
 
       {/* Center bar */}
+      <WoodRail height={1} />
       <CenterBar
         roundNumber={currentRound?.roundNumber ?? game.rounds.length}
         player1Name={game.player1.name}
@@ -228,13 +233,16 @@ export function GameClient({ game }: GameClientProps) {
         canUndoRound={completedRoundCount > 0}
         disabled={isPending || isGameOver}
       />
+      <WoodRail height={1} />
 
       {/* Player 2 (bottom, normal orientation) */}
-      <div className={`flex-1 flex transition-colors duration-300 ${
-        leader === "p2"
-          ? "bg-gradient-to-t from-red-900/60 to-red-950/20"
-          : "bg-gradient-to-t from-red-950/30 to-background"
-      }`}>
+      <div className="flex-1 flex relative overflow-hidden">
+        {/* Vignette */}
+        <div className="absolute inset-0"
+          style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%)" }} />
+        {/* Inner shadow from bottom rail */}
+        <div className="absolute bottom-0 left-0 right-0 h-3 z-10"
+          style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.3), transparent)" }} />
         <PlayerHalf
           name={game.player2.name}
           gameScore={game.player2Score}
@@ -247,6 +255,7 @@ export function GameClient({ game }: GameClientProps) {
           disabled={isGameOver || isPending}
         />
       </div>
+      <WoodRail height={7} />
 
       {/* Round summary dialog */}
       <RoundSummaryDialog
