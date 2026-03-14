@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 
 interface GameOverDialogProps {
   open: boolean;
@@ -30,13 +31,15 @@ export function GameOverDialog({
   player1Id,
   player2Id,
 }: GameOverDialogProps) {
+  const router = useRouter();
+
   return (
     <Dialog open={open}>
       <DialogContent className="text-center">
         <DialogHeader>
           <DialogTitle className="text-3xl">{winnerName} Wins!</DialogTitle>
           <DialogDescription className="text-lg mt-2">
-            {player1Name} {player1Score} &mdash; {player2Score} {player2Name}
+            {player1Name} {player1Score} — {player2Score} {player2Name}
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-3 mt-4">
@@ -45,6 +48,14 @@ export function GameOverDialog({
               Rematch
             </Button>
           </a>
+          <Button
+            variant="outline"
+            size="lg"
+            className="w-full"
+            onClick={() => router.refresh()}
+          >
+            View Details
+          </Button>
           <a href="/">
             <Button variant="secondary" className="w-full" size="lg">
               Home
