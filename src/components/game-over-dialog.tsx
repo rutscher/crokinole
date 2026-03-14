@@ -32,7 +32,7 @@ export function GameOverDialog({
 }: GameOverDialogProps) {
   return (
     <Dialog open={open}>
-      <DialogContent className="text-center" onPointerDownOutside={(e) => e.preventDefault()}>
+      <DialogContent className="text-center">
         <DialogHeader>
           <DialogTitle className="text-3xl">{winnerName} Wins!</DialogTitle>
           <DialogDescription className="text-lg mt-2">

@@ -11,7 +11,8 @@ function getDatabaseUrl(): string {
 function createPrismaClient(): PrismaClient {
   const adapter = new PrismaBetterSqlite3({ url: getDatabaseUrl() });
   // Type assertion needed: Prisma 7 adapter option types don't align with PrismaClientOptions yet
-  return new PrismaClient({ adapter } as Parameters<typeof PrismaClient>[0]);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return new PrismaClient({ adapter } as any);
 }
 
 const globalForPrisma = globalThis as unknown as {
