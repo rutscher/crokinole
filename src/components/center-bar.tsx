@@ -10,6 +10,7 @@ interface CenterBarProps {
   player2Total: number;
   onEndRound: () => void;
   onUndoRound: () => void;
+  onMenuOpen: () => void;
   canUndoRound: boolean;
   disabled?: boolean;
 }
@@ -22,6 +23,7 @@ export function CenterBar({
   player2Total,
   onEndRound,
   onUndoRound,
+  onMenuOpen,
   canUndoRound,
   disabled,
 }: CenterBarProps) {
@@ -34,7 +36,8 @@ export function CenterBar({
 
   return (
     <div className="bg-muted/50 border-y border-border px-3 py-2 space-y-2">
-      <div className="flex items-center justify-center gap-3 text-sm">
+      {/* Score comparison */}
+      <div className="flex items-center justify-center gap-3 text-sm" aria-live="polite">
         <span className={`font-bold tabular-nums ${player1Total >= player2Total ? "text-emerald-400" : "text-muted-foreground"}`}>
           {player1Total}
         </span>
@@ -46,38 +49,43 @@ export function CenterBar({
         </span>
       </div>
 
+      {/* Controls */}
       <div className="flex items-center justify-between gap-2">
-        {canUndoRound ? (
+        <div className="flex gap-2">
           <Button
-            onClick={onUndoRound}
-            disabled={disabled}
-            variant="outline"
+            onClick={onMenuOpen}
+            variant="ghost"
             size="sm"
-            className="text-destructive border-destructive/50"
+            aria-label="Game menu"
+            className="px-2"
           >
-            Undo Round
+            Menu
           </Button>
-        ) : (
-          <span className="text-sm font-medium text-muted-foreground">
-            R{roundNumber}
-          </span>
-        )}
+          {canUndoRound && (
+            <Button
+              onClick={onUndoRound}
+              disabled={disabled}
+              variant="outline"
+              size="sm"
+              className="text-destructive border-destructive/50"
+            >
+              Undo Round
+            </Button>
+          )}
+        </div>
 
         <Button
           onClick={onEndRound}
           disabled={disabled}
-          className="px-8 h-10 text-base font-bold"
+          className="px-8 min-h-[48px] text-base font-bold"
+          aria-label="End the current round"
         >
           End Round
         </Button>
 
-        {canUndoRound ? (
-          <span className="text-sm font-medium text-muted-foreground min-w-[2rem] text-right">
-            R{roundNumber}
-          </span>
-        ) : (
-          <span className="min-w-[2rem]" />
-        )}
+        <span className="text-sm font-medium text-muted-foreground min-w-[2rem] text-right">
+          R{roundNumber}
+        </span>
       </div>
     </div>
   );
