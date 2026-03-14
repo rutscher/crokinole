@@ -35,16 +35,18 @@ export function CenterBar({
       : null;
 
   return (
-    <div className="bg-muted/50 border-y border-border px-3 py-2 space-y-2">
+    <div className="px-3 py-2 space-y-2" style={{ background: "var(--surface-deep)" }}>
       {/* Score comparison */}
       <div className="flex items-center justify-center gap-3 text-sm" aria-live="polite">
-        <span className={`font-bold tabular-nums ${player1Total >= player2Total ? "text-emerald-400" : "text-muted-foreground"}`}>
+        <span className={`font-bold tabular-nums ${player1Total >= player2Total ? "text-foreground" : ""}`}
+          style={player1Total < player2Total ? { color: "var(--text-dim)" } : undefined}>
           {player1Total}
         </span>
-        <span className="text-muted-foreground">
+        <span style={{ color: "var(--text-dim)" }}>
           {leaderName ? `${leaderName} +${diff}` : "Tied"}
         </span>
-        <span className={`font-bold tabular-nums ${player2Total >= player1Total ? "text-emerald-400" : "text-muted-foreground"}`}>
+        <span className={`font-bold tabular-nums ${player2Total >= player1Total ? "text-foreground" : ""}`}
+          style={player2Total < player1Total ? { color: "var(--text-dim)" } : undefined}>
           {player2Total}
         </span>
       </div>
@@ -58,6 +60,7 @@ export function CenterBar({
             size="sm"
             aria-label="Game menu"
             className="px-2"
+            style={{ color: "var(--text-dim)" }}
           >
             Menu
           </Button>
@@ -67,7 +70,7 @@ export function CenterBar({
               disabled={disabled}
               variant="outline"
               size="sm"
-              className="text-destructive border-destructive/50"
+              className="border-destructive/30 text-destructive"
             >
               Undo Round
             </Button>
@@ -78,6 +81,11 @@ export function CenterBar({
           onClick={onEndRound}
           disabled={disabled}
           className="px-8 min-h-[48px] text-base font-bold"
+          style={{
+            background: "rgba(232,224,214,0.1)",
+            color: "#e8e0d6",
+            border: "1px solid #3d362e",
+          }}
           aria-label="End the current round"
         >
           End Round
