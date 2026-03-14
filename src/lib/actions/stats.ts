@@ -38,7 +38,11 @@ export async function getPlayerStats(playerId: number) {
         OR: [{ player1Id: playerId }, { player2Id: playerId }],
       },
     },
-    include: { game: true },
+    select: {
+      player1RoundScore: true,
+      player2RoundScore: true,
+      game: { select: { player1Id: true } },
+    },
   });
 
   const roundScores = rounds.map((r) =>
