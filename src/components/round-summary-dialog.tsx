@@ -29,7 +29,7 @@ export function RoundSummaryDialog({ result, onDismiss }: RoundSummaryDialogProp
   if (!result) return null;
 
   return (
-    <Dialog open={true}>
+    <Dialog open={true} onOpenChange={(v) => { if (!v) onDismiss(); }}>
       <DialogContent className="text-center max-w-sm">
         <DialogHeader>
           <DialogTitle className="text-xl">Round {result.roundNumber}</DialogTitle>

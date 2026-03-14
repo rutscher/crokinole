@@ -77,8 +77,8 @@ export default async function HomePage() {
           <div className="space-y-2">
             {inProgressGames.map((game) => (
               <Link key={game.id} href={`/game/${game.id}`}>
-                <Card className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <CardContent className="p-4">
+                <Card className="cursor-pointer hover:bg-muted/50 transition-colors py-0">
+                  <CardContent className="p-3">
                     <div className="flex justify-between items-center">
                       <div>
                         {game.player1.name} {game.player1Score}
@@ -101,8 +101,8 @@ export default async function HomePage() {
           <div className="space-y-2">
             {recentGames.map((game) => (
               <Link key={game.id} href={`/game/${game.id}`}>
-                <Card className="cursor-pointer hover:bg-muted/50 transition-colors">
-                  <CardContent className="p-4">
+                <Card className="cursor-pointer hover:bg-muted/50 transition-colors py-0">
+                  <CardContent className="p-3">
                     <div className="flex justify-between items-center">
                       <div>
                         <span className={game.winnerId === game.player1Id ? "font-bold" : ""}>

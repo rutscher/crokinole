@@ -201,10 +201,10 @@ export function GameClient({ game }: GameClientProps) {
       <WoodRail height={7} />
       <div className="flex-1 flex relative overflow-hidden">
         {/* Inner shadow from rail */}
-        <div className="absolute top-0 left-0 right-0 h-3 z-10"
+        <div className="absolute top-0 left-0 right-0 h-3 z-10 pointer-events-none"
           style={{ background: "linear-gradient(180deg, rgba(0,0,0,0.3), transparent)" }} />
         {/* Vignette */}
-        <div className="absolute inset-0"
+        <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%)" }} />
         <PlayerHalf
           name={game.player1.name}
@@ -238,10 +238,10 @@ export function GameClient({ game }: GameClientProps) {
       {/* Player 2 (bottom, normal orientation) */}
       <div className="flex-1 flex relative overflow-hidden">
         {/* Vignette */}
-        <div className="absolute inset-0"
+        <div className="absolute inset-0 pointer-events-none"
           style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%)" }} />
         {/* Inner shadow from bottom rail */}
-        <div className="absolute bottom-0 left-0 right-0 h-3 z-10"
+        <div className="absolute bottom-0 left-0 right-0 h-3 z-10 pointer-events-none"
           style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.3), transparent)" }} />
         <PlayerHalf
           name={game.player2.name}
