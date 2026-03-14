@@ -23,5 +23,14 @@ export async function updatePlayer(id: number, name: string) {
 }
 
 export async function deletePlayer(id: number) {
+  const activeGames = await db.game.count({
+    where: {
+      status: "in_progress",
+      OR: [{ player1Id: id }, { player2Id: id }],
+    },
+  });
+  if (activeGames > 0) {
+    throw new Error("Cannot delete player with active games");
+  }
   return db.player.delete({ where: { id } });
 }
