@@ -57,4 +57,4 @@ ENV HOSTNAME="0.0.0.0"
 ENV DATABASE_URL="file:/app/data/crokinole.db"
 
 # Run migrations then start the server
-CMD sh -c "npx prisma migrate deploy && node server.js"
+CMD ["sh", "-c", "node_modules/prisma/build/index.js migrate deploy && node server.js"]
