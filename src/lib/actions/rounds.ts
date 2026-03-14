@@ -125,3 +125,63 @@ export async function endRound(gameId: number) {
     return completedRound;
   });
 }
+
+export async function undoRound(gameId: number) {
+  const game = await db.game.findUnique({
+    where: { id: gameId },
+    include: {
+      rounds: {
+        orderBy: { roundNumber: "desc" },
+        take: 2,
+        include: { discs: true },
+      },
+    },
+  });
+
+  if (!game || game.status === "completed") {
+    return null;
+  }
+
+  const rounds = game.rounds;
+  if (rounds.length < 2) {
+    return null;
+  }
+
+  const currentRound = rounds.find((r) => r.status === "in_progress");
+  const lastCompletedRound = rounds.find((r) => r.status === "completed");
+
+  if (!currentRound || !lastCompletedRound) {
+    return null;
+  }
+
+  return db.$transaction(async (tx) => {
+    await tx.disc.deleteMany({ where: { roundId: currentRound.id } });
+    await tx.round.delete({ where: { id: currentRound.id } });
+
+    await tx.round.update({
+      where: { id: lastCompletedRound.id },
+      data: {
+        status: "in_progress",
+        player1RoundScore: 0,
+        player2RoundScore: 0,
+        pointsAwarded: 0,
+        awardedToPlayerId: null,
+      },
+    });
+
+    const revertP1 = lastCompletedRound.awardedToPlayerId === game.player1Id
+      ? lastCompletedRound.pointsAwarded : 0;
+    const revertP2 = lastCompletedRound.awardedToPlayerId === game.player2Id
+      ? lastCompletedRound.pointsAwarded : 0;
+
+    await tx.game.update({
+      where: { id: gameId },
+      data: {
+        player1Score: game.player1Score - revertP1,
+        player2Score: game.player2Score - revertP2,
+      },
+    });
+
+    return lastCompletedRound;
+  });
+}

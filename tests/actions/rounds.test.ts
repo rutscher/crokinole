@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { createPlayer } from "@/lib/actions/players";
 import { createGame, getGame } from "@/lib/actions/games";
-import { addDisc, undoDisc, endRound } from "@/lib/actions/rounds";
+import { addDisc, undoDisc, endRound, undoRound } from "@/lib/actions/rounds";
 
 let gameId: number;
 let player1Id: number;
@@ -106,5 +106,48 @@ describe("endRound", () => {
     const result = await endRound(gameId);
     expect(result.pointsAwarded).toBe(0);
     expect(result.awardedToPlayerId).toBeNull();
+  });
+});
+
+describe("undoRound", () => {
+  it("reverts the last completed round and reopens it", async () => {
+    await addDisc(gameId, player1Id, 20);
+    await addDisc(gameId, player1Id, 15);
+    await addDisc(gameId, player2Id, 10);
+    await endRound(gameId);
+
+    let game = await getGame(gameId);
+    expect(game!.player1Score).toBe(25);
+    expect(game!.rounds).toHaveLength(2);
+
+    const result = await undoRound(gameId);
+    expect(result).not.toBeNull();
+
+    game = await getGame(gameId);
+    expect(game!.player1Score).toBe(0);
+    expect(game!.player2Score).toBe(0);
+    expect(game!.rounds).toHaveLength(1);
+    expect(game!.rounds[0].status).toBe("in_progress");
+    expect(game!.rounds[0].discs).toHaveLength(3);
+  });
+
+  it("returns null if only one round exists and it is in progress", async () => {
+    const result = await undoRound(gameId);
+    expect(result).toBeNull();
+  });
+
+  it("does nothing on a completed game", async () => {
+    await addDisc(gameId, player1Id, 20);
+    await addDisc(gameId, player1Id, 20);
+    await addDisc(gameId, player1Id, 20);
+    await addDisc(gameId, player1Id, 20);
+    await addDisc(gameId, player1Id, 20);
+    await endRound(gameId);
+
+    const game = await getGame(gameId);
+    expect(game!.status).toBe("completed");
+
+    const result = await undoRound(gameId);
+    expect(result).toBeNull();
   });
 });
