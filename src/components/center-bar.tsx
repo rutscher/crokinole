@@ -1,87 +1,153 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-
 interface CenterBarProps {
-  roundNumber: number;
-  player1Total: number;
-  player2Total: number;
-  onEndRound: () => void;
+  player1Score: number;
+  player2Score: number;
   onMenuOpen: () => void;
-  disabled?: boolean;
 }
 
 export function CenterBar({
-  roundNumber,
-  player1Total,
-  player2Total,
-  onEndRound,
+  player1Score,
+  player2Score,
   onMenuOpen,
-  disabled,
 }: CenterBarProps) {
+  const p1Width = Math.min(player1Score, 100);
+  const p2Width = Math.min(player2Score, 100);
+
+  // Adaptive text: use dark text when score >= 15 (enough fill behind), light otherwise
+  const p1TextColor = player1Score >= 15 ? "#1a1400" : "#ddd8d0";
+  const p1MutedColor = player1Score >= 15 ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)";
+  const p1DashColor = player1Score >= 15 ? "rgba(0,0,0,0.4)" : "rgba(255,255,255,0.3)";
+
+  // P2 fill is steel (dark) — light text always works
+  const p2TextColor = "#ddd8d0";
+  const p2MutedColor = "rgba(255,255,255,0.5)";
+  const p2DashColor = "rgba(255,255,255,0.3)";
+
   return (
-    <div
-      className="px-3 py-1.5 flex items-center justify-between"
-      style={{ background: "var(--surface-deep)" }}
-    >
-      {/* Menu icon */}
-      <button
-        onClick={onMenuOpen}
-        className="w-7 h-7 flex items-center justify-center rounded-full opacity-50"
-        aria-label="Game menu"
-        style={{ background: "transparent", border: "none", cursor: "pointer" }}
+    <div style={{ padding: "4px 6px", background: "var(--surface-deep)" }}>
+      <div
+        style={{
+          position: "relative",
+          height: 28,
+          background: "rgba(255,255,255,0.04)",
+          borderRadius: 14,
+          overflow: "visible",
+        }}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--text-dim, #8a8078)">
-          <circle cx="12" cy="5" r="2.5" />
-          <circle cx="12" cy="12" r="2.5" />
-          <circle cx="12" cy="19" r="2.5" />
-        </svg>
-      </button>
-
-      {/* P1 score */}
-      <span
-        className="text-base font-bold tabular-nums"
-        style={{ color: "var(--foreground, #ddd8d0)" }}
-      >
-        {player1Total}
-      </span>
-
-      {/* Round badge + End Round */}
-      <div className="flex items-center gap-2">
-        <span
-          className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+        {/* P1 fill (gold, from left) */}
+        <div
           style={{
-            color: "var(--text-dim, #8a8078)",
-            background: "rgba(255,255,255,0.04)",
+            position: "absolute",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: `${p1Width}%`,
+            background: "linear-gradient(90deg, #c8a862, rgba(200,168,98,0.4))",
+            borderRadius: "14px 0 0 14px",
+            transition: "width 0.3s ease",
+          }}
+        />
+
+        {/* P2 fill (steel, from right) */}
+        <div
+          style={{
+            position: "absolute",
+            right: 0,
+            top: 0,
+            bottom: 0,
+            width: `${p2Width}%`,
+            background: "linear-gradient(270deg, #6a7580, rgba(106,117,128,0.4))",
+            borderRadius: "0 14px 14px 0",
+            transition: "width 0.3s ease",
+          }}
+        />
+
+        {/* P1 scores (rotated 180° for P1) */}
+        <div
+          style={{
+            position: "absolute",
+            left: 6,
+            top: "50%",
+            transform: "translateY(-50%) rotate(180deg)",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            zIndex: 2,
           }}
         >
-          R{roundNumber}
-        </span>
-        <Button
-          onClick={onEndRound}
-          disabled={disabled}
-          className="px-5 min-h-[40px] text-sm font-bold"
+          <span style={{ fontSize: 11, fontWeight: "bold", color: p1TextColor, textShadow: player1Score < 15 ? "0 1px 3px rgba(0,0,0,0.8)" : "none" }}>
+            {player1Score}
+          </span>
+          <span style={{ fontSize: 8, color: p1DashColor }}>-</span>
+          <span style={{ fontSize: 10, fontWeight: 600, color: p1MutedColor, textShadow: player1Score < 15 ? "0 1px 3px rgba(0,0,0,0.8)" : "none" }}>
+            {player2Score}
+          </span>
+        </div>
+
+        {/* Menu dot (center) */}
+        <button
+          onClick={onMenuOpen}
+          aria-label="Game menu"
           style={{
-            background: "rgba(232,224,214,0.1)",
-            color: "#e8e0d6",
-            border: "1px solid #3d362e",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            zIndex: 3,
+            width: 22,
+            height: 22,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            borderRadius: "50%",
+            background: "rgba(18,16,14,0.85)",
+            border: "none",
+            cursor: "pointer",
+            padding: 0,
           }}
-          aria-label="End the current round"
         >
-          End Round
-        </Button>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="#8a8078">
+            <circle cx="12" cy="5" r="2.5" />
+            <circle cx="12" cy="12" r="2.5" />
+            <circle cx="12" cy="19" r="2.5" />
+          </svg>
+        </button>
+
+        {/* P2 scores (normal for P2) */}
+        <div
+          style={{
+            position: "absolute",
+            right: 6,
+            top: "50%",
+            transform: "translateY(-50%)",
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            zIndex: 2,
+          }}
+        >
+          <span style={{ fontSize: 11, fontWeight: "bold", color: p2TextColor, textShadow: player2Score < 15 ? "0 1px 3px rgba(0,0,0,0.8)" : "none" }}>
+            {player2Score}
+          </span>
+          <span style={{ fontSize: 8, color: p2DashColor }}>-</span>
+          <span style={{ fontSize: 10, fontWeight: 600, color: p2MutedColor, textShadow: player2Score < 15 ? "0 1px 3px rgba(0,0,0,0.8)" : "none" }}>
+            {player1Score}
+          </span>
+        </div>
+
+        {/* Center line */}
+        <div
+          style={{
+            position: "absolute",
+            left: "50%",
+            top: 3,
+            bottom: 3,
+            width: 1,
+            background: "rgba(255,255,255,0.12)",
+          }}
+        />
       </div>
-
-      {/* P2 score */}
-      <span
-        className="text-base font-bold tabular-nums"
-        style={{ color: "var(--foreground, #ddd8d0)" }}
-      >
-        {player2Total}
-      </span>
-
-      {/* Spacer to balance menu icon */}
-      <div className="w-7" />
     </div>
   );
 }
