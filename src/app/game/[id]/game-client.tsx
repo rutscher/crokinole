@@ -8,12 +8,14 @@ import { WoodRail } from "@/components/wood-rail";
 import { GameOverDialog } from "@/components/game-over-dialog";
 import { RoundSummaryDialog } from "@/components/round-summary-dialog";
 import { ExitMenuDialog } from "@/components/exit-menu-dialog";
-import { addDisc, undoDisc, endRound, undoRound } from "@/lib/actions/rounds";
+import { addDisc, undoDisc, removeDisc, endRound, undoRound } from "@/lib/actions/rounds";
 
 interface Disc {
   id: number;
   playerId: number;
   ringValue: number;
+  posX: number | null;
+  posY: number | null;
 }
 
 interface GameData {
@@ -127,18 +129,44 @@ export function GameClient({ game }: GameClientProps) {
 
   const p1Total = game.player1Score + player1RoundScore;
   const p2Total = game.player2Score + player2RoundScore;
-  const leader: "p1" | "p2" | "tied" =
-    p1Total > p2Total ? "p1" : p2Total > p1Total ? "p2" : "tied";
+  const player1Discs = localDiscs.filter((d) => d.playerId === game.player1Id);
+  const player2Discs = localDiscs.filter((d) => d.playerId === game.player2Id);
+  const player1DiscCount = player1Discs.length;
+  const player2DiscCount = player2Discs.length;
 
   // Optimistic disc tap — update UI instantly, sync with server
-  const handleDiscTap = useCallback((playerId: number, ringValue: number) => {
-    const tempId = nextLocalId.current--;
-    setLocalDiscs((prev) => [...prev, { id: tempId, playerId, ringValue }]);
-    addDisc(game.id, playerId, ringValue).catch(() => {
-      // Revert on failure
-      setLocalDiscs((prev) => prev.filter((d) => d.id !== tempId));
-    });
-  }, [game.id]);
+  const handleDiscTap = useCallback(
+    (playerId: number, ringValue: number, posX: number, posY: number) => {
+      const tempId = nextLocalId.current--;
+      setLocalDiscs((prev) => [...prev, { id: tempId, playerId, ringValue, posX, posY }]);
+      addDisc(game.id, playerId, ringValue, posX, posY).catch(() => {
+        setLocalDiscs((prev) => prev.filter((d) => d.id !== tempId));
+      });
+    },
+    [game.id],
+  );
+
+  // Remove a specific disc by id
+  const handleRemoveDisc = useCallback(
+    (discId: number) => {
+      // Capture disc for revert inside updater to avoid stale closure
+      let removedDisc: Disc | undefined;
+      setLocalDiscs((prev) => {
+        removedDisc = prev.find((d) => d.id === discId);
+        return prev.filter((d) => d.id !== discId);
+      });
+
+      // Skip server call for temp discs (negative IDs)
+      if (discId < 0) return;
+
+      removeDisc(game.id, discId).catch(() => {
+        if (removedDisc) {
+          setLocalDiscs((prev) => [...prev, removedDisc!]);
+        }
+      });
+    },
+    [game.id],
+  );
 
   // Optimistic undo — remove from local state instantly
   const handleUndo = useCallback((playerId: number) => {
@@ -208,12 +236,16 @@ export function GameClient({ game }: GameClientProps) {
           style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%)" }} />
         <PlayerHalf
           name={game.player1.name}
-          gameScore={game.player1Score}
           roundScore={player1RoundScore}
+          discCount={player1DiscCount}
           hasHammer={currentRound?.hammerPlayerId === game.player1Id}
-          isLeading={leader === "p1"}
           isRotated={true}
-          onDiscTap={(v) => handleDiscTap(game.player1Id, v)}
+          playerId={game.player1Id}
+          discs={localDiscs}
+          opponentDiscs={player2Discs}
+          isPlayer1={true}
+          onPlace={(rv, px, py) => handleDiscTap(game.player1Id, rv, px, py)}
+          onRemove={(id) => handleRemoveDisc(id)}
           onUndo={() => handleUndo(game.player1Id)}
           disabled={isGameOver || isPending}
         />
@@ -223,14 +255,10 @@ export function GameClient({ game }: GameClientProps) {
       <WoodRail height={1} />
       <CenterBar
         roundNumber={currentRound?.roundNumber ?? game.rounds.length}
-        player1Name={game.player1.name}
-        player2Name={game.player2.name}
         player1Total={p1Total}
         player2Total={p2Total}
         onEndRound={handleEndRound}
-        onUndoRound={handleUndoRound}
         onMenuOpen={() => setShowExitMenu(true)}
-        canUndoRound={completedRoundCount > 0}
         disabled={isPending || isGameOver}
       />
       <WoodRail height={1} />
@@ -245,12 +273,16 @@ export function GameClient({ game }: GameClientProps) {
           style={{ background: "linear-gradient(0deg, rgba(0,0,0,0.3), transparent)" }} />
         <PlayerHalf
           name={game.player2.name}
-          gameScore={game.player2Score}
           roundScore={player2RoundScore}
+          discCount={player2DiscCount}
           hasHammer={currentRound?.hammerPlayerId === game.player2Id}
-          isLeading={leader === "p2"}
           isRotated={false}
-          onDiscTap={(v) => handleDiscTap(game.player2Id, v)}
+          playerId={game.player2Id}
+          discs={localDiscs}
+          opponentDiscs={player1Discs}
+          isPlayer1={false}
+          onPlace={(rv, px, py) => handleDiscTap(game.player2Id, rv, px, py)}
+          onRemove={(id) => handleRemoveDisc(id)}
           onUndo={() => handleUndo(game.player2Id)}
           disabled={isGameOver || isPending}
         />
@@ -268,6 +300,8 @@ export function GameClient({ game }: GameClientProps) {
         open={showExitMenu}
         onClose={() => setShowExitMenu(false)}
         gameId={game.id}
+        onUndoRound={handleUndoRound}
+        canUndoRound={completedRoundCount > 0}
       />
 
       {/* Game over dialog */}
