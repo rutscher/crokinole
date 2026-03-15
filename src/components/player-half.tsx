@@ -1,149 +1,137 @@
 "use client";
 
-import { RingButton } from "./ring-button";
+import { MiniBoard } from "./mini-board";
+import { TwentiesTray } from "./twenties-tray";
 import { Button } from "@/components/ui/button";
+
+interface DiscData {
+  id: number;
+  playerId: number;
+  ringValue: number;
+  posX: number | null;
+  posY: number | null;
+}
 
 interface PlayerHalfProps {
   name: string;
-  gameScore: number;
   roundScore: number;
+  discCount: number;
   hasHammer: boolean;
-  isLeading: boolean;
   isRotated: boolean;
-  onDiscTap: (ringValue: number) => void;
+  playerId: number;
+  discs: DiscData[];
+  opponentDiscs: DiscData[];
+  isPlayer1: boolean;
+  onPlace: (ringValue: number, posX: number, posY: number) => void;
+  onRemove: (discId: number) => void;
   onUndo: () => void;
   disabled?: boolean;
 }
 
 function HammerIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
       <rect x="5" y="4" width="14" height="8" rx="2" fill="#b8a898" />
       <rect x="10" y="12" width="3.5" height="8" rx="1.5" fill="#8a8078" />
     </svg>
   );
 }
 
-function LeadIcon() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-      <path d="M7 15l5-7 5 7" stroke="#ddd8d0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function DiscBadge({
-  variant,
-  children,
-  label,
-}: {
-  variant: "hammer" | "lead";
-  children: React.ReactNode;
-  label: string;
-}) {
-  const styles =
-    variant === "hammer"
-      ? {
-          background: "radial-gradient(circle at 40% 35%, #3a3430, #292420 60%, #1f1c19)",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.08)",
-        }
-      : {
-          background: "radial-gradient(circle at 40% 35%, #5a7560, #486050 60%, #3a5040)",
-          boxShadow: "0 2px 6px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1)",
-        };
-
-  return (
-    <div
-      className="w-[34px] h-[34px] rounded-full flex items-center justify-center"
-      style={styles}
-      role="status"
-      aria-label={label}
-    >
-      {children}
-    </div>
-  );
-}
-
 export function PlayerHalf({
   name,
-  gameScore,
   roundScore,
+  discCount,
   hasHammer,
-  isLeading,
   isRotated,
-  onDiscTap,
+  playerId,
+  discs,
+  opponentDiscs,
+  isPlayer1,
+  onPlace,
+  onRemove,
   onUndo,
   disabled,
 }: PlayerHalfProps) {
-  const ringValues = isRotated ? [5, 10, 15, 20] : [20, 15, 10, 5];
+  // Filter 20s for the tray
+  const twenties = discs.filter(
+    (d) => d.playerId === playerId && d.ringValue === 20,
+  );
 
   return (
     <div
-      className={`
-        flex-1 flex flex-col items-center justify-center p-3 gap-1
-        ${isRotated ? "rotate-180" : ""}
-      `}
+      className={`flex-1 relative ${isRotated ? "rotate-180" : ""}`}
       aria-label={`${name}'s scoring area`}
     >
-      {/* Name + badges */}
-      <div className="flex items-center gap-2">
-        <span className="text-sm uppercase tracking-widest text-muted-foreground">
+      {/* Top-left: Name + Hammer */}
+      <div className="absolute top-2 left-3 z-10">
+        <div
+          className="text-[10px] uppercase tracking-widest"
+          style={{ color: "var(--text-dim, #8a8078)" }}
+        >
           {name}
-        </span>
+        </div>
         {hasHammer && (
-          <DiscBadge variant="hammer" label="Has hammer">
+          <div className="mt-0.5">
             <HammerIcon />
-          </DiscBadge>
-        )}
-        {isLeading && (
-          <DiscBadge variant="lead" label="Leading">
-            <LeadIcon />
-          </DiscBadge>
+          </div>
         )}
       </div>
 
-      {/* Game Score */}
-      <div
-        className="text-5xl font-bold tabular-nums"
-        style={isLeading ? { color: "var(--lead)" } : undefined}
-        aria-label={`Game score: ${gameScore}`}
-        role="status"
-      >
-        {gameScore}
+      {/* Top-right: Round score + disc count */}
+      <div className="absolute top-2 right-3 z-10 text-right">
+        <div
+          className="text-2xl font-bold tabular-nums"
+          style={{ color: "var(--foreground, #ddd8d0)", lineHeight: 1 }}
+          aria-label={`Round score: ${roundScore}`}
+          aria-live="polite"
+        >
+          +{roundScore}
+        </div>
+        <div
+          className="text-[10px] mt-0.5"
+          style={{ color: "var(--text-dim, #8a8078)" }}
+        >
+          {discCount} of 8
+        </div>
       </div>
 
-      {/* Round Score */}
-      <div
-        className="text-3xl font-semibold tabular-nums"
-        style={{ color: "var(--text-secondary)" }}
-        aria-label={`Round score: ${roundScore}`}
-        aria-live="polite"
-      >
-        +{roundScore}
+      {/* Center: MiniBoard */}
+      <div className="absolute inset-0 flex items-center justify-center p-2">
+        <MiniBoard
+          discs={discs}
+          playerId={playerId}
+          opponentDiscs={opponentDiscs}
+          onPlace={onPlace}
+          onRemove={onRemove}
+          disabled={disabled}
+          maxDiscs={8}
+          isPlayer1={isPlayer1}
+        />
       </div>
 
-      {/* Ring Buttons */}
-      <div className="flex gap-4 mt-1">
-        {ringValues.map((value) => (
-          <RingButton
-            key={value}
-            value={value}
-            onTap={() => onDiscTap(value)}
-            disabled={disabled}
-          />
-        ))}
+      {/* Bottom-left: 20s tray */}
+      <div className="absolute bottom-2 left-3 z-10">
+        <TwentiesTray
+          discs={twenties}
+          onAdd={() => onPlace(20, 0, 0)}
+          onRemove={onRemove}
+          disabled={disabled}
+          isPlayer1={isPlayer1}
+        />
       </div>
 
-      {/* Undo — 48px minimum */}
-      <Button
-        onClick={onUndo}
-        disabled={disabled || roundScore === 0}
-        variant="outline"
-        className="mt-2 min-h-[48px] px-6"
-        aria-label={`Undo ${name}'s last disc`}
-      >
-        Undo
-      </Button>
+      {/* Bottom-right: Undo */}
+      <div className="absolute bottom-2 right-3 z-10">
+        <Button
+          onClick={onUndo}
+          disabled={disabled || roundScore === 0}
+          variant="outline"
+          className="h-7 px-3 text-xs"
+          aria-label={`Undo ${name}'s last disc`}
+        >
+          Undo
+        </Button>
+      </div>
     </div>
   );
 }
