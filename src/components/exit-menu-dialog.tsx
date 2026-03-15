@@ -18,6 +18,8 @@ interface ExitMenuDialogProps {
   gameId: number;
   onUndoRound?: () => void;
   canUndoRound?: boolean;
+  onEndRound?: () => void;
+  canEndRound?: boolean;
 }
 
 export function ExitMenuDialog({
@@ -26,6 +28,8 @@ export function ExitMenuDialog({
   gameId,
   onUndoRound,
   canUndoRound = false,
+  onEndRound,
+  canEndRound = false,
 }: ExitMenuDialogProps) {
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
@@ -98,6 +102,19 @@ export function ExitMenuDialog({
                 }}
               >
                 Undo Last Round
+              </Button>
+            )}
+            {canEndRound && onEndRound && (
+              <Button
+                variant="outline"
+                size="lg"
+                className="w-full"
+                onClick={() => {
+                  onEndRound();
+                  onClose();
+                }}
+              >
+                End Round
               </Button>
             )}
             <Link href="/">
