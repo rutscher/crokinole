@@ -20,14 +20,15 @@ interface MiniBoardProps {
   disabled?: boolean;
   maxDiscs?: number;
   isPlayer1?: boolean;
+  onSwipe?: (direction: "left" | "right") => void;
 }
 
-// Ring visual boundaries (normalized radius)
+// Ring visual boundaries — match board-utils thresholds
 const RINGS = [
   { r: 1.0, fill: "#2a3530", stroke: "#4a6050", label: "5" },
-  { r: 0.75, fill: "#283038", stroke: "#4a6050", label: "10" },
-  { r: 0.50, fill: "#3a2820", stroke: "#4a6050", label: "15" },
-  { r: 0.25, fill: "#1a1400", stroke: "#4a3a20", label: "20" },
+  { r: 0.69, fill: "#283038", stroke: "#4a6050", label: "10" },
+  { r: 0.39, fill: "#3a2820", stroke: "#4a6050", label: "15" },
+  { r: 0.08, fill: "#1a1400", stroke: "#4a3a20", label: "20" },
 ];
 
 const LIGHT_DISC = {
@@ -50,10 +51,25 @@ export function MiniBoard({
   disabled = false,
   maxDiscs = 8,
   isPlayer1 = false,
+  onSwipe,
 }: MiniBoardProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [flashingDiscId, setFlashingDiscId] = useState<number | null>(null);
   const [flashValue, setFlashValue] = useState<number | null>(null);
+  const prevOwnCountRef = useRef(0);
+  const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
+  const isSwipingRef = useRef(false);
+
+  // Flash the newest disc when own disc count increases
+  const ownDiscs = discs.filter((d) => d.playerId === playerId);
+  useEffect(() => {
+    if (ownDiscs.length > prevOwnCountRef.current && ownDiscs.length > 0) {
+      const newest = ownDiscs[ownDiscs.length - 1];
+      setFlashingDiscId(newest.id);
+      setFlashValue(newest.ringValue);
+    }
+    prevOwnCountRef.current = ownDiscs.length;
+  }, [ownDiscs]);
 
   // Clear flash after 1.5s
   useEffect(() => {
@@ -65,30 +81,73 @@ export function MiniBoard({
     return () => clearTimeout(timer);
   }, [flashingDiscId]);
 
-  const ownDiscCount = discs.filter((d) => d.playerId === playerId).length;
-  const atLimit = ownDiscCount >= maxDiscs;
+  const atLimit = ownDiscs.length >= maxDiscs;
 
   const handlePointerDown = useCallback(
     (e: React.PointerEvent<SVGSVGElement>) => {
       if (disabled) return;
       e.preventDefault();
-      e.stopPropagation();
 
       const svg = svgRef.current;
       if (!svg) return;
 
-      // Convert screen coords to SVG coords
-      const pt = svg.createSVGPoint();
+      svg.setPointerCapture(e.pointerId);
+      pointerStartRef.current = { x: e.clientX, y: e.clientY };
+      isSwipingRef.current = false;
+    },
+    [disabled],
+  );
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent<SVGSVGElement>) => {
+      if (!pointerStartRef.current) return;
+      const dx = e.clientX - pointerStartRef.current.x;
+      const dy = e.clientY - pointerStartRef.current.y;
+      if (Math.abs(dx) > 50 && Math.abs(dy) < 30) {
+        isSwipingRef.current = true;
+      }
+    },
+    [],
+  );
+
+  const handlePointerUp = useCallback(
+    (e: React.PointerEvent<SVGSVGElement>) => {
+      const svg = svgRef.current;
+      if (svg) svg.releasePointerCapture(e.pointerId);
+
+      const start = pointerStartRef.current;
+      pointerStartRef.current = null;
+
+      if (!start) return;
+
+      if (isSwipingRef.current) {
+        // It was a swipe
+        isSwipingRef.current = false;
+        const dx = e.clientX - start.x;
+        if (onSwipe) {
+          onSwipe(dx > 0 ? "right" : "left");
+        }
+        return;
+      }
+
+      // It was a tap — process as disc placement/removal
+      if (disabled) return;
+      const svg2 = svgRef.current;
+      if (!svg2) return;
+
+      const pt = svg2.createSVGPoint();
       pt.x = e.clientX;
       pt.y = e.clientY;
-      const svgPt = pt.matrixTransform(svg.getScreenCTM()!.inverse());
+      const svgPt = pt.matrixTransform(svg2.getScreenCTM()!.inverse());
       const posX = svgPt.x;
       const posY = svgPt.y;
 
-      // Hit-test own discs only (tap-to-remove)
-      const hitDisc = findDiscAtPosition(discs, posX, posY, playerId);
+      // Skip hit-testing in the 20 zone
+      const tapRadius = Math.sqrt(posX * posX + posY * posY);
+      const inHoleZone = tapRadius < 0.08;
+
+      const hitDisc = !inHoleZone ? findDiscAtPosition(discs, posX, posY, playerId) : null;
       if (hitDisc) {
-        // Flash the value briefly before removing
         setFlashingDiscId(hitDisc.id);
         setFlashValue(hitDisc.ringValue);
         setTimeout(() => {
@@ -99,19 +158,13 @@ export function MiniBoard({
         return;
       }
 
-      // Placement — check if within board and not at limit
       if (atLimit) return;
       const ringValue = getRingValue(posX, posY);
       if (ringValue == null) return;
 
-      // Flash value on newly placed disc
-      const tempId = Date.now(); // will be replaced by actual ID
-      setFlashingDiscId(tempId);
-      setFlashValue(ringValue);
-
       onPlace(ringValue, posX, posY);
     },
-    [disabled, discs, playerId, onPlace, onRemove, atLimit],
+    [disabled, discs, playerId, onPlace, onRemove, onSwipe, atLimit],
   );
 
   // Determine disc colors based on player
@@ -122,9 +175,11 @@ export function MiniBoard({
     <svg
       ref={svgRef}
       viewBox="-1.05 -1.05 2.1 2.1"
-      className="w-full h-full max-w-[260px] max-h-[260px]"
+      className="w-full h-full"
       style={{ touchAction: "none" }}
       onPointerDown={handlePointerDown}
+      onPointerMove={handlePointerMove}
+      onPointerUp={handlePointerUp}
       aria-label="Crokinole scoring board"
     >
       <defs>
@@ -155,13 +210,13 @@ export function MiniBoard({
       ))}
 
       {/* Center hole shadow */}
-      <circle cx={0} cy={0} r={0.23} fill="#0a0800" opacity={0.6} />
+      <circle cx={0} cy={0} r={0.07} fill="#0a0800" opacity={0.6} />
 
-      {/* Ring labels (subtle) */}
-      <text x={0} y={0.92} textAnchor="middle" fill="rgba(221,216,208,0.3)" fontSize={0.08} fontWeight="bold">5</text>
-      <text x={0} y={0.67} textAnchor="middle" fill="rgba(221,216,208,0.3)" fontSize={0.08} fontWeight="bold">10</text>
-      <text x={0} y={0.42} textAnchor="middle" fill="rgba(221,216,208,0.3)" fontSize={0.08} fontWeight="bold">15</text>
-      <text x={0} y={0.05} textAnchor="middle" fill="rgba(200,168,98,0.5)" fontSize={0.08} fontWeight="bold">20</text>
+      {/* Ring labels (subtle) — centered in each ring band */}
+      <text x={0} y={0.87} textAnchor="middle" fill="rgba(221,216,208,0.3)" fontSize={0.08} fontWeight="bold">5</text>
+      <text x={0} y={0.57} textAnchor="middle" fill="rgba(221,216,208,0.3)" fontSize={0.08} fontWeight="bold">10</text>
+      <text x={0} y={0.27} textAnchor="middle" fill="rgba(221,216,208,0.3)" fontSize={0.08} fontWeight="bold">15</text>
+      <text x={0} y={0.03} textAnchor="middle" fill="rgba(200,168,98,0.5)" fontSize={0.06} fontWeight="bold">20</text>
 
       {/* Opponent discs (positions negated for 180° rotation) */}
       {opponentDiscs.map((disc) =>
