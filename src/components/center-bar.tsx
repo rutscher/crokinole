@@ -4,83 +4,63 @@ import { Button } from "@/components/ui/button";
 
 interface CenterBarProps {
   roundNumber: number;
-  player1Name: string;
-  player2Name: string;
   player1Total: number;
   player2Total: number;
   onEndRound: () => void;
-  onUndoRound: () => void;
   onMenuOpen: () => void;
-  canUndoRound: boolean;
   disabled?: boolean;
 }
 
 export function CenterBar({
   roundNumber,
-  player1Name,
-  player2Name,
   player1Total,
   player2Total,
   onEndRound,
-  onUndoRound,
   onMenuOpen,
-  canUndoRound,
   disabled,
 }: CenterBarProps) {
-  const diff = Math.abs(player1Total - player2Total);
-  const leaderName = player1Total > player2Total
-    ? player1Name
-    : player2Total > player1Total
-      ? player2Name
-      : null;
-
   return (
-    <div className="px-3 py-2 space-y-2" style={{ background: "var(--surface-deep)" }}>
-      {/* Score comparison */}
-      <div className="flex items-center justify-center gap-3 text-sm" aria-live="polite">
-        <span className={`font-bold tabular-nums ${player1Total >= player2Total ? "text-foreground" : ""}`}
-          style={player1Total < player2Total ? { color: "var(--text-dim)" } : undefined}>
-          {player1Total}
-        </span>
-        <span style={{ color: "var(--text-dim)" }}>
-          {leaderName ? `${leaderName} +${diff}` : "Tied"}
-        </span>
-        <span className={`font-bold tabular-nums ${player2Total >= player1Total ? "text-foreground" : ""}`}
-          style={player2Total < player1Total ? { color: "var(--text-dim)" } : undefined}>
-          {player2Total}
-        </span>
-      </div>
+    <div
+      className="px-3 py-1.5 flex items-center justify-between"
+      style={{ background: "var(--surface-deep)" }}
+    >
+      {/* Menu icon */}
+      <button
+        onClick={onMenuOpen}
+        className="w-7 h-7 flex items-center justify-center rounded-full opacity-50"
+        aria-label="Game menu"
+        style={{ background: "transparent", border: "none", cursor: "pointer" }}
+      >
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--text-dim, #8a8078)">
+          <circle cx="12" cy="5" r="2.5" />
+          <circle cx="12" cy="12" r="2.5" />
+          <circle cx="12" cy="19" r="2.5" />
+        </svg>
+      </button>
 
-      {/* Controls */}
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex gap-2">
-          <Button
-            onClick={onMenuOpen}
-            variant="ghost"
-            size="sm"
-            aria-label="Game menu"
-            className="px-2"
-            style={{ color: "var(--text-dim)" }}
-          >
-            Menu
-          </Button>
-          {canUndoRound && (
-            <Button
-              onClick={onUndoRound}
-              disabled={disabled}
-              variant="outline"
-              size="sm"
-              className="border-destructive/30 text-destructive"
-            >
-              Undo Round
-            </Button>
-          )}
-        </div>
+      {/* P1 score */}
+      <span
+        className="text-base font-bold tabular-nums"
+        style={{ color: "var(--foreground, #ddd8d0)" }}
+      >
+        {player1Total}
+      </span>
 
+      {/* Round badge + End Round */}
+      <div className="flex items-center gap-2">
+        <span
+          className="text-[10px] font-semibold px-1.5 py-0.5 rounded"
+          style={{
+            color: "var(--text-dim, #8a8078)",
+            background: "rgba(255,255,255,0.04)",
+          }}
+        >
+          R{roundNumber}
+        </span>
         <Button
           onClick={onEndRound}
           disabled={disabled}
-          className="px-8 min-h-[48px] text-base font-bold"
+          className="px-5 min-h-[40px] text-sm font-bold"
           style={{
             background: "rgba(232,224,214,0.1)",
             color: "#e8e0d6",
@@ -90,11 +70,18 @@ export function CenterBar({
         >
           End Round
         </Button>
-
-        <span className="text-sm font-medium text-muted-foreground min-w-[2rem] text-right">
-          R{roundNumber}
-        </span>
       </div>
+
+      {/* P2 score */}
+      <span
+        className="text-base font-bold tabular-nums"
+        style={{ color: "var(--foreground, #ddd8d0)" }}
+      >
+        {player2Total}
+      </span>
+
+      {/* Spacer to balance menu icon */}
+      <div className="w-7" />
     </div>
   );
 }
