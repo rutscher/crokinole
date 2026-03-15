@@ -53,6 +53,23 @@ export async function undoDisc(gameId: number, playerId: number) {
   return db.disc.delete({ where: { id: currentRound.discs[0].id } });
 }
 
+export async function removeDisc(gameId: number, discId: number) {
+  const disc = await db.disc.findUnique({
+    where: { id: discId },
+    include: { round: true },
+  });
+
+  if (!disc) {
+    throw new Error("Disc not found");
+  }
+
+  if (disc.round.gameId !== gameId || disc.round.status !== "in_progress") {
+    throw new Error("Disc does not belong to an active round of this game");
+  }
+
+  return db.disc.delete({ where: { id: discId } });
+}
+
 export async function endRound(gameId: number) {
   const game = await db.game.findUnique({
     where: { id: gameId },
