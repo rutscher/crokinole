@@ -4,6 +4,7 @@ import { getRecentGames, getInProgressGames } from "@/lib/actions/games";
 import { getPlayers } from "@/lib/actions/players";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { InstallHint } from "@/components/install-hint";
 import Link from "next/link";
 
 export default async function HomePage() {
@@ -20,6 +21,10 @@ export default async function HomePage() {
       <div className="text-center py-8">
         <h1 className="text-4xl font-bold mb-2">Crokinole</h1>
         <p className="text-muted-foreground">Scorekeeper</p>
+      </div>
+
+      <div className="mb-4">
+        <InstallHint />
       </div>
 
       <div className="space-y-3 mb-8">
