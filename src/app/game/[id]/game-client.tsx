@@ -8,7 +8,7 @@ import { WoodRail } from "@/components/wood-rail";
 import { GameOverDialog } from "@/components/game-over-dialog";
 import { RoundSummaryDialog } from "@/components/round-summary-dialog";
 import { ExitMenuDialog } from "@/components/exit-menu-dialog";
-import { addDisc, undoDisc, removeDisc, endRound, undoRound } from "@/lib/actions/rounds";
+import { addDisc, removeDisc, endRound, undoRound } from "@/lib/actions/rounds";
 
 interface Disc {
   id: number;
@@ -65,6 +65,9 @@ export function GameClient({ game }: GameClientProps) {
   const [roundResult, setRoundResult] = useState<RoundResult | null>(null);
   const [showExitMenu, setShowExitMenu] = useState(false);
   const nextLocalId = useRef(-1);
+  const [player1Locked, setPlayer1Locked] = useState(false);
+  const [player2Locked, setPlayer2Locked] = useState(false);
+  const endingRoundRef = useRef(false);
 
   // Sync local discs from server state when game data changes
   useEffect(() => {
@@ -127,8 +130,6 @@ export function GameClient({ game }: GameClientProps) {
     .filter((d) => d.playerId === game.player2Id)
     .reduce((sum, d) => sum + d.ringValue, 0);
 
-  const p1Total = game.player1Score + player1RoundScore;
-  const p2Total = game.player2Score + player2RoundScore;
   const player1Discs = localDiscs.filter((d) => d.playerId === game.player1Id);
   const player2Discs = localDiscs.filter((d) => d.playerId === game.player2Id);
   const player1DiscCount = player1Discs.length;
@@ -168,19 +169,33 @@ export function GameClient({ game }: GameClientProps) {
     [game.id],
   );
 
-  // Optimistic undo — remove from local state instantly
-  const handleUndo = useCallback((playerId: number) => {
-    setLocalDiscs((prev) => {
-      const idx = [...prev].reverse().findIndex((d) => d.playerId === playerId);
-      if (idx === -1) return prev;
-      const actualIdx = prev.length - 1 - idx;
-      return prev.filter((_, i) => i !== actualIdx);
-    });
-    undoDisc(game.id, playerId).catch(() => {
-      // On failure, refresh to get true state
-      router.refresh();
-    });
-  }, [game.id, router]);
+  const handleSwipe = useCallback(
+    (playerId: number, isRotated: boolean, direction: "left" | "right") => {
+      const isLockSwipe = isRotated ? direction === "left" : direction === "right";
+      const isUnlockSwipe = isRotated ? direction === "right" : direction === "left";
+
+      if (playerId === game.player1Id) {
+        if (isLockSwipe) setPlayer1Locked(true);
+        if (isUnlockSwipe) setPlayer1Locked(false);
+      } else {
+        if (isLockSwipe) setPlayer2Locked(true);
+        if (isUnlockSwipe) setPlayer2Locked(false);
+      }
+    },
+    [game.player1Id],
+  );
+
+  // Auto-end round when both players lock in
+  // eslint-disable-next-line react-hooks/exhaustive-deps -- handleEndRound is a plain function, intentionally excluded
+  useEffect(() => {
+    if (player1Locked && player2Locked && !endingRoundRef.current) {
+      endingRoundRef.current = true;
+      handleEndRound();
+      setPlayer1Locked(false);
+      setPlayer2Locked(false);
+      endingRoundRef.current = false;
+    }
+  }, [player1Locked, player2Locked]);
 
   // End round — show summary, then advance
   function handleEndRound() {
@@ -212,6 +227,8 @@ export function GameClient({ game }: GameClientProps) {
 
   function handleDismissRoundResult() {
     setRoundResult(null);
+    setPlayer1Locked(false);
+    setPlayer2Locked(false);
     router.refresh();
   }
 
@@ -246,7 +263,8 @@ export function GameClient({ game }: GameClientProps) {
           isPlayer1={true}
           onPlace={(rv, px, py) => handleDiscTap(game.player1Id, rv, px, py)}
           onRemove={(id) => handleRemoveDisc(id)}
-          onUndo={() => handleUndo(game.player1Id)}
+          onSwipe={(dir) => handleSwipe(game.player1Id, true, dir)}
+          isLocked={player1Locked}
           disabled={isGameOver || isPending}
         />
       </div>
@@ -254,12 +272,9 @@ export function GameClient({ game }: GameClientProps) {
       {/* Center bar */}
       <WoodRail height={1} />
       <CenterBar
-        roundNumber={currentRound?.roundNumber ?? game.rounds.length}
-        player1Total={p1Total}
-        player2Total={p2Total}
-        onEndRound={handleEndRound}
+        player1Score={game.player1Score}
+        player2Score={game.player2Score}
         onMenuOpen={() => setShowExitMenu(true)}
-        disabled={isPending || isGameOver}
       />
       <WoodRail height={1} />
 
@@ -283,7 +298,8 @@ export function GameClient({ game }: GameClientProps) {
           isPlayer1={false}
           onPlace={(rv, px, py) => handleDiscTap(game.player2Id, rv, px, py)}
           onRemove={(id) => handleRemoveDisc(id)}
-          onUndo={() => handleUndo(game.player2Id)}
+          onSwipe={(dir) => handleSwipe(game.player2Id, false, dir)}
+          isLocked={player2Locked}
           disabled={isGameOver || isPending}
         />
       </div>
@@ -302,6 +318,8 @@ export function GameClient({ game }: GameClientProps) {
         gameId={game.id}
         onUndoRound={handleUndoRound}
         canUndoRound={completedRoundCount > 0}
+        onEndRound={handleEndRound}
+        canEndRound={!!currentRound}
       />
 
       {/* Game over dialog */}
