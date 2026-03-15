@@ -59,6 +59,50 @@ export async function createGame(
   });
 }
 
+export async function deleteGame(id: number) {
+  return db.$transaction(async (tx) => {
+    const rounds = await tx.round.findMany({
+      where: { gameId: id },
+      select: { id: true },
+    });
+
+    const roundIds = rounds.map((r) => r.id);
+
+    if (roundIds.length > 0) {
+      await tx.disc.deleteMany({ where: { roundId: { in: roundIds } } });
+    }
+    await tx.round.deleteMany({ where: { gameId: id } });
+    await tx.game.delete({ where: { id } });
+  });
+}
+
+export async function updateGameScore(
+  id: number,
+  player1Score: number,
+  player2Score: number
+) {
+  if (player1Score < 0 || player2Score < 0) {
+    throw new Error("Scores cannot be negative");
+  }
+
+  const game = await db.game.findUnique({ where: { id } });
+  if (!game) {
+    throw new Error("Game not found");
+  }
+
+  let winnerId: number | null = null;
+  if (player1Score > player2Score) {
+    winnerId = game.player1Id;
+  } else if (player2Score > player1Score) {
+    winnerId = game.player2Id;
+  }
+
+  return db.game.update({
+    where: { id },
+    data: { player1Score, player2Score, winnerId },
+  });
+}
+
 export async function getGame(id: number) {
   return db.game.findUnique({
     where: { id },
