@@ -1,5 +1,10 @@
+"use client";
+
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { DeleteGameDialog } from "@/components/delete-game-dialog";
+import { EditScoreDialog } from "@/components/edit-score-dialog";
 import Link from "next/link";
 
 interface GameDetailProps {
@@ -7,6 +12,7 @@ interface GameDetailProps {
     id: number;
     player1Score: number;
     player2Score: number;
+    status: string;
     player1: { id: number; name: string };
     player2: { id: number; name: string };
     winner: { name: string } | null;
@@ -23,6 +29,10 @@ interface GameDetailProps {
 }
 
 export function GameDetail({ game }: GameDetailProps) {
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const isCompleted = game.status === "completed";
+
   return (
     <div className="min-h-screen bg-background p-4 max-w-md mx-auto">
       <div className="flex items-center justify-between mb-6">
@@ -34,7 +44,7 @@ export function GameDetail({ game }: GameDetailProps) {
 
       {/* Final Score */}
       <Card className="mb-6">
-        <CardContent className="p-6 text-center">
+        <CardContent className="text-center">
           {game.winner && (
             <div className="text-lg font-semibold mb-2" style={{ color: "var(--lead)" }}>
               {game.winner.name} Wins!
@@ -59,7 +69,7 @@ export function GameDetail({ game }: GameDetailProps) {
 
       {/* Round-by-round breakdown */}
       <h2 className="text-lg font-semibold mb-3">Rounds</h2>
-      <div className="space-y-2">
+      <div className="space-y-3">
         {game.rounds.map((round) => {
           const p1Won = round.awardedToPlayerId === game.player1.id;
           const p2Won = round.awardedToPlayerId === game.player2.id;
@@ -68,7 +78,7 @@ export function GameDetail({ game }: GameDetailProps) {
 
           return (
             <Card key={round.roundNumber}>
-              <CardContent className="p-3">
+              <CardContent>
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground w-8">R{round.roundNumber}</span>
                   <div className="flex items-center gap-4 tabular-nums">
@@ -96,7 +106,27 @@ export function GameDetail({ game }: GameDetailProps) {
       </div>
 
       {/* Actions */}
-      <div className="flex gap-3 mt-6">
+      {isCompleted && (
+        <div className="flex gap-3 mt-6">
+          <Button
+            variant="outline"
+            size="lg"
+            className="flex-1"
+            onClick={() => setShowEditDialog(true)}
+          >
+            Edit Score
+          </Button>
+          <Button
+            variant="destructive"
+            size="lg"
+            className="flex-1"
+            onClick={() => setShowDeleteDialog(true)}
+          >
+            Delete Game
+          </Button>
+        </div>
+      )}
+      <div className="flex gap-3 mt-3">
         <a href={`/game/new?p1=${game.player1.id}&p2=${game.player2.id}`} className="flex-1">
           <Button
             className="w-full"
@@ -112,6 +142,24 @@ export function GameDetail({ game }: GameDetailProps) {
           <Button variant="secondary" className="w-full" size="lg">Stats</Button>
         </Link>
       </div>
+
+      {/* Dialogs */}
+      <DeleteGameDialog
+        open={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        gameId={game.id}
+      />
+      {isCompleted && (
+        <EditScoreDialog
+          open={showEditDialog}
+          onClose={() => setShowEditDialog(false)}
+          gameId={game.id}
+          player1Name={game.player1.name}
+          player2Name={game.player2.name}
+          currentPlayer1Score={game.player1Score}
+          currentPlayer2Score={game.player2Score}
+        />
+      )}
     </div>
   );
 }
