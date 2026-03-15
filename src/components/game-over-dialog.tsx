@@ -8,6 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface GameOverDialogProps {
@@ -43,7 +44,7 @@ export function GameOverDialog({
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-3 mt-4">
-          <a href={`/game/new?p1=${player1Id}&p2=${player2Id}`}>
+          <Link href={`/game/new?p1=${player1Id}&p2=${player2Id}`}>
             <Button
               className="w-full"
               size="lg"
@@ -55,7 +56,7 @@ export function GameOverDialog({
             >
               Rematch
             </Button>
-          </a>
+          </Link>
           <Button
             variant="outline"
             size="lg"
@@ -64,11 +65,11 @@ export function GameOverDialog({
           >
             View Details
           </Button>
-          <a href="/">
+          <Link href="/">
             <Button variant="secondary" className="w-full" size="lg">
               Home
             </Button>
-          </a>
+          </Link>
         </div>
       </DialogContent>
     </Dialog>

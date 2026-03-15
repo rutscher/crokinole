@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { deleteGame } from "@/lib/actions/games";
@@ -78,11 +79,11 @@ export function ExitMenuDialog({ open, onClose, gameId }: ExitMenuDialogProps) {
             >
               Resume Game
             </Button>
-            <a href="/">
+            <Link href="/">
               <Button variant="outline" size="lg" className="w-full">
                 Save & Exit
               </Button>
-            </a>
+            </Link>
             <Button
               variant="destructive"
               size="lg"

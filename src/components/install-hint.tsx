@@ -1,34 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-function isStandalone() {
-  if (typeof window === "undefined") return true;
-  return (
+function getInitialState(): { show: boolean; platform: "ios" | "android" | "other" } {
+  if (typeof window === "undefined") return { show: false, platform: "other" };
+
+  const nav = window.navigator as Navigator & { standalone?: boolean };
+  const isStandalone =
     window.matchMedia("(display-mode: standalone)").matches ||
-    (window.navigator as any).standalone === true
-  );
+    nav.standalone === true;
+
+  if (isStandalone || localStorage.getItem("install-hint-dismissed")) {
+    return { show: false, platform: "other" };
+  }
+
+  const ua = navigator.userAgent;
+  let platform: "ios" | "android" | "other" = "other";
+  if (/iPad|iPhone|iPod/.test(ua)) platform = "ios";
+  else if (/Android/.test(ua)) platform = "android";
+
+  return { show: true, platform };
 }
 
 export function InstallHint() {
-  const [show, setShow] = useState(false);
-  const [platform, setPlatform] = useState<"ios" | "android" | "other">("other");
-
-  useEffect(() => {
-    if (isStandalone()) return;
-    if (localStorage.getItem("install-hint-dismissed")) return;
-
-    const ua = navigator.userAgent;
-    if (/iPad|iPhone|iPod/.test(ua)) {
-      setPlatform("ios");
-    } else if (/Android/.test(ua)) {
-      setPlatform("android");
-    }
-    setShow(true);
-  }, []);
+  const [{ show, platform }, setState] = useState(getInitialState);
 
   function dismiss() {
-    setShow(false);
+    setState((prev) => ({ ...prev, show: false }));
     localStorage.setItem("install-hint-dismissed", "1");
   }
 

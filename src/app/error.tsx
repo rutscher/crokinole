@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function GlobalError({ reset }: { error: Error; reset: () => void }) {
   return (
@@ -9,7 +10,7 @@ export default function GlobalError({ reset }: { error: Error; reset: () => void
       <p className="text-muted-foreground mb-6">An unexpected error occurred.</p>
       <div className="flex gap-3">
         <Button onClick={reset}>Try Again</Button>
-        <a href="/"><Button variant="secondary">Home</Button></a>
+        <Link href="/"><Button variant="secondary">Home</Button></Link>
       </div>
     </div>
   );

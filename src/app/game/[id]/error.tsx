@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function GameError({ reset }: { error: Error; reset: () => void }) {
   return (
@@ -9,7 +10,7 @@ export default function GameError({ reset }: { error: Error; reset: () => void }
       <p className="text-muted-foreground mb-6">Unable to load this game.</p>
       <div className="flex gap-3">
         <Button onClick={reset}>Retry</Button>
-        <a href="/"><Button variant="secondary">Home</Button></a>
+        <Link href="/"><Button variant="secondary">Home</Button></Link>
       </div>
     </div>
   );
