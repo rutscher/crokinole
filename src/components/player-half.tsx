@@ -2,7 +2,6 @@
 
 import { MiniBoard } from "./mini-board";
 import { TwentiesTray } from "./twenties-tray";
-import { Button } from "@/components/ui/button";
 
 interface DiscData {
   id: number;
@@ -24,7 +23,8 @@ interface PlayerHalfProps {
   isPlayer1: boolean;
   onPlace: (ringValue: number, posX: number, posY: number) => void;
   onRemove: (discId: number) => void;
-  onUndo: () => void;
+  onSwipe: (direction: "left" | "right") => void;
+  isLocked: boolean;
   disabled?: boolean;
 }
 
@@ -49,7 +49,8 @@ export function PlayerHalf({
   isPlayer1,
   onPlace,
   onRemove,
-  onUndo,
+  onSwipe,
+  isLocked,
   disabled,
 }: PlayerHalfProps) {
   // Filter 20s for the tray
@@ -96,18 +97,37 @@ export function PlayerHalf({
       </div>
 
       {/* Center: MiniBoard */}
-      <div className="absolute inset-0 flex items-center justify-center p-2">
+      <div className="absolute inset-0 flex items-center justify-center overflow-hidden p-1">
         <MiniBoard
           discs={discs}
           playerId={playerId}
           opponentDiscs={opponentDiscs}
           onPlace={onPlace}
           onRemove={onRemove}
-          disabled={disabled}
+          onSwipe={onSwipe}
+          disabled={isLocked || disabled}
           maxDiscs={8}
           isPlayer1={isPlayer1}
         />
       </div>
+
+      {/* Lock overlay */}
+      {isLocked && (
+        <div
+          className="absolute inset-0 flex items-center justify-center z-20"
+          style={{ background: "rgba(0,0,0,0.5)" }}
+        >
+          <div className="flex flex-col items-center gap-1">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(90,117,96,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <span style={{ fontSize: 9, color: "rgba(90,117,96,0.7)", fontWeight: 600, textTransform: "uppercase", letterSpacing: 1 }}>
+              Locked In
+            </span>
+          </div>
+        </div>
+      )}
 
       {/* Bottom-left: 20s tray */}
       <div className="absolute bottom-2 left-3 z-10">
@@ -115,22 +135,16 @@ export function PlayerHalf({
           discs={twenties}
           onAdd={() => onPlace(20, 0, 0)}
           onRemove={onRemove}
-          disabled={disabled}
+          disabled={isLocked || disabled}
           isPlayer1={isPlayer1}
         />
       </div>
 
-      {/* Bottom-right: Undo */}
+      {/* Bottom-right: Swipe hint */}
       <div className="absolute bottom-2 right-3 z-10">
-        <Button
-          onClick={onUndo}
-          disabled={disabled || roundScore === 0}
-          variant="outline"
-          className="h-7 px-3 text-xs"
-          aria-label={`Undo ${name}'s last disc`}
-        >
-          Undo
-        </Button>
+        <span style={{ fontSize: 7, color: isLocked ? "#5a7560" : "#5a524a" }}>
+          {isLocked ? "← swipe to unlock" : "swipe → done"}
+        </span>
       </div>
     </div>
   );
