@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Disc" ADD COLUMN "posX" REAL;
+ALTER TABLE "Disc" ADD COLUMN "posY" REAL;

@@ -61,6 +61,8 @@ model Disc {
   roundId   Int
   playerId  Int
   ringValue Int
+  posX      Float?
+  posY      Float?
   createdAt DateTime @default(now())
 
   round  Round  @relation(fields: [roundId], references: [id])
