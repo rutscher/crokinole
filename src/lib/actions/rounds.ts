@@ -4,7 +4,13 @@ import { db } from "@/lib/db";
 
 const VALID_RING_VALUES = [5, 10, 15, 20];
 
-export async function addDisc(gameId: number, playerId: number, ringValue: number) {
+export async function addDisc(
+  gameId: number,
+  playerId: number,
+  ringValue: number,
+  posX?: number,
+  posY?: number,
+) {
   if (!VALID_RING_VALUES.includes(ringValue)) {
     throw new Error(`Invalid ring value: ${ringValue}. Must be 5, 10, 15, or 20.`);
   }
@@ -22,6 +28,8 @@ export async function addDisc(gameId: number, playerId: number, ringValue: numbe
       roundId: currentRound.id,
       playerId,
       ringValue,
+      posX: posX ?? null,
+      posY: posY ?? null,
     },
   });
 }

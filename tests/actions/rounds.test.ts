@@ -31,6 +31,22 @@ describe("addDisc", () => {
     await expect(addDisc(gameId, player1Id, 0)).rejects.toThrow();
     await expect(addDisc(gameId, player1Id, 25)).rejects.toThrow();
   });
+
+  it("stores posX and posY when provided", async () => {
+    await addDisc(gameId, player1Id, 15, 0.3, -0.4);
+    const game = await getGame(gameId);
+    const disc = game!.rounds[0].discs[0];
+    expect(disc.posX).toBeCloseTo(0.3);
+    expect(disc.posY).toBeCloseTo(-0.4);
+  });
+
+  it("stores null posX/posY when not provided", async () => {
+    await addDisc(gameId, player1Id, 10);
+    const game = await getGame(gameId);
+    const disc = game!.rounds[0].discs[0];
+    expect(disc.posX).toBeNull();
+    expect(disc.posY).toBeNull();
+  });
 });
 
 describe("undoDisc", () => {
