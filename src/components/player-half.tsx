@@ -23,7 +23,7 @@ interface PlayerHalfProps {
   isPlayer1: boolean;
   onPlace: (ringValue: number, posX: number, posY: number) => void;
   onRemove: (discId: number) => void;
-  onSwipe: (direction: "left" | "right") => void;
+  onToggleLock: () => void;
   isLocked: boolean;
   disabled?: boolean;
 }
@@ -49,7 +49,7 @@ export function PlayerHalf({
   isPlayer1,
   onPlace,
   onRemove,
-  onSwipe,
+  onToggleLock,
   isLocked,
   disabled,
 }: PlayerHalfProps) {
@@ -66,7 +66,7 @@ export function PlayerHalf({
       {/* Top-left: Name + Hammer */}
       <div className="absolute top-2 left-3 z-10">
         <div
-          className="text-[10px] uppercase tracking-widest"
+          className="text-xs uppercase tracking-widest"
           style={{ color: "var(--text-dim, #8a8078)" }}
         >
           {name}
@@ -81,7 +81,7 @@ export function PlayerHalf({
       {/* Top-right: Round score + disc count */}
       <div className="absolute top-2 right-3 z-10 text-right">
         <div
-          className="text-2xl font-bold tabular-nums"
+          className="text-3xl font-bold tabular-nums"
           style={{ color: "var(--foreground, #ddd8d0)", lineHeight: 1 }}
           aria-label={`Round score: ${roundScore}`}
           aria-live="polite"
@@ -89,7 +89,7 @@ export function PlayerHalf({
           +{roundScore}
         </div>
         <div
-          className="text-[10px] mt-0.5"
+          className="text-xs mt-0.5"
           style={{ color: "var(--text-dim, #8a8078)" }}
         >
           {discCount} of 8
@@ -104,18 +104,19 @@ export function PlayerHalf({
           opponentDiscs={opponentDiscs}
           onPlace={onPlace}
           onRemove={onRemove}
-          onSwipe={onSwipe}
+          onDoubleTap={onToggleLock}
           disabled={isLocked || disabled}
           maxDiscs={8}
           isPlayer1={isPlayer1}
         />
       </div>
 
-      {/* Lock overlay */}
+      {/* Lock overlay — tap to unlock */}
       {isLocked && (
         <div
-          className="absolute inset-0 flex items-center justify-center z-20"
+          className="absolute inset-0 flex items-center justify-center z-20 cursor-pointer"
           style={{ background: "rgba(0,0,0,0.5)" }}
+          onClick={onToggleLock}
         >
           <div className="flex flex-col items-center gap-1">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="rgba(90,117,96,0.7)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -124,6 +125,9 @@ export function PlayerHalf({
             </svg>
             <span style={{ fontSize: 9, color: "rgba(90,117,96,0.7)", fontWeight: 600, textTransform: "uppercase", letterSpacing: 1 }}>
               Locked In
+            </span>
+            <span style={{ fontSize: 7, color: "rgba(90,117,96,0.5)", marginTop: 2 }}>
+              tap to unlock
             </span>
           </div>
         </div>
@@ -140,12 +144,14 @@ export function PlayerHalf({
         />
       </div>
 
-      {/* Bottom-right: Swipe hint */}
-      <div className="absolute bottom-2 right-3 z-10">
-        <span style={{ fontSize: 7, color: isLocked ? "#5a7560" : "#5a524a" }}>
-          {isLocked ? "← swipe to unlock" : "swipe → done"}
-        </span>
-      </div>
+      {/* Bottom-right: Double-tap hint */}
+      {!isLocked && (
+        <div className="absolute bottom-2 right-3 z-10">
+          <span style={{ fontSize: 10, color: "#5a524a" }}>
+            double-tap to lock
+          </span>
+        </div>
+      )}
     </div>
   );
 }

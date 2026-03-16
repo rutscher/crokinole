@@ -24,7 +24,7 @@ bash /Users/rob/env/deploy-unraid/deploy.sh crokinole
 
 Crokinole scorekeeper — mobile-first web app for tracking crokinole game scores. Phone lays flat between two players; screen is split in half with Player 1's half rotated 180° so each player reads their own side.
 
-**Stack:** Next.js 16 (App Router), React 19, Prisma 7 + SQLite (BetterSQLite3 adapter), shadcn/ui (Base UI), Tailwind 4, Vitest.
+**Stack:** Next.js 16.1 (App Router), React 19.2, Prisma 7 + SQLite (BetterSQLite3 adapter), Node 22 LTS, shadcn/ui 4 (Base UI), Tailwind 4, ESLint 10, Vitest.
 
 **Data flow:** Server Actions in `src/lib/actions/` handle all DB operations. Game page uses optimistic updates — disc taps update local `useState` instantly with temporary negative IDs, fire server action async, revert on failure. Only `endRound`/`undoRound` use `router.refresh()` for full state sync.
 
@@ -38,13 +38,16 @@ Crokinole scorekeeper — mobile-first web app for tracking crokinole game score
 - **Hammer:** Last-shot advantage. Auto-alternates each round. Tracked per round in DB.
 - **Wake lock:** NoSleep.js (hidden video trick) activated on first user touch, plus native Wake Lock API as bonus. Re-acquired on visibility change.
 - **Force-dynamic:** Pages with DB queries use `export const dynamic = "force-dynamic"` to prevent stale static rendering.
+- **PWA:** Installable via service worker (`public/sw.js`), web manifest, and iOS meta tags. `ServiceWorkerRegister` component auto-registers in layout. `InstallHint` shows a dismissable banner for non-standalone users on the home page.
+- **Game management:** Completed games can be deleted (`deleteGame`) or have scores edited (`updateGameScore`) via dialogs accessible from the game detail exit menu.
+- **New game screen:** `NewGameClient` component with `getRecentPlayers` action for quick player selection.
 
 ## Testing
 
 - Vitest with `fileParallelism: false` (shared SQLite test DB)
 - Test DB: `test.db` (set via `vitest.config.ts` env override, separate from dev `dev.db`)
 - `tests/setup.ts`: clears all tables before each test, disconnects after all
-- 25 tests covering: player CRUD, game creation, disc add/undo, round scoring (ties, game-over), round undo, stats derivation
+- 36 tests across 5 files covering: player CRUD, game creation/deletion/score-edit, disc add/undo, round scoring (ties, game-over), round undo, stats derivation
 
 ## Deployment
 

@@ -43,10 +43,10 @@ export default async function PlayersPage() {
         <Button type="submit">Add</Button>
       </form>
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         {players.map((player) => (
           <Card key={player.id}>
-            <CardContent className="flex items-center justify-between p-4">
+            <CardContent className="flex items-center justify-between">
               <span className="font-medium">{player.name}</span>
               <form action={handleDelete}>
                 <input type="hidden" name="id" value={player.id} />

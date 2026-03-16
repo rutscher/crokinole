@@ -1,9 +1,11 @@
 // Boundary line scores the LOWER ring value per spec.
 // Use strict less-than for inner boundaries; outer boundary (1.0) is inclusive.
+// Hole is disc-sized (~0.08 radius). Remaining space split evenly among 3 rings.
+// 0–0.08 = 20 (hole), 0.08–0.39 = 15, 0.39–0.69 = 10, 0.69–1.0 = 5
 const RING_THRESHOLDS = [
-  { maxRadius: 0.25, value: 20, exclusive: true },
-  { maxRadius: 0.50, value: 15, exclusive: true },
-  { maxRadius: 0.75, value: 10, exclusive: true },
+  { maxRadius: 0.08, value: 20, exclusive: true },
+  { maxRadius: 0.39, value: 15, exclusive: true },
+  { maxRadius: 0.69, value: 10, exclusive: true },
   { maxRadius: 1.00, value: 5, exclusive: false },
 ] as const;
 

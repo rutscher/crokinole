@@ -20,7 +20,7 @@ interface MiniBoardProps {
   disabled?: boolean;
   maxDiscs?: number;
   isPlayer1?: boolean;
-  onSwipe?: (direction: "left" | "right") => void;
+  onDoubleTap?: () => void;
 }
 
 // Ring visual boundaries — match board-utils thresholds
@@ -51,14 +51,14 @@ export function MiniBoard({
   disabled = false,
   maxDiscs = 8,
   isPlayer1 = false,
-  onSwipe,
+  onDoubleTap,
 }: MiniBoardProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [flashingDiscId, setFlashingDiscId] = useState<number | null>(null);
   const [flashValue, setFlashValue] = useState<number | null>(null);
   const prevOwnCountRef = useRef(0);
-  const pointerStartRef = useRef<{ x: number; y: number } | null>(null);
-  const isSwipingRef = useRef(false);
+  const lastTapTimeRef = useRef(0);
+  const lastPlacedDiscRef = useRef<{ ringValue: number; posX: number; posY: number } | null>(null);
 
   // Flash the newest disc when own disc count increases
   const ownDiscs = discs.filter((d) => d.playerId === playerId);
@@ -87,58 +87,35 @@ export function MiniBoard({
     (e: React.PointerEvent<SVGSVGElement>) => {
       if (disabled) return;
       e.preventDefault();
+      e.stopPropagation();
+
+      const now = Date.now();
+      const timeSinceLastTap = now - lastTapTimeRef.current;
+      lastTapTimeRef.current = now;
+
+      // Double-tap detection (< 300ms between taps)
+      if (timeSinceLastTap < 300 && onDoubleTap) {
+        // Undo the disc that was placed by the first tap
+        if (lastPlacedDiscRef.current) {
+          // Find and remove the most recently placed own disc
+          const latest = ownDiscs[ownDiscs.length - 1];
+          if (latest) onRemove(latest.id);
+          lastPlacedDiscRef.current = null;
+        }
+        onDoubleTap();
+        lastTapTimeRef.current = 0;
+        return;
+      }
+
+      lastPlacedDiscRef.current = null;
 
       const svg = svgRef.current;
       if (!svg) return;
 
-      svg.setPointerCapture(e.pointerId);
-      pointerStartRef.current = { x: e.clientX, y: e.clientY };
-      isSwipingRef.current = false;
-    },
-    [disabled],
-  );
-
-  const handlePointerMove = useCallback(
-    (e: React.PointerEvent<SVGSVGElement>) => {
-      if (!pointerStartRef.current) return;
-      const dx = e.clientX - pointerStartRef.current.x;
-      const dy = e.clientY - pointerStartRef.current.y;
-      if (Math.abs(dx) > 50 && Math.abs(dy) < 30) {
-        isSwipingRef.current = true;
-      }
-    },
-    [],
-  );
-
-  const handlePointerUp = useCallback(
-    (e: React.PointerEvent<SVGSVGElement>) => {
-      const svg = svgRef.current;
-      if (svg) svg.releasePointerCapture(e.pointerId);
-
-      const start = pointerStartRef.current;
-      pointerStartRef.current = null;
-
-      if (!start) return;
-
-      if (isSwipingRef.current) {
-        // It was a swipe
-        isSwipingRef.current = false;
-        const dx = e.clientX - start.x;
-        if (onSwipe) {
-          onSwipe(dx > 0 ? "right" : "left");
-        }
-        return;
-      }
-
-      // It was a tap — process as disc placement/removal
-      if (disabled) return;
-      const svg2 = svgRef.current;
-      if (!svg2) return;
-
-      const pt = svg2.createSVGPoint();
+      const pt = svg.createSVGPoint();
       pt.x = e.clientX;
       pt.y = e.clientY;
-      const svgPt = pt.matrixTransform(svg2.getScreenCTM()!.inverse());
+      const svgPt = pt.matrixTransform(svg.getScreenCTM()!.inverse());
       const posX = svgPt.x;
       const posY = svgPt.y;
 
@@ -162,9 +139,11 @@ export function MiniBoard({
       const ringValue = getRingValue(posX, posY);
       if (ringValue == null) return;
 
+      // Track this placement so double-tap can undo it
+      lastPlacedDiscRef.current = { ringValue, posX, posY };
       onPlace(ringValue, posX, posY);
     },
-    [disabled, discs, playerId, onPlace, onRemove, onSwipe, atLimit],
+    [disabled, discs, ownDiscs, playerId, onPlace, onRemove, onDoubleTap, atLimit],
   );
 
   // Determine disc colors based on player
@@ -178,8 +157,6 @@ export function MiniBoard({
       className="w-full h-full"
       style={{ touchAction: "none" }}
       onPointerDown={handlePointerDown}
-      onPointerMove={handlePointerMove}
-      onPointerUp={handlePointerUp}
       aria-label="Crokinole scoring board"
     >
       <defs>

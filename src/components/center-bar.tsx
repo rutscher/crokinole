@@ -11,8 +11,8 @@ export function CenterBar({
   player2Score,
   onMenuOpen,
 }: CenterBarProps) {
-  const p1Width = Math.min(player1Score, 100);
-  const p2Width = Math.min(player2Score, 100);
+  const p1Width = Math.min(player1Score, 100) / 2;
+  const p2Width = Math.min(player2Score, 100) / 2;
 
   // Adaptive text: use dark text when score >= 15 (enough fill behind), light otherwise
   const p1TextColor = player1Score >= 15 ? "#1a1400" : "#ddd8d0";
@@ -25,7 +25,7 @@ export function CenterBar({
   const p2DashColor = "rgba(255,255,255,0.3)";
 
   return (
-    <div style={{ padding: "4px 6px", background: "var(--surface-deep)" }}>
+    <div className="shrink-0" style={{ padding: "4px 6px", background: "var(--surface-deep)" }}>
       <div
         style={{
           position: "relative",
@@ -63,7 +63,7 @@ export function CenterBar({
           }}
         />
 
-        {/* P1 scores (rotated 180° for P1) */}
+        {/* P1 scores (rotated 180° for P1, on left end of bar) */}
         <div
           style={{
             position: "absolute",

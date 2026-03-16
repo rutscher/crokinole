@@ -169,17 +169,12 @@ export function GameClient({ game }: GameClientProps) {
     [game.id],
   );
 
-  const handleSwipe = useCallback(
-    (playerId: number, isRotated: boolean, direction: "left" | "right") => {
-      const isLockSwipe = isRotated ? direction === "left" : direction === "right";
-      const isUnlockSwipe = isRotated ? direction === "right" : direction === "left";
-
+  const handleToggleLock = useCallback(
+    (playerId: number) => {
       if (playerId === game.player1Id) {
-        if (isLockSwipe) setPlayer1Locked(true);
-        if (isUnlockSwipe) setPlayer1Locked(false);
+        setPlayer1Locked((prev) => !prev);
       } else {
-        if (isLockSwipe) setPlayer2Locked(true);
-        if (isUnlockSwipe) setPlayer2Locked(false);
+        setPlayer2Locked((prev) => !prev);
       }
     },
     [game.player1Id],
@@ -263,7 +258,7 @@ export function GameClient({ game }: GameClientProps) {
           isPlayer1={true}
           onPlace={(rv, px, py) => handleDiscTap(game.player1Id, rv, px, py)}
           onRemove={(id) => handleRemoveDisc(id)}
-          onSwipe={(dir) => handleSwipe(game.player1Id, true, dir)}
+          onToggleLock={() => handleToggleLock(game.player1Id)}
           isLocked={player1Locked}
           disabled={isGameOver || isPending}
         />
@@ -298,7 +293,7 @@ export function GameClient({ game }: GameClientProps) {
           isPlayer1={false}
           onPlace={(rv, px, py) => handleDiscTap(game.player2Id, rv, px, py)}
           onRemove={(id) => handleRemoveDisc(id)}
-          onSwipe={(dir) => handleSwipe(game.player2Id, false, dir)}
+          onToggleLock={() => handleToggleLock(game.player2Id)}
           isLocked={player2Locked}
           disabled={isGameOver || isPending}
         />

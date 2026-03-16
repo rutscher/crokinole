@@ -48,7 +48,7 @@ export default async function StatsPage({ searchParams }: Props) {
       </div>
 
       <Card className="mb-6">
-        <CardContent className="p-4">
+        <CardContent>
           <div className="flex flex-wrap gap-2">
             {players.map((p) => (
               <form key={p.id} action={selectPlayer}>
@@ -128,10 +128,10 @@ export default async function StatsPage({ searchParams }: Props) {
           {history && history.length > 0 && (
             <div>
               <h2 className="text-lg font-semibold mb-3">Match History</h2>
-              <div className="space-y-2">
+              <div className="space-y-3">
                 {history.map((game) => (
                   <Card key={game.id}>
-                    <CardContent className="p-4">
+                    <CardContent>
                       <div className="flex justify-between items-center">
                         <div>
                           <span className={game.winnerId === game.player1Id ? "font-bold" : ""}>

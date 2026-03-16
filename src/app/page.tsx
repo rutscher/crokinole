@@ -79,11 +79,11 @@ export default async function HomePage() {
       {inProgressGames.length > 0 && (
         <div className="mb-8">
           <h2 className="text-lg font-semibold mb-3">Resume Game</h2>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-3">
             {inProgressGames.map((game) => (
               <Link key={game.id} href={`/game/${game.id}`}>
-                <Card className="cursor-pointer hover:bg-muted/50 transition-colors py-0">
-                  <CardContent className="p-3">
+                <Card className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <CardContent>
                     <div className="flex justify-between items-center">
                       <div>
                         {game.player1.name} {game.player1Score}
@@ -103,11 +103,11 @@ export default async function HomePage() {
       {recentGames.length > 0 && (
         <div>
           <h2 className="text-lg font-semibold mb-3">Recent Games</h2>
-          <div className="space-y-2">
+          <div className="flex flex-col gap-3">
             {recentGames.map((game) => (
               <Link key={game.id} href={`/game/${game.id}`}>
-                <Card className="cursor-pointer hover:bg-muted/50 transition-colors py-0">
-                  <CardContent className="p-3">
+                <Card className="cursor-pointer hover:bg-muted/50 transition-colors">
+                  <CardContent>
                     <div className="flex justify-between items-center">
                       <div>
                         <span className={game.winnerId === game.player1Id ? "font-bold" : ""}>

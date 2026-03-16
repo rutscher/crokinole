@@ -1,35 +1,37 @@
 import { describe, it, expect } from "vitest";
 import { getRingValue, findDiscAtPosition } from "@/lib/board-utils";
 
+// Thresholds: 0–0.08 = 20, 0.08–0.39 = 15, 0.39–0.69 = 10, 0.69–1.0 = 5
+
 describe("getRingValue", () => {
-  it("returns 20 for center (radius 0 to <0.25)", () => {
+  it("returns 20 for center hole (radius 0 to <0.08)", () => {
     expect(getRingValue(0, 0)).toBe(20);
-    expect(getRingValue(0.1, 0.1)).toBe(20);
-    expect(getRingValue(0.17, 0.0)).toBe(20);
+    expect(getRingValue(0.04, 0.04)).toBe(20); // ~0.057
   });
 
-  it("returns 15 for second ring (radius 0.25 to <0.50)", () => {
+  it("returns 15 for inner ring (radius 0.08 to <0.39)", () => {
+    expect(getRingValue(0.1, 0.0)).toBe(15);
+    expect(getRingValue(0.2, 0.2)).toBe(15); // ~0.283
     expect(getRingValue(0.3, 0.0)).toBe(15);
-    expect(getRingValue(0.0, 0.4)).toBe(15);
-    expect(getRingValue(0.25, 0.25)).toBe(15);
   });
 
-  it("returns 10 for third ring (radius 0.50 to <0.75)", () => {
-    expect(getRingValue(0.6, 0.0)).toBe(10);
-    expect(getRingValue(0.0, 0.7)).toBe(10);
+  it("returns 10 for middle ring (radius 0.39 to <0.69)", () => {
+    expect(getRingValue(0.5, 0.0)).toBe(10);
+    expect(getRingValue(0.4, 0.4)).toBe(10); // ~0.566
+    expect(getRingValue(0.0, 0.6)).toBe(10);
   });
 
-  it("returns 5 for outer ring (radius 0.75 to 1.0)", () => {
+  it("returns 5 for outer ring (radius 0.69 to 1.0)", () => {
     expect(getRingValue(0.8, 0.0)).toBe(5);
     expect(getRingValue(0.0, 0.9)).toBe(5);
-    expect(getRingValue(0.7, 0.7)).toBe(5);
+    expect(getRingValue(0.7, 0.7)).toBe(5); // ~0.99
   });
 
   it("scores boundary taps to the lower ring (spec rule)", () => {
-    expect(getRingValue(0.25, 0.0)).toBe(15); // exactly on 20/15 line → 15
-    expect(getRingValue(0.5, 0.0)).toBe(10);  // exactly on 15/10 line → 10
-    expect(getRingValue(0.75, 0.0)).toBe(5);  // exactly on 10/5 line → 5
-    expect(getRingValue(1.0, 0.0)).toBe(5);   // outer edge → still on board
+    expect(getRingValue(0.08, 0.0)).toBe(15);  // exactly on 20/15 line → 15
+    expect(getRingValue(0.39, 0.0)).toBe(10);  // exactly on 15/10 line → 10
+    expect(getRingValue(0.69, 0.0)).toBe(5);   // exactly on 10/5 line → 5
+    expect(getRingValue(1.0, 0.0)).toBe(5);    // outer edge → still on board
   });
 
   it("returns null for taps outside the board (radius > 1.0)", () => {
