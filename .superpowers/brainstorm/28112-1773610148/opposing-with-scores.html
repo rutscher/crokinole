@@ -1,0 +1,110 @@
+<h2>Opposing Bar with Integrated Scores</h2>
+<p class="subtitle">Score numbers sit inside the bar, facing each player</p>
+
+<div class="cards">
+  <!-- Option A: Scores inside the filled portions -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="position: relative; height: 22px; background: rgba(255,255,255,0.04); border-radius: 11px; overflow: hidden;">
+          <!-- P1 from left -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.6)); border-radius: 11px 0 0 11px;"></div>
+          <!-- P1 score (rotated for P1) -->
+          <span style="position: absolute; left: 8px; top: 50%; transform: translateY(-50%) rotate(180deg); font-size: 11px; font-weight: bold; color: #1a1400; z-index: 1;">42</span>
+          <!-- P2 from right -->
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.6)); border-radius: 0 11px 11px 0;"></div>
+          <!-- P2 score (normal for P2) -->
+          <span style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: bold; color: #ddd8d0; z-index: 1;">37</span>
+          <!-- Center line -->
+          <div style="position: absolute; left: 50%; top: 2px; bottom: 2px; width: 1px; background: rgba(255,255,255,0.15);"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+          </button>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+            <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+          </div>
+          <div style="width: 24px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Scores Inside Fill</h3>
+      <p>Numbers sit inside the colored fill area. P1's "42" is rotated 180° on the left. P2's "37" is normal on the right. Scores are dark-on-light for P1 (gold bar), light-on-dark for P2 (steel bar).</p>
+    </div>
+  </div>
+
+  <!-- Option B: Scores at the edges, outside the fill -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; align-items: center; gap: 6px;">
+          <!-- P1 score (rotated) -->
+          <span style="font-size: 12px; font-weight: bold; color: #c8a862; transform: rotate(180deg); min-width: 22px; text-align: center;">42</span>
+          <!-- Bar -->
+          <div style="position: relative; flex: 1; height: 14px; background: rgba(255,255,255,0.04); border-radius: 7px; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.5)); border-radius: 7px 0 0 7px;"></div>
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.5)); border-radius: 0 7px 7px 0;"></div>
+            <div style="position: absolute; left: 50%; top: 2px; bottom: 2px; width: 1px; background: rgba(255,255,255,0.1);"></div>
+          </div>
+          <!-- P2 score (normal) -->
+          <span style="font-size: 12px; font-weight: bold; color: #6a7580; min-width: 22px; text-align: center;">37</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+          </button>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+            <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+          </div>
+          <div style="width: 24px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Scores Flanking Bar</h3>
+      <p>Numbers sit outside the bar on each end, color-matched to the fill. P1's "42" in gold (rotated) on the left, P2's "37" in steel on the right. Bar stays thinner. Always readable even when fill is small.</p>
+    </div>
+  </div>
+
+  <!-- Option C: Scores at the leading edge of fill -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="position: relative; height: 22px; background: rgba(255,255,255,0.04); border-radius: 11px; overflow: hidden;">
+          <!-- P1 from left -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.4)); border-radius: 11px 0 0 11px;"></div>
+          <!-- P1 score at leading edge -->
+          <span style="position: absolute; left: 42%; top: 50%; transform: translate(-100%, -50%) rotate(180deg); padding-right: 4px; font-size: 11px; font-weight: bold; color: #ddd8d0; z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">42</span>
+          <!-- P2 from right -->
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.4)); border-radius: 0 11px 11px 0;"></div>
+          <!-- P2 score at leading edge -->
+          <span style="position: absolute; right: 37%; top: 50%; transform: translate(100%, -50%); padding-left: 4px; font-size: 11px; font-weight: bold; color: #ddd8d0; z-index: 1; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">37</span>
+          <!-- Center line -->
+          <div style="position: absolute; left: 50%; top: 2px; bottom: 2px; width: 1px; background: rgba(255,255,255,0.15);"></div>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+          </button>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+            <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+          </div>
+          <div style="width: 24px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Scores at Leading Edge</h3>
+      <p>Numbers sit at the tip of each fill, moving with the bar as the score grows. The score literally shows where each player is in the race. P1's "42" rotated at the left fill edge.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <p style="margin: 0; font-size: 13px; color: #888;">My recommendation: <strong>B (Flanking)</strong> — always readable regardless of fill level (a score of "5" on option A or C would be cramped inside a tiny fill). The color-matched numbers flanking the bar keep it clean and the rotated P1 score is easy to read from across the table.</p>
+</div>

@@ -1,0 +1,97 @@
+<h2>Minimal Center Bar — Score Bar Only</h2>
+<p class="subtitle">Menu dots sit on the center line. Round indicator removed. One element.</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px 12px; background: #12100e;">
+      <!-- The entire center bar is just this -->
+      <div style="position: relative; height: 28px; background: rgba(255,255,255,0.04); border-radius: 14px; overflow: visible;">
+        <!-- P1 fill -->
+        <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.4)); border-radius: 14px 0 0 14px;"></div>
+        <!-- P2 fill -->
+        <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.4)); border-radius: 0 14px 14px 0;"></div>
+
+        <!-- P1 scores (rotated) -->
+        <div style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 2px; z-index: 2;">
+          <span style="font-size: 11px; font-weight: bold; color: #1a1400;">42</span>
+          <span style="font-size: 8px; color: rgba(0,0,0,0.4);">-</span>
+          <span style="font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.5);">37</span>
+        </div>
+
+        <!-- Menu dots on center line -->
+        <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 3; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; background: rgba(18,16,14,0.8);">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="#8a8078">
+            <circle cx="12" cy="5" r="2.5"/>
+            <circle cx="12" cy="12" r="2.5"/>
+            <circle cx="12" cy="19" r="2.5"/>
+          </svg>
+        </div>
+
+        <!-- P2 scores (normal) -->
+        <div style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; z-index: 2;">
+          <span style="font-size: 11px; font-weight: bold; color: #ddd8d0;">37</span>
+          <span style="font-size: 8px; color: rgba(255,255,255,0.3);">-</span>
+          <span style="font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);">42</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Menu Dot on Center Line</h3>
+      <p>Small dark circle with menu dots sits right on the center divider. Subtle but tappable. The entire center area is just this one bar.</p>
+    </div>
+  </div>
+
+  <!-- In context -->
+  <div class="card" data-choice="context" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #0c0a08;">
+      <div style="width: 280px; margin: 0 auto; display: flex; flex-direction: column;">
+        <!-- P1 bottom edge -->
+        <div style="height: 40px; background: #0c0a08; position: relative;">
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.3;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #2a3530 100%);"></div>
+          </div>
+        </div>
+
+        <div style="height: 2px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e);"></div>
+
+        <!-- Center bar — JUST the score bar with padding -->
+        <div style="padding: 4px 6px; background: #12100e;">
+          <div style="position: relative; height: 28px; background: rgba(255,255,255,0.04); border-radius: 14px; overflow: visible;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.4)); border-radius: 14px 0 0 14px;"></div>
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.4)); border-radius: 0 14px 14px 0;"></div>
+            <div style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 2px; z-index: 2;">
+              <span style="font-size: 11px; font-weight: bold; color: #1a1400;">42</span>
+              <span style="font-size: 8px; color: rgba(0,0,0,0.4);">-</span>
+              <span style="font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.5);">37</span>
+            </div>
+            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 3; width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; background: rgba(18,16,14,0.8);">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+            </div>
+            <div style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; z-index: 2;">
+              <span style="font-size: 11px; font-weight: bold; color: #ddd8d0;">37</span>
+              <span style="font-size: 8px; color: rgba(255,255,255,0.3);">-</span>
+              <span style="font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);">42</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="height: 2px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e);"></div>
+
+        <!-- P2 top edge -->
+        <div style="height: 40px; background: #0c0a08; position: relative;">
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.3;">
+            <div style="width: 60px; height: 60px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #2a3530 100%);"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>In Context</h3>
+      <p>The center bar between the two halves. Wood rails, then just the score bar with ~4px padding. Total height ~36px. Maximum board space for both players.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <p style="margin: 0; font-size: 13px; color: #888;">The center bar is now a single ~36px element: wood rail, score bar, wood rail. Nothing else. Menu access is the dot on the center line. Round number can show inside the menu dialog if needed. This frees up maximum vertical space for the boards.</p>
+</div>

@@ -1,0 +1,16 @@
+{"type":"server-started","port":57195,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:57195","screen_dir":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/aesthetic-intensity.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/aesthetic-intensity-v2.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/surface-comparison.html"}
+{"source":"user-event","type":"click","text":"Round 3\n                \n                \n                  \n                    \n                    45\n                    Rob\n                  \n                  \n                  \n                  \n                    \n                    30\n                    Alex\n                  \n                \n              \n            \n          \n        \n      \n    \n    \n      Warm Dark\n      Espresso-toned surface. Warm and cohesive with the birch rail. Feels like dark-stained wood or a leather playing surface.","choice":"warm-dark","id":null,"timestamp":1773529797587}
+{"source":"user-event","type":"click","text":"Round 3\n                \n                \n                  \n                    \n                    45\n                    Rob\n                  \n                  \n                  \n                  \n                    \n                    30\n                    Alex\n                  \n                \n              \n            \n          \n        \n      \n    \n    \n      Warm Dark\n      Espresso-toned surface. Warm and cohesive with the birch rail. Feels like dark-stained wood or a leather playing surface.","choice":"warm-dark","id":null,"timestamp":1773529799069}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/waiting.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/game-view-design.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/ring-button-options.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/game-view-v2.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/yellow-fix-options.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/game-view-v3.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/badge-icons.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/badge-icons-v2.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/7506-1773528845/waiting-2.html"}
+{"type":"server-stopped","reason":"idle timeout"}

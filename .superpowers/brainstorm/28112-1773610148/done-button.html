@@ -1,0 +1,130 @@
+<h2>Done Button States</h2>
+<p class="subtitle">Where does "Done" live on each player's half, and what does the waiting state look like?</p>
+
+<div class="cards">
+  <!-- Option A: Replace Undo corner with Done/Undo toggle -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #0c0a08;">
+      <div style="display: flex; flex-direction: column; width: 280px; margin: 0 auto;">
+        <!-- Player half mock — just corners -->
+        <div style="position: relative; height: 180px; background: #0c0a08;">
+          <!-- Top-left: name -->
+          <div style="position: absolute; top: 8px; left: 10px;">
+            <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+          </div>
+          <!-- Top-right: round score -->
+          <div style="position: absolute; top: 6px; right: 10px; text-align: right;">
+            <div style="font-size: 20px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+            <div style="font-size: 9px; color: #8a8078;">3 of 8</div>
+          </div>
+          <!-- Board placeholder -->
+          <div style="position: absolute; inset: 30px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 39%, #283038 69%, #2a3530 100%); opacity: 0.4;"></div>
+          <!-- Bottom-left: 20s -->
+          <div style="position: absolute; bottom: 8px; left: 10px; font-size: 8px; color: #8a8078;">20s +</div>
+
+          <!-- Bottom-right: NOT YET DONE state -->
+          <div style="position: absolute; bottom: 6px; right: 10px; display: flex; gap: 4px;">
+            <div style="padding: 5px 8px; border: 1px solid #3d362e; border-radius: 4px; font-size: 9px; color: #b8a898;">Undo</div>
+            <div style="padding: 5px 12px; background: rgba(200,168,98,0.15); border: 1px solid rgba(200,168,98,0.3); border-radius: 4px; font-size: 9px; font-weight: bold; color: #c8a862;">Done</div>
+          </div>
+        </div>
+
+        <div style="height: 1px; background: #3d362e;"></div>
+        <div style="padding: 4px; text-align: center; font-size: 9px; color: #5a524a;">Before tapping Done</div>
+        <div style="height: 1px; background: #3d362e;"></div>
+
+        <!-- Same half — WAITING state -->
+        <div style="position: relative; height: 180px; background: #0c0a08;">
+          <div style="position: absolute; top: 8px; left: 10px;">
+            <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+          </div>
+          <div style="position: absolute; top: 6px; right: 10px; text-align: right;">
+            <div style="font-size: 20px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+            <div style="font-size: 9px; color: #8a8078;">3 of 8</div>
+          </div>
+          <div style="position: absolute; inset: 30px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 39%, #283038 69%, #2a3530 100%); opacity: 0.4;"></div>
+          <div style="position: absolute; bottom: 8px; left: 10px; font-size: 8px; color: #8a8078;">20s +</div>
+
+          <!-- Bottom-right: WAITING state -->
+          <div style="position: absolute; bottom: 6px; right: 10px; display: flex; gap: 4px; align-items: center;">
+            <div style="padding: 5px 8px; border: 1px solid #3d362e; border-radius: 4px; font-size: 9px; color: #b8a898;">Undo</div>
+            <div style="padding: 5px 12px; background: rgba(90,117,96,0.2); border: 1px solid rgba(90,117,96,0.4); border-radius: 4px; font-size: 9px; color: #5a7560; display: flex; align-items: center; gap: 4px;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#5a7560" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Waiting...
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Done + Undo Side by Side</h3>
+      <p>Bottom-right has both Undo and Done. After tapping Done, it becomes a green "✓ Waiting..." indicator. Undo stays available so you can still fix mistakes while waiting. Board stays interactive until both confirm.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Done replaces Undo entirely -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #0c0a08;">
+      <div style="display: flex; flex-direction: column; width: 280px; margin: 0 auto;">
+        <div style="position: relative; height: 180px; background: #0c0a08;">
+          <div style="position: absolute; top: 8px; left: 10px;">
+            <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+          </div>
+          <div style="position: absolute; top: 6px; right: 10px; text-align: right;">
+            <div style="font-size: 20px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+            <div style="font-size: 9px; color: #8a8078;">3 of 8</div>
+          </div>
+          <div style="position: absolute; inset: 30px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 39%, #283038 69%, #2a3530 100%); opacity: 0.4;"></div>
+          <div style="position: absolute; bottom: 8px; left: 10px; font-size: 8px; color: #8a8078;">20s +</div>
+
+          <!-- Bottom-right: Just Done, bigger -->
+          <div style="position: absolute; bottom: 6px; right: 10px;">
+            <div style="padding: 6px 20px; background: rgba(200,168,98,0.15); border: 1px solid rgba(200,168,98,0.3); border-radius: 6px; font-size: 11px; font-weight: bold; color: #c8a862;">Done</div>
+          </div>
+        </div>
+
+        <div style="height: 1px; background: #3d362e;"></div>
+        <div style="padding: 4px; text-align: center; font-size: 9px; color: #5a524a;">Before → After</div>
+        <div style="height: 1px; background: #3d362e;"></div>
+
+        <div style="position: relative; height: 180px; background: #0c0a08;">
+          <div style="position: absolute; top: 8px; left: 10px;">
+            <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+          </div>
+          <div style="position: absolute; top: 6px; right: 10px; text-align: right;">
+            <div style="font-size: 20px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+            <div style="font-size: 9px; color: #8a8078;">3 of 8</div>
+          </div>
+          <div style="position: absolute; inset: 30px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 39%, #283038 69%, #2a3530 100%); opacity: 0.3;"></div>
+          <div style="position: absolute; bottom: 8px; left: 10px; font-size: 8px; color: #8a8078;">20s +</div>
+
+          <!-- Bottom-right: Waiting + tap to undo -->
+          <div style="position: absolute; bottom: 6px; right: 10px;">
+            <div style="padding: 6px 16px; background: rgba(90,117,96,0.15); border: 1px solid rgba(90,117,96,0.3); border-radius: 6px; font-size: 11px; color: #5a7560; display: flex; align-items: center; gap: 5px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5a7560" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Waiting...
+            </div>
+          </div>
+          <!-- Subtle hint -->
+          <div style="position: absolute; bottom: 2px; right: 10px; font-size: 7px; color: #5a524a;">tap to undo</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Done Replaces Undo</h3>
+      <p>Bigger Done button in the corner (no separate Undo). After tapping, it becomes "✓ Waiting..." with a tiny "tap to undo" hint — tapping the waiting indicator un-confirms and goes back to Done. Cleaner, one button.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <h3 style="margin: 0 0 8px; font-size: 14px;">How it works</h3>
+  <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #aaa; line-height: 1.8;">
+    <li>Each player taps <strong>Done</strong> when they've finished recording their discs</li>
+    <li>Button changes to <strong>✓ Waiting...</strong> — shows they've confirmed</li>
+    <li>When <strong>both</strong> players are confirmed, round auto-ends and score calculates</li>
+    <li>Board stays interactive (undo/remove discs) even while waiting — tapping waiting un-confirms</li>
+    <li><strong>End Round</strong> moves to the menu for the rare case of ending early by agreement</li>
+  </ul>
+  <p style="margin: 8px 0 0; font-size: 13px; color: #888;">Recommendation: <strong>B</strong> — one button that toggles between Done and Waiting is simpler. The disc-level undo (tap-to-remove) is still available on the board itself, and tapping the waiting state lets you un-confirm if you need to change something.</p>
+</div>

@@ -1,0 +1,7 @@
+{"type":"server-started","port":63617,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:63617","screen_dir":"/Users/rob/env/crokinole/.superpowers/brainstorm/20361-1773583901"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/20361-1773583901/player-selection.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/20361-1773583901/player-selection-v2.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/20361-1773583901/player-selection-v3.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/20361-1773583901/player-selection-v4.html"}
+{"type":"screen-added","file":"/Users/rob/env/crokinole/.superpowers/brainstorm/20361-1773583901/waiting.html"}
+{"type":"server-stopped","reason":"idle timeout"}

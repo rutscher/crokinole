@@ -1,0 +1,142 @@
+<h2>Score Display Redesign</h2>
+<p class="subtitle">Center bar becomes progress bars + each player half gets an opponent score badge</p>
+
+<div class="cards">
+  <!-- Option A: Dual progress bars in center -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #1a1916;">
+      <!-- Simulated phone slice showing P1 bottom edge, center bar, P2 top edge -->
+      <div style="display: flex; flex-direction: column; width: 300px; margin: 0 auto;">
+
+        <!-- P1's half bottom edge (rotated) -->
+        <div style="height: 50px; background: #0c0a08; position: relative; transform: rotate(180deg);">
+          <!-- Opponent score badge for P1 (shows P2's score, right-side up for P1) -->
+          <div style="position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 0.5px;">OPP</span>
+            <span style="font-size: 14px; font-weight: bold; color: #ddd8d0; font-variant-numeric: tabular-nums;">37</span>
+          </div>
+        </div>
+
+        <!-- Wood rail -->
+        <div style="height: 3px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e);"></div>
+
+        <!-- Center bar with progress bars -->
+        <div style="padding: 6px 12px; background: #12100e; display: flex; flex-direction: column; gap: 4px;">
+          <!-- P1 progress bar (top, faces P1 so rotated 180) -->
+          <div style="display: flex; align-items: center; gap: 6px; transform: rotate(180deg);">
+            <span style="font-size: 9px; color: #8a8078; min-width: 20px; text-align: right;">42</span>
+            <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;">
+              <div style="width: 42%; height: 100%; background: linear-gradient(90deg, #c8a862, #b09050); border-radius: 3px;"></div>
+            </div>
+          </div>
+
+          <!-- Center controls -->
+          <div style="display: flex; items: center; justify-content: space-between;">
+            <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+            </button>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+              <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+            </div>
+            <div style="width: 24px;"></div>
+          </div>
+
+          <!-- P2 progress bar (bottom, faces P2 so normal orientation) -->
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 9px; color: #8a8078; min-width: 20px; text-align: right;">37</span>
+            <div style="flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;">
+              <div style="width: 37%; height: 100%; background: linear-gradient(90deg, #6a7580, #556570); border-radius: 3px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Wood rail -->
+        <div style="height: 3px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e);"></div>
+
+        <!-- P2's half top edge -->
+        <div style="height: 50px; background: #0c0a08; position: relative;">
+          <!-- Opponent score badge for P2 (shows P1's score, right-side up for P2) -->
+          <div style="position: absolute; top: 6px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 4px;">
+            <span style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 0.5px;">OPP</span>
+            <span style="font-size: 14px; font-weight: bold; color: #ddd8d0; font-variant-numeric: tabular-nums;">42</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Progress Bars + OPP Badge</h3>
+      <p>Each player's progress bar faces them (P1's is rotated 180°). Small "OPP 37" badge on each player's half near the center bar, oriented for that player. Score numbers are committed game score only (no round inflation).</p>
+    </div>
+  </div>
+
+  <!-- Option B: Progress bars with player color coding, no text labels -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #1a1916;">
+      <div style="display: flex; flex-direction: column; width: 300px; margin: 0 auto;">
+
+        <!-- P1's half bottom edge (rotated) -->
+        <div style="height: 50px; background: #0c0a08; position: relative; transform: rotate(180deg);">
+          <div style="position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px;">
+            <!-- Light disc icon -->
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898);"></div>
+            <span style="font-size: 14px; font-weight: bold; color: #ddd8d0;">42</span>
+            <span style="font-size: 10px; color: #5a524a;">vs</span>
+            <!-- Dark disc icon -->
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); border: 1px solid #5a5450;"></div>
+            <span style="font-size: 14px; font-weight: bold; color: #ddd8d0;">37</span>
+          </div>
+        </div>
+
+        <div style="height: 3px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e);"></div>
+
+        <!-- Center bar — just progress bars and controls, no numbers -->
+        <div style="padding: 6px 12px; background: #12100e; display: flex; flex-direction: column; gap: 4px;">
+          <!-- P1 bar (light color, faces P1) -->
+          <div style="height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; transform: rotate(180deg);">
+            <div style="width: 42%; height: 100%; background: linear-gradient(90deg, #c8a862, #b09050); border-radius: 3px;"></div>
+          </div>
+
+          <div style="display: flex; items: center; justify-content: space-between;">
+            <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+            </button>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+              <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+            </div>
+            <div style="width: 24px;"></div>
+          </div>
+
+          <!-- P2 bar (dark color, faces P2) -->
+          <div style="height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;">
+            <div style="width: 37%; height: 100%; background: linear-gradient(90deg, #6a7580, #556570); border-radius: 3px;"></div>
+          </div>
+        </div>
+
+        <div style="height: 3px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e);"></div>
+
+        <!-- P2's half top edge -->
+        <div style="height: 50px; background: #0c0a08; position: relative;">
+          <div style="position: absolute; top: 6px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 6px;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); border: 1px solid #5a5450;"></div>
+            <span style="font-size: 14px; font-weight: bold; color: #ddd8d0;">37</span>
+            <span style="font-size: 10px; color: #5a524a;">vs</span>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898);"></div>
+            <span style="font-size: 14px; font-weight: bold; color: #ddd8d0;">42</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Color-Coded Bars + Full Scoreboard Badge</h3>
+      <p>Progress bars use disc colors (gold for P1, steel for P2) with no numbers — purely visual. Each player's half shows both scores with disc color icons: "⚪ 42 vs ⚫ 37", oriented for that player. Your score listed first.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <h3 style="margin: 0 0 8px;">Both options fix the score bug</h3>
+  <p style="margin: 0; font-size: 13px; color: #888;">The center bar and badges show only <strong>committed game score</strong> (from <code>game.player1Score</code>), not the inflated mid-round total. The round score (+N) stays in each player's top-right corner as it is now.</p>
+  <p style="margin: 8px 0 0 0; font-size: 13px; color: #888;">My recommendation: <strong>B</strong> — the disc color icons make it instantly clear whose score is whose without needing to read "OPP". The center bar stays cleaner without numbers on the progress bars. Both scores visible on each half means neither player needs to read upside-down text.</p>
+</div>

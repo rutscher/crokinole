@@ -1,0 +1,151 @@
+<h2>Mini Board Scoring: Layout Approaches</h2>
+<p class="subtitle">How should the board + score + 20s counter be arranged in each player's half?</p>
+
+<div class="cards">
+  <!-- Approach A: Board-Centered -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #1a1916;">
+      <!-- Mockup of board-centered layout -->
+      <div style="display: flex; align-items: center; justify-content: center; gap: 12px; height: 220px;">
+        <!-- 20s holder on left -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 4px; width: 40px;">
+          <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">20s</div>
+          <div style="width: 32px; height: 80px; border: 1px solid #3d362e; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 4px; gap: 2px;">
+            <div style="width: 22px; height: 22px; border-radius: 50%; background: #c8a862; opacity: 0.8;"></div>
+            <div style="width: 22px; height: 22px; border-radius: 50%; background: #c8a862;"></div>
+          </div>
+        </div>
+
+        <!-- Board -->
+        <div style="position: relative; width: 180px; height: 180px;">
+          <!-- 5 ring (outermost) -->
+          <div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 25%, #3a5040 25%, #486050 45%, #3a5040 60%, #2a3530 75%, #1e2520 100%); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);"></div>
+          <!-- 10 ring -->
+          <div style="position: absolute; inset: 28px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 30%, #485860 30%, #556570 60%, #485860 85%); box-shadow: inset 0 0 6px rgba(0,0,0,0.4);"></div>
+          <!-- 15 ring -->
+          <div style="position: absolute; inset: 52px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 35%, #7a4438 35%, #8e5548 65%, #663830 90%); box-shadow: inset 0 0 4px rgba(0,0,0,0.4);"></div>
+          <!-- 20 hole (center) -->
+          <div style="position: absolute; inset: 72px; border-radius: 50%; background: radial-gradient(circle, #0a0800 0%, #1a1400 60%, #2a2010 100%); box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;">
+            <span style="color: #c8a862; font-size: 11px; font-weight: bold;">20</span>
+          </div>
+          <!-- Ring labels -->
+          <div style="position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); color: #ddd8d0; font-size: 10px; font-weight: bold; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">5</div>
+          <div style="position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); color: #ddd8d0; font-size: 10px; font-weight: bold; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">10</div>
+          <div style="position: absolute; bottom: 54px; left: 50%; transform: translateX(-50%); color: #ddd8d0; font-size: 10px; font-weight: bold; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">15</div>
+          <!-- Sample discs on board -->
+          <div style="position: absolute; top: 12px; left: 55px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+          <div style="position: absolute; top: 45px; right: 40px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #5a5450;"></div>
+          <div style="position: absolute; top: 70px; left: 42px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+        </div>
+
+        <!-- Score + info on right -->
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; width: 50px;">
+          <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">Score</div>
+          <div style="font-size: 28px; font-weight: bold; color: #ddd8d0;">+25</div>
+          <div style="font-size: 11px; color: #8a8078;">5/8</div>
+          <div style="margin-top: 4px; padding: 4px 8px; border: 1px solid #3d362e; border-radius: 4px; font-size: 10px; color: #b8a898; cursor: pointer;">Undo</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Board-Centered</h3>
+      <p>Board dominates the center. 20s holder on one side, round score + disc count + undo on the other. Maximizes board size.</p>
+    </div>
+  </div>
+
+  <!-- Approach B: Board with Bottom Strip -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #1a1916;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; height: 220px;">
+        <!-- Name + Score row -->
+        <div style="display: flex; align-items: baseline; gap: 8px; width: 100%;">
+          <span style="font-size: 10px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</span>
+          <span style="font-size: 20px; font-weight: bold; color: #ddd8d0; margin-left: auto;">+25</span>
+          <span style="font-size: 11px; color: #8a8078;">5/8</span>
+        </div>
+
+        <!-- Board row with 20s holder -->
+        <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+          <!-- Board (bigger since it has full width minus holder) -->
+          <div style="position: relative; width: 160px; height: 160px; flex-shrink: 0;">
+            <div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 25%, #3a5040 25%, #486050 45%, #3a5040 60%, #2a3530 75%, #1e2520 100%); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);"></div>
+            <div style="position: absolute; inset: 26px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 30%, #485860 30%, #556570 60%, #485860 85%); box-shadow: inset 0 0 6px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; inset: 48px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 35%, #7a4438 35%, #8e5548 65%, #663830 90%); box-shadow: inset 0 0 4px rgba(0,0,0,0.4);"></div>
+            <div style="position: absolute; inset: 66px; border-radius: 50%; background: radial-gradient(circle, #0a0800 0%, #1a1400 60%, #2a2010 100%); box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;">
+              <span style="color: #c8a862; font-size: 11px; font-weight: bold;">20</span>
+            </div>
+            <!-- Sample discs -->
+            <div style="position: absolute; top: 10px; left: 48px; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+            <div style="position: absolute; top: 38px; right: 32px; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #5a5450;"></div>
+          </div>
+
+          <!-- 20s holder + undo (stacked vertically on side) -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1;">
+            <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">20s</div>
+            <div style="width: 36px; height: 70px; border: 1px solid #3d362e; border-radius: 18px; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 4px; gap: 2px;">
+              <div style="width: 20px; height: 20px; border-radius: 50%; background: #c8a862; opacity: 0.8;"></div>
+              <div style="width: 20px; height: 20px; border-radius: 50%; background: #c8a862;"></div>
+            </div>
+            <div style="padding: 4px 10px; border: 1px solid #3d362e; border-radius: 4px; font-size: 10px; color: #b8a898; cursor: pointer;">Undo</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Score Header + Board</h3>
+      <p>Name and round score in a slim header row. Board + 20s holder below. Clean separation of info vs. interaction.</p>
+    </div>
+  </div>
+
+  <!-- Approach C: Full-Width Board -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #1a1916;">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 6px; height: 220px;">
+        <!-- Board takes maximum space -->
+        <div style="position: relative; width: 170px; height: 170px;">
+          <div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 25%, #3a5040 25%, #486050 45%, #3a5040 60%, #2a3530 75%, #1e2520 100%); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);"></div>
+          <div style="position: absolute; inset: 28px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 30%, #485860 30%, #556570 60%, #485860 85%); box-shadow: inset 0 0 6px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; inset: 50px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 35%, #7a4438 35%, #8e5548 65%, #663830 90%); box-shadow: inset 0 0 4px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; inset: 68px; border-radius: 50%; background: radial-gradient(circle, #0a0800 0%, #1a1400 60%, #2a2010 100%); box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;">
+            <span style="color: #c8a862; font-size: 11px; font-weight: bold;">20</span>
+          </div>
+          <!-- Sample discs -->
+          <div style="position: absolute; top: 10px; left: 50px; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+          <div style="position: absolute; top: 42px; right: 35px; width: 16px; height: 16px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #5a5450;"></div>
+          <!-- Floating score overlay -->
+          <div style="position: absolute; top: -2px; right: -40px; text-align: center;">
+            <div style="font-size: 22px; font-weight: bold; color: #ddd8d0;">+25</div>
+            <div style="font-size: 9px; color: #8a8078;">5/8</div>
+          </div>
+        </div>
+
+        <!-- Bottom strip: 20s tray + undo -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; width: 100%;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 9px; color: #8a8078; text-transform: uppercase;">20s:</span>
+            <div style="display: flex; gap: 3px;">
+              <div style="width: 18px; height: 18px; border-radius: 50%; background: #c8a862;"></div>
+              <div style="width: 18px; height: 18px; border-radius: 50%; background: #c8a862;"></div>
+              <div style="width: 18px; height: 18px; border-radius: 50%; border: 1px dashed #3d362e;"></div>
+            </div>
+          </div>
+          <div style="padding: 4px 12px; border: 1px solid #3d362e; border-radius: 4px; font-size: 10px; color: #b8a898;">Undo</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Maximum Board</h3>
+      <p>Board as large as possible with floating score overlay. 20s tray and undo in a thin strip below. Prioritizes board size over info layout.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <h3 style="margin: 0 0 8px 0; font-size: 14px;">Key trade-offs</h3>
+  <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #aaa; line-height: 1.6;">
+    <li><strong>A</strong> gives the biggest board but scatters info across both sides</li>
+    <li><strong>B</strong> cleanly separates score info (top) from board interaction (below) — easiest to scan</li>
+    <li><strong>C</strong> maximizes board at the expense of score readability (floating overlay)</li>
+  </ul>
+  <p style="margin: 12px 0 0 0; font-size: 13px; color: #888;">My recommendation: <strong>B</strong> — the score header keeps info readable while the board stays large. The clear separation also works well with the rotated Player 1 half.</p>
+</div>

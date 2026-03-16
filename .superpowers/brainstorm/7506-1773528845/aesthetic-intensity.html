@@ -1,0 +1,108 @@
+<h2>How much "board" should you feel?</h2>
+<p class="subtitle">Click the level that feels right — not kitschy, but clearly crokinole</p>
+
+<div class="cards">
+  <div class="card" data-choice="subtle" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- Subtle: Current dark UI with warm color shift and minimal wood hints -->
+      <div style="background: #1c1917; border-radius: 12px; padding: 20px; border: 1px solid rgba(180,140,100,0.15);">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <span style="font-size: 13px; color: #a8a29e; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+          <div style="flex:1; text-align: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #d4b896; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #1c1917; font-size: 18px;">45</div>
+            <span style="color: #d6d3d1; font-size: 14px;">Rob</span>
+          </div>
+          <div style="color: #78716c; font-size: 14px;">vs</div>
+          <div style="flex:1; text-align: center;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: #44403c; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 18px; border: 1px solid #57534e;">30</div>
+            <span style="color: #d6d3d1; font-size: 14px;">Alex</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Subtle Warmth</h3>
+      <p>Warm-shifted dark UI. Wood tones in accent colors, disc-shaped score indicators. No textures — just the right color temperature and shapes to say "crokinole" without shouting it.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="moderate" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- Moderate: Board-inspired surfaces with ring geometry hints -->
+      <div style="background: linear-gradient(145deg, #2c2520, #1c1917); border-radius: 12px; padding: 20px; border: 1px solid rgba(180,140,100,0.25); box-shadow: inset 0 1px 0 rgba(180,140,100,0.08);">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <span style="font-size: 13px; color: #a8a29e; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+          <div style="flex:1; text-align: center;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #e8d5b8, #c4a67a); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #1c1917; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);">45</div>
+            <span style="color: #d6d3d1; font-size: 14px;">Rob</span>
+          </div>
+          <div style="width: 28px; height: 28px; border-radius: 50%; border: 2px solid #78716c; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: #44403c;"></div>
+          </div>
+          <div style="flex:1; text-align: center;">
+            <div style="width: 52px; height: 52px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #57534e, #292524); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 18px; box-shadow: 0 2px 8px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1); border: 1px solid #57534e;">30</div>
+            <span style="color: #d6d3d1; font-size: 14px;">Alex</span>
+          </div>
+        </div>
+        <!-- Subtle ring line -->
+        <div style="margin-top: 16px; border-top: 1px solid rgba(180,140,100,0.15); padding-top: 12px; text-align: center;">
+          <div style="display: inline-flex; gap: 8px; align-items: center;">
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #ffd700; box-shadow: 0 0 4px rgba(255,215,0,0.3);"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #c0392b;"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #2980b9;"></div>
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #27ae60;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Board-Inspired</h3>
+      <p>Discs have dimensionality with subtle lighting. Center hole motif as a divider element. Dark playing surface with warm wood-toned edges. Ring zone colors as accents. Material feel without literal wood grain.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="rich" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- Rich: More textured, closer to the board -->
+      <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+        <!-- Wood rail -->
+        <div style="background: linear-gradient(90deg, #8B7355, #A0855C, #8B7355); padding: 4px;">
+          <div style="background: linear-gradient(180deg, #1a1f1a, #0d110d); border-radius: 8px; padding: 20px;">
+            <div style="text-align: center; margin-bottom: 16px;">
+              <span style="font-size: 13px; color: #7c9a7c; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+              <div style="flex:1; text-align: center;">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #f0dfc4, #c4a67a 60%, #a08860); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.3), 0 0 0 2px rgba(180,140,100,0.3);">45</div>
+                <span style="color: #c5c0b8; font-size: 14px;">Rob</span>
+              </div>
+              <!-- Center hole -->
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: radial-gradient(circle, #000 40%, #1a1a1a 60%, transparent 70%); border: 2px solid #555; box-shadow: inset 0 2px 6px rgba(0,0,0,0.8);"></div>
+              <div style="flex:1; text-align: center;">
+                <div style="width: 56px; height: 56px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #57534e, #292524 60%, #1c1917); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 2px rgba(100,100,100,0.2);">30</div>
+                <span style="color: #c5c0b8; font-size: 14px;">Alex</span>
+              </div>
+            </div>
+            <!-- Scoring ring hints -->
+            <div style="margin-top: 16px; display: flex; justify-content: center;">
+              <div style="position: relative; width: 120px; height: 24px;">
+                <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 120px; height: 24px; border: 1px solid rgba(39,174,96,0.2); border-radius: 50%;"></div>
+                <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 90px; height: 18px; border: 1px solid rgba(41,128,185,0.2); border-radius: 50%;"></div>
+                <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 60px; height: 12px; border: 1px solid rgba(192,57,43,0.2); border-radius: 50%;"></div>
+                <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 30px; height: 6px; border: 1px solid rgba(255,215,0,0.3); border-radius: 50%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Full Board Feel</h3>
+      <p>Wood rail framing the dark playing surface. Dimensional discs with real lighting. Center hole as functional element. Dark green-tinted surface like felt. Concentric ring hints. Still clean and modern — but unmistakably a crokinole board.</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,165 @@
+<h2>Wood texture approaches</h2>
+<p class="subtitle">Real wood feel without looking like a 2005 skeuomorphic app — click the one that feels right</p>
+
+<div class="cards">
+  <div class="card" data-choice="css-grain" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- CSS-only subtle grain: noise filter over warm tones -->
+      <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+        <!-- Outer rail with CSS grain effect -->
+        <div style="background: linear-gradient(160deg, #9B8567, #B89B72, #A08558, #C4A87A, #8B7355); padding: 6px; position: relative;">
+          <div style="position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(0,0,0,0.03) 2px, rgba(0,0,0,0.03) 4px); mix-blend-mode: multiply;"></div>
+          <div style="position: absolute; inset: 0; background: repeating-linear-gradient(87deg, transparent, transparent 5px, rgba(255,255,255,0.02) 5px, rgba(255,255,255,0.02) 7px);"></div>
+          <div style="background: #1c1917; border-radius: 8px; padding: 20px; position: relative;">
+            <div style="text-align: center; margin-bottom: 16px;">
+              <span style="font-size: 13px; color: #a8a29e; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+              <div style="flex:1; text-align: center;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #ecdcc4, #c9a97a 55%, #a88c60); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 19px; box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);">45</div>
+                <span style="color: #d6d3d1; font-size: 14px;">Rob</span>
+              </div>
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle, #000 45%, #1a1a1a); border: 2px solid #555; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);"></div>
+              <div style="flex:1; text-align: center;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #4a4541, #2e2a26 55%, #1f1c19); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 19px; box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1); border: 1px solid #4a4541;">30</div>
+                <span style="color: #d6d3d1; font-size: 14px;">Alex</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A. CSS Grain</h3>
+      <p>Pure CSS — subtle linear gradients that mimic wood grain direction without a texture image. Lightweight and crisp on all screens. The grain is a hint, not a photo.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="svg-woodgrain" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- SVG turbulence wood grain -->
+      <svg style="position: absolute; width: 0; height: 0;">
+        <defs>
+          <filter id="wood1">
+            <feTurbulence type="fractalNoise" baseFrequency="0.02 0.2" numOctaves="4" seed="3" result="noise"/>
+            <feColorMatrix type="saturate" values="0" in="noise" result="gray"/>
+            <feComponentTransfer in="gray" result="stretched">
+              <feFuncR type="linear" slope="0.15" intercept="0"/>
+              <feFuncG type="linear" slope="0.15" intercept="0"/>
+              <feFuncB type="linear" slope="0.15" intercept="0"/>
+              <feFuncA type="linear" slope="1" intercept="0"/>
+            </feComponentTransfer>
+            <feBlend in="SourceGraphic" in2="stretched" mode="overlay"/>
+          </filter>
+        </defs>
+      </svg>
+      <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+        <div style="background: linear-gradient(160deg, #9B8567, #B89B72, #A08558, #B89B72, #8B7355); padding: 6px; filter: url(#wood1);">
+          <div style="background: #1c1917; border-radius: 8px; padding: 20px; filter: none;">
+            <div style="text-align: center; margin-bottom: 16px;">
+              <span style="font-size: 13px; color: #a8a29e; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+              <div style="flex:1; text-align: center;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #ecdcc4, #c9a97a 55%, #a88c60); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 19px; box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.25);">45</div>
+                <span style="color: #d6d3d1; font-size: 14px;">Rob</span>
+              </div>
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle, #000 45%, #1a1a1a); border: 2px solid #555; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);"></div>
+              <div style="flex:1; text-align: center;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; background: radial-gradient(circle at 38% 35%, #4a4541, #2e2a26 55%, #1f1c19); margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 19px; box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1); border: 1px solid #4a4541;">30</div>
+                <span style="color: #d6d3d1; font-size: 14px;">Alex</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B. SVG Wood Grain</h3>
+      <p>Generated wood texture using SVG turbulence filters — organic, slightly irregular grain pattern. No image files, scales to any size, procedurally unique. More natural-looking than CSS lines.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="photo-texture" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- Real photo texture approach (simulated with rich gradient) -->
+      <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+        <!-- Simulating photo wood with complex gradient layers -->
+        <div style="padding: 6px; position: relative; background: linear-gradient(165deg, #8B7355 0%, #A08558 15%, #BFA87A 30%, #9B8060 45%, #C4A87A 55%, #A08558 70%, #8B7355 85%, #9B8567 100%);">
+          <!-- Knot/variation layers -->
+          <div style="position: absolute; inset: 0; background: radial-gradient(ellipse 40% 80% at 20% 50%, rgba(120,90,50,0.3), transparent), radial-gradient(ellipse 30% 60% at 75% 30%, rgba(160,120,70,0.2), transparent);"></div>
+          <!-- Fine grain lines -->
+          <div style="position: absolute; inset: 0; background: repeating-linear-gradient(88deg, transparent 0px, transparent 1px, rgba(0,0,0,0.04) 1px, rgba(0,0,0,0.04) 2px, transparent 2px, transparent 4px, rgba(0,0,0,0.02) 4px, rgba(0,0,0,0.02) 5px); mix-blend-mode: multiply;"></div>
+          <div style="position: absolute; inset: 0; background: repeating-linear-gradient(91deg, transparent 0px, transparent 3px, rgba(255,255,255,0.03) 3px, rgba(255,255,255,0.03) 4px, transparent 4px, transparent 8px);"></div>
+          <!-- Varnish sheen -->
+          <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 40%, rgba(255,255,255,0.04) 100%);"></div>
+
+          <div style="background: #1c1917; border-radius: 8px; padding: 20px; position: relative;">
+            <div style="text-align: center; margin-bottom: 16px;">
+              <span style="font-size: 13px; color: #a8a29e; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+              <div style="flex:1; text-align: center;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; position: relative; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 19px; background: radial-gradient(circle at 38% 35%, #f0dfc4, #d4b896 40%, #c4a67a 70%, #a08860); box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.3);">45</div>
+                <span style="color: #d6d3d1; font-size: 14px;">Rob</span>
+              </div>
+              <div style="width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle, #000 45%, #1a1a1a); border: 2px solid #555; box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);"></div>
+              <div style="flex:1; text-align: center;">
+                <div style="width: 54px; height: 54px; border-radius: 50%; position: relative; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 19px; background: radial-gradient(circle at 38% 35%, #4a4541, #2e2a26 55%, #1f1c19); box-shadow: 0 2px 8px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.1); border: 1px solid #4a4541;">30</div>
+                <span style="color: #d6d3d1; font-size: 14px;">Alex</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C. Rich Layered CSS</h3>
+      <p>Multiple CSS gradient layers to simulate real wood — grain lines, color variation, knot hints, and a subtle varnish sheen. No image files but much richer than simple gradients. Closest to "real wood" you can get without a photo.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="actual-photo" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 24px; background: #1a1a1a;">
+      <!-- Actual image texture approach (using a data URI of a tiny seamless wood pattern) -->
+      <div style="position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
+        <div style="padding: 6px; position: relative; background: #A08558;">
+          <!-- Simulating what a real birch photo texture would look like -->
+          <div style="position: absolute; inset: 0; background: linear-gradient(170deg, #c4ac82 0%, #b89b6e 20%, #a88d5c 35%, #bfa474 50%, #a08558 65%, #c4ac82 80%, #9b8050 100%);"></div>
+          <!-- Very fine, natural-looking grain using noise-like pattern -->
+          <div style="position: absolute; inset: 0; background:
+            repeating-linear-gradient(88.5deg, transparent 0px, transparent 0.5px, rgba(80,55,25,0.06) 0.5px, rgba(80,55,25,0.06) 1px, transparent 1px, transparent 2.5px),
+            repeating-linear-gradient(89.2deg, transparent 0px, transparent 1.5px, rgba(80,55,25,0.04) 1.5px, rgba(80,55,25,0.04) 2px, transparent 2px, transparent 5px),
+            repeating-linear-gradient(87.8deg, transparent 0px, transparent 3px, rgba(255,220,170,0.03) 3px, rgba(255,220,170,0.03) 3.5px, transparent 3.5px, transparent 7px);"></div>
+          <!-- Subtle highlight -->
+          <div style="position: absolute; inset: 0; background: linear-gradient(140deg, rgba(255,255,255,0.1) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.05) 100%);"></div>
+
+          <div style="background: linear-gradient(180deg, #1a1e1a, #0f130f); border-radius: 8px; padding: 20px; position: relative;">
+            <!-- Very subtle felt texture -->
+            <div style="position: absolute; inset: 0; border-radius: 8px; background: radial-gradient(circle at 50% 50%, rgba(30,50,30,0.3), transparent 70%);"></div>
+            <div style="position: relative;">
+              <div style="text-align: center; margin-bottom: 16px;">
+                <span style="font-size: 13px; color: #8a9e8a; letter-spacing: 0.05em; text-transform: uppercase;">Round 3</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; gap: 16px;">
+                <div style="flex:1; text-align: center;">
+                  <div style="width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 19px; background: radial-gradient(circle at 38% 32%, #f5e6ce, #dcc49a 35%, #c4a67a 65%, #a08860 90%); box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.35), 0 0 0 1.5px rgba(160,133,96,0.3);">45</div>
+                  <span style="color: #c5c8c0; font-size: 14px;">Rob</span>
+                </div>
+                <div style="width: 30px; height: 30px; border-radius: 50%; background: radial-gradient(circle, #050505 40%, #151515 65%, #1a1a1a); border: 2px solid #4a4a4a; box-shadow: inset 0 2px 6px rgba(0,0,0,0.9), 0 0 0 1px rgba(0,0,0,0.5);"></div>
+                <div style="flex:1; text-align: center;">
+                  <div style="width: 54px; height: 54px; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #e7e5e4; font-size: 19px; background: radial-gradient(circle at 38% 32%, #504a44, #3a3530 45%, #292524 70%, #1f1c19); box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1.5px rgba(80,74,68,0.3);">30</div>
+                  <span style="color: #c5c8c0; font-size: 14px;">Alex</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>D. Birch + Felt</h3>
+      <p>Light birch-toned wood rail with fine natural grain. Dark green-tinted felt playing surface (like a real board). Dimensional discs with highlight and shadow. The most "I'm looking at a crokinole board" of the options — but still clean and modern, not a wood-panel Photoshop job.</p>
+    </div>
+  </div>
+</div>

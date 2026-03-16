@@ -1,0 +1,101 @@
+<h2>Player Selection: Refined</h2>
+<p class="subtitle">Combining A's chips with B's clean feel. Search expands only when typing.</p>
+
+<div class="cards">
+  <div class="card" data-choice="collapsed" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #1a1610;">
+      <div style="font-family: system-ui; color: #e8e0d6; max-width: 340px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <span style="font-size: 18px; font-weight: 700;">New Game</span>
+          <span style="font-size: 13px; color: #6b5f53;">Back</span>
+        </div>
+
+        <!-- Selected area -->
+        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 24px;">
+          <div style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: #2a4a2e; border: 2px solid #7a9e80;">
+            <div style="font-size: 11px; color: #7a9e80; text-transform: uppercase; letter-spacing: 1px;">Player 1</div>
+            <div style="font-size: 16px; font-weight: 600; margin-top: 4px;">Rob</div>
+          </div>
+          <div style="display: flex; align-items: center; color: #6b5f53; font-size: 13px;">vs</div>
+          <div style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: #2a2520; border: 2px dashed #6b5f53;">
+            <div style="font-size: 11px; color: #6b5f53; text-transform: uppercase; letter-spacing: 1px;">Player 2</div>
+            <div style="font-size: 14px; color: #6b5f53; margin-top: 4px;">tap below</div>
+          </div>
+        </div>
+
+        <!-- Recent chips -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+          <div style="padding: 10px 18px; border-radius: 20px; background: #7a9e80; color: #1a1610; font-weight: 600; font-size: 14px;">Rob ✓</div>
+          <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Dave</div>
+          <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Sarah</div>
+          <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Mike</div>
+        </div>
+
+        <!-- Search (collapsed) -->
+        <div style="padding: 12px 14px; border-radius: 10px; background: #2a2520; border: 1px solid #3d362e; color: #6b5f53; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">🔍</span>
+          <span>Search all players...</span>
+        </div>
+
+        <div style="text-align: center; margin-top: 12px; color: #6b5f53; font-size: 12px;">No list shown — just chips and search</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Default View (before typing)</h3>
+      <p>Clean: just the assignment slots, recent chips, and a search bar. No scrolling list cluttering the screen.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="expanded" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px; background: #1a1610;">
+      <div style="font-family: system-ui; color: #e8e0d6; max-width: 340px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+          <span style="font-size: 18px; font-weight: 700;">New Game</span>
+          <span style="font-size: 13px; color: #6b5f53;">Back</span>
+        </div>
+
+        <!-- Selected area (both filled) -->
+        <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 24px;">
+          <div style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: #2a4a2e; border: 2px solid #7a9e80;">
+            <div style="font-size: 11px; color: #7a9e80; text-transform: uppercase; letter-spacing: 1px;">Player 1</div>
+            <div style="font-size: 16px; font-weight: 600; margin-top: 4px;">Rob</div>
+          </div>
+          <div style="display: flex; align-items: center; color: #6b5f53; font-size: 13px;">vs</div>
+          <div style="flex: 1; text-align: center; padding: 12px; border-radius: 10px; background: #2a2520; border: 2px dashed #6b5f53;">
+            <div style="font-size: 11px; color: #6b5f53; text-transform: uppercase; letter-spacing: 1px;">Player 2</div>
+            <div style="font-size: 14px; color: #6b5f53; margin-top: 4px;">tap below</div>
+          </div>
+        </div>
+
+        <!-- Recent chips -->
+        <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px;">
+          <div style="padding: 10px 18px; border-radius: 20px; background: #7a9e80; color: #1a1610; font-weight: 600; font-size: 14px;">Rob ✓</div>
+          <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Dave</div>
+          <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Sarah</div>
+          <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Mike</div>
+        </div>
+
+        <!-- Search (active with text) -->
+        <div style="padding: 12px 14px; border-radius: 10px 10px 0 0; background: #2a2520; border: 1px solid #cbb48a; border-bottom: none; color: #e8e0d6; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 16px;">🔍</span>
+          <span>Jo</span><span style="display: inline-block; width: 2px; height: 16px; background: #cbb48a; animation: blink 1s infinite;"></span>
+          <span style="margin-left: auto; color: #6b5f53; font-size: 12px;">✕</span>
+        </div>
+
+        <!-- Filtered results -->
+        <div style="border: 1px solid #3d362e; border-top: none; border-radius: 0 0 10px 10px; overflow: hidden;">
+          <div style="padding: 14px; color: #e8e0d6; font-size: 15px; background: #2a2520; border-bottom: 1px solid #3d362e;">Jordan</div>
+          <div style="padding: 14px; color: #e8e0d6; font-size: 15px; background: #2a2520;">John</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Search Active (typing "Jo")</h3>
+      <p>Filtered results appear below the search bar. Large touch targets. Only shows matches — no scrolling through 200 names.</p>
+    </div>
+  </div>
+</div>
+
+<style>
+@keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+</style>

@@ -1,0 +1,89 @@
+<h2>Playing surface tone</h2>
+<p class="subtitle">Same wood rail, same discs — just the inner surface changes. Which feels more like "your board"?</p>
+
+<div class="split">
+  <div class="card" data-choice="warm-dark" onclick="toggleSelect(this)" style="cursor: pointer; flex: 1;">
+    <div class="card-image" style="padding: 20px; background: #111;">
+      <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,0.5);">
+        <!-- Wood rail - warm birch tones, single clean gradient with subtle sheen -->
+        <div style="padding: 7px; position: relative; background: linear-gradient(165deg, #c4a87a 0%, #b59768 25%, #cbb48a 50%, #a8905c 75%, #bda574 100%);">
+          <!-- Single varnish sheen — restraint -->
+          <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.06) 100%); border-radius: 14px;"></div>
+          <!-- Inner edge shadow for depth -->
+          <div style="background: #1f1b17; border-radius: 9px; position: relative; overflow: hidden; box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,0,0,0.3);">
+            <!-- Warm dark surface -->
+            <div style="padding: 28px 20px; position: relative;">
+              <!-- Subtle warm vignette -->
+              <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.2) 100%);"></div>
+              <div style="position: relative;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                  <span style="font-size: 11px; color: #8a8078; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;">Round 3</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+                  <div style="flex:1; text-align: center;">
+                    <!-- Light disc — proper single light source from top-left -->
+                    <div style="width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 20px; background: radial-gradient(circle at 40% 32%, #f5e8d0 0%, #dcc49e 30%, #c4a67a 65%, #9e8458 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);">45</div>
+                    <span style="color: #b8b0a6; font-size: 13px; font-weight: 500; letter-spacing: 0.02em;">Rob</span>
+                  </div>
+                  <!-- Center hole — simple, honest -->
+                  <div style="width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle, #000 50%, #0a0908 70%, #151210); box-shadow: inset 0 2px 6px rgba(0,0,0,1), 0 0 0 2px #3d362e; flex-shrink: 0;"></div>
+                  <div style="flex:1; text-align: center;">
+                    <!-- Dark disc -->
+                    <div style="width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #ddd8d2; font-size: 20px; background: radial-gradient(circle at 40% 32%, #504842 0%, #3a3430 30%, #292420 65%, #1a1714 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);">30</div>
+                    <span style="color: #b8b0a6; font-size: 13px; font-weight: 500; letter-spacing: 0.02em;">Alex</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Warm Dark</h3>
+      <p>Espresso-toned surface. Warm and cohesive with the birch rail. Feels like dark-stained wood or a leather playing surface.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="dark-green" onclick="toggleSelect(this)" style="cursor: pointer; flex: 1;">
+    <div class="card-image" style="padding: 20px; background: #111;">
+      <div style="border-radius: 14px; overflow: hidden; box-shadow: 0 6px 24px rgba(0,0,0,0.5);">
+        <!-- Same wood rail -->
+        <div style="padding: 7px; position: relative; background: linear-gradient(165deg, #c4a87a 0%, #b59768 25%, #cbb48a 50%, #a8905c 75%, #bda574 100%);">
+          <div style="position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.06) 100%); border-radius: 14px;"></div>
+          <!-- Inner edge shadow -->
+          <div style="background: #141a15; border-radius: 9px; position: relative; overflow: hidden; box-shadow: inset 0 2px 8px rgba(0,0,0,0.6), inset 0 0 2px rgba(0,0,0,0.3);">
+            <!-- Dark green surface -->
+            <div style="padding: 28px 20px; position: relative;">
+              <!-- Green-tinted vignette -->
+              <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at center, rgba(20,35,20,0.15) 0%, rgba(0,0,0,0.25) 100%);"></div>
+              <div style="position: relative;">
+                <div style="text-align: center; margin-bottom: 20px;">
+                  <span style="font-size: 11px; color: #6e8570; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;">Round 3</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 12px;">
+                  <div style="flex:1; text-align: center;">
+                    <!-- Light disc — same as warm dark -->
+                    <div style="width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #2c1f10; font-size: 20px; background: radial-gradient(circle at 40% 32%, #f5e8d0 0%, #dcc49e 30%, #c4a67a 65%, #9e8458 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);">45</div>
+                    <span style="color: #a8b0a4; font-size: 13px; font-weight: 500; letter-spacing: 0.02em;">Rob</span>
+                  </div>
+                  <!-- Center hole -->
+                  <div style="width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle, #000 50%, #080a08 70%, #101410); box-shadow: inset 0 2px 6px rgba(0,0,0,1), 0 0 0 2px #2e3830; flex-shrink: 0;"></div>
+                  <div style="flex:1; text-align: center;">
+                    <!-- Dark disc -->
+                    <div style="width: 58px; height: 58px; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #ddd8d2; font-size: 20px; background: radial-gradient(circle at 40% 32%, #504842 0%, #3a3430 30%, #292420 65%, #1a1714 100%); box-shadow: 0 4px 12px rgba(0,0,0,0.5), 0 1px 3px rgba(0,0,0,0.3);">30</div>
+                    <span style="color: #a8b0a4; font-size: 13px; font-weight: 500; letter-spacing: 0.02em;">Alex</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Dark Green Felt</h3>
+      <p>Subtle green tint like the actual playing surface. The "ROUND 3" text picks up the green. Feels more literally like looking down at the board.</p>
+    </div>
+  </div>
+</div>

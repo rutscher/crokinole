@@ -1,0 +1,237 @@
+<h2>Full Design Preview</h2>
+<p class="subtitle">Complete game screen with new center bar, swipe-to-confirm, and locked state</p>
+
+<div class="cards">
+  <!-- State 1: Mid-round, both players placing -->
+  <div class="card" data-choice="active" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #0c0a08;">
+      <div style="width: 280px; height: 520px; margin: 0 auto; display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid #333;">
+
+        <!-- P1 half (rotated) -->
+        <div style="flex: 1; position: relative; background: #0c0a08; transform: rotate(180deg);">
+          <!-- Corner info -->
+          <div style="position: absolute; top: 6px; left: 8px; z-index: 2;">
+            <div style="font-size: 8px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="8" rx="2" fill="#b8a898"/><rect x="10" y="12" width="3.5" height="8" rx="1.5" fill="#8a8078"/></svg>
+          </div>
+          <div style="position: absolute; top: 4px; right: 8px; text-align: right; z-index: 2;">
+            <div style="font-size: 18px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+            <div style="font-size: 8px; color: #8a8078;">3 of 8</div>
+          </div>
+          <!-- Board -->
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 22%, #283038 50%, #2a3530 72%, #1e2520 100%); box-shadow: inset 0 0 8px rgba(0,0,0,0.5); position: relative;">
+              <!-- Ring lines -->
+              <div style="position: absolute; inset: 12px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 40px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 68px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <!-- Sample discs -->
+              <div style="position: absolute; top: 18px; left: 50px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 2px rgba(0,0,0,0.5);"></div>
+              <div style="position: absolute; top: 45px; right: 30px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 2px rgba(0,0,0,0.5);"></div>
+              <div style="position: absolute; top: 35px; left: 30px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); border: 1px solid #5a5450; box-shadow: 0 1px 2px rgba(0,0,0,0.5);"></div>
+            </div>
+          </div>
+          <!-- 20s tray -->
+          <div style="position: absolute; bottom: 6px; left: 8px; z-index: 2; font-size: 7px; color: #8a8078; display: flex; align-items: center; gap: 2px;">
+            20s
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #c8a862;"></div>
+            <div style="width: 12px; height: 12px; border-radius: 50%; border: 1px dashed #3d362e; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #5a524a;">+</div>
+          </div>
+          <!-- Swipe hint -->
+          <div style="position: absolute; bottom: 6px; right: 8px; z-index: 2; font-size: 7px; color: #5a524a; display: flex; align-items: center; gap: 2px;">
+            swipe → done
+          </div>
+        </div>
+
+        <!-- Wood rail -->
+        <div style="height: 2px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e); flex-shrink: 0;"></div>
+
+        <!-- Center bar — just the score bar + menu/round -->
+        <div style="padding: 5px 8px; background: #12100e; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;">
+          <!-- Score bar -->
+          <div style="position: relative; height: 24px; background: rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.4)); border-radius: 12px 0 0 12px;"></div>
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.4)); border-radius: 0 12px 12px 0;"></div>
+            <!-- P1 scores (rotated) -->
+            <div style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 2px; z-index: 2;">
+              <span style="font-size: 10px; font-weight: bold; color: #1a1400;">42</span>
+              <span style="font-size: 7px; color: rgba(0,0,0,0.4);">-</span>
+              <span style="font-size: 9px; font-weight: 600; color: rgba(0,0,0,0.5);">37</span>
+            </div>
+            <!-- P2 scores (normal) -->
+            <div style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; z-index: 2;">
+              <span style="font-size: 10px; font-weight: bold; color: #ddd8d0;">37</span>
+              <span style="font-size: 7px; color: rgba(255,255,255,0.3);">-</span>
+              <span style="font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5);">42</span>
+            </div>
+            <div style="position: absolute; left: 50%; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,0.12);"></div>
+          </div>
+          <!-- Menu + Round -->
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.4;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+            </button>
+            <span style="font-size: 9px; font-weight: 600; color: #5a524a;">R3</span>
+            <div style="width: 20px;"></div>
+          </div>
+        </div>
+
+        <!-- Wood rail -->
+        <div style="height: 2px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e); flex-shrink: 0;"></div>
+
+        <!-- P2 half (normal) -->
+        <div style="flex: 1; position: relative; background: #0c0a08;">
+          <div style="position: absolute; top: 6px; left: 8px; z-index: 2;">
+            <div style="font-size: 8px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">MIKE</div>
+          </div>
+          <div style="position: absolute; top: 4px; right: 8px; text-align: right; z-index: 2;">
+            <div style="font-size: 18px; font-weight: bold; color: #ddd8d0; line-height: 1;">+15</div>
+            <div style="font-size: 8px; color: #8a8078;">2 of 8</div>
+          </div>
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 22%, #283038 50%, #2a3530 72%, #1e2520 100%); box-shadow: inset 0 0 8px rgba(0,0,0,0.5); position: relative;">
+              <div style="position: absolute; inset: 12px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 40px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 68px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; bottom: 25px; left: 40px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); border: 1px solid #5a5450; box-shadow: 0 1px 2px rgba(0,0,0,0.5);"></div>
+              <div style="position: absolute; bottom: 45px; right: 35px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 2px rgba(0,0,0,0.5);"></div>
+            </div>
+          </div>
+          <div style="position: absolute; bottom: 6px; left: 8px; z-index: 2; font-size: 7px; color: #8a8078; display: flex; align-items: center; gap: 2px;">
+            20s
+            <div style="width: 12px; height: 12px; border-radius: 50%; border: 1px dashed #3d362e; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #5a524a;">+</div>
+          </div>
+          <div style="position: absolute; bottom: 6px; right: 8px; z-index: 2; font-size: 7px; color: #5a524a; display: flex; align-items: center; gap: 2px;">
+            swipe → done
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Active: Both Players Placing</h3>
+      <p>Boards are interactive, subtle "swipe → done" hint in bottom-right. Center bar is just the score bar + tiny menu/round row. Clean and focused.</p>
+    </div>
+  </div>
+
+  <!-- State 2: P1 confirmed, P2 still placing -->
+  <div class="card" data-choice="partial" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #0c0a08;">
+      <div style="width: 280px; height: 520px; margin: 0 auto; display: flex; flex-direction: column; border-radius: 16px; overflow: hidden; border: 1px solid #333;">
+
+        <!-- P1 half (LOCKED — rotated) -->
+        <div style="flex: 1; position: relative; background: #0c0a08; transform: rotate(180deg);">
+          <div style="position: absolute; top: 6px; left: 8px; z-index: 3;">
+            <div style="font-size: 8px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="8" rx="2" fill="#b8a898"/><rect x="10" y="12" width="3.5" height="8" rx="1.5" fill="#8a8078"/></svg>
+          </div>
+          <div style="position: absolute; top: 4px; right: 8px; text-align: right; z-index: 3;">
+            <div style="font-size: 18px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+            <div style="font-size: 8px; color: #8a8078;">3 of 8</div>
+          </div>
+          <!-- Board (dimmed) -->
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 22%, #283038 50%, #2a3530 72%, #1e2520 100%); box-shadow: inset 0 0 8px rgba(0,0,0,0.5); opacity: 0.5; position: relative;">
+              <div style="position: absolute; inset: 12px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 40px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 68px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; top: 18px; left: 50px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898);"></div>
+              <div style="position: absolute; top: 45px; right: 30px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898);"></div>
+              <div style="position: absolute; top: 35px; left: 30px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); border: 1px solid #5a5450;"></div>
+            </div>
+          </div>
+          <!-- Lock overlay -->
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 2; pointer-events: none;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 2px;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(90,117,96,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <span style="font-size: 9px; color: rgba(90,117,96,0.6); font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Locked In</span>
+            </div>
+          </div>
+          <div style="position: absolute; bottom: 6px; left: 8px; z-index: 3; font-size: 7px; color: #8a8078; display: flex; align-items: center; gap: 2px;">
+            20s
+            <div style="width: 10px; height: 10px; border-radius: 50%; background: #c8a862;"></div>
+          </div>
+          <div style="position: absolute; bottom: 6px; right: 8px; z-index: 3; font-size: 7px; color: #5a7560;">
+            ← swipe to unlock
+          </div>
+        </div>
+
+        <div style="height: 2px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e); flex-shrink: 0;"></div>
+
+        <!-- Center bar -->
+        <div style="padding: 5px 8px; background: #12100e; flex-shrink: 0; display: flex; flex-direction: column; gap: 3px;">
+          <div style="position: relative; height: 24px; background: rgba(255,255,255,0.04); border-radius: 12px; overflow: hidden;">
+            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.4)); border-radius: 12px 0 0 12px;"></div>
+            <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.4)); border-radius: 0 12px 12px 0;"></div>
+            <div style="position: absolute; left: 5px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 2px; z-index: 2;">
+              <span style="font-size: 10px; font-weight: bold; color: #1a1400;">42</span>
+              <span style="font-size: 7px; color: rgba(0,0,0,0.4);">-</span>
+              <span style="font-size: 9px; font-weight: 600; color: rgba(0,0,0,0.5);">37</span>
+            </div>
+            <div style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; z-index: 2;">
+              <span style="font-size: 10px; font-weight: bold; color: #ddd8d0;">37</span>
+              <span style="font-size: 7px; color: rgba(255,255,255,0.3);">-</span>
+              <span style="font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5);">42</span>
+            </div>
+            <div style="position: absolute; left: 50%; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,0.12);"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <button style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.4;">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+            </button>
+            <span style="font-size: 9px; font-weight: 600; color: #5a524a;">R3</span>
+            <div style="width: 20px;"></div>
+          </div>
+        </div>
+
+        <div style="height: 2px; background: linear-gradient(90deg, #5a4d3e, #4a3f32, #3a3128, #4a3f32, #5a4d3e); flex-shrink: 0;"></div>
+
+        <!-- P2 half (still active) -->
+        <div style="flex: 1; position: relative; background: #0c0a08;">
+          <div style="position: absolute; top: 6px; left: 8px; z-index: 2;">
+            <div style="font-size: 8px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">MIKE</div>
+          </div>
+          <div style="position: absolute; top: 4px; right: 8px; text-align: right; z-index: 2;">
+            <div style="font-size: 18px; font-weight: bold; color: #ddd8d0; line-height: 1;">+15</div>
+            <div style="font-size: 8px; color: #8a8078;">2 of 8</div>
+          </div>
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;">
+            <div style="width: 170px; height: 170px; border-radius: 50%; background: radial-gradient(circle, #1a1400 8%, #3a2820 22%, #283038 50%, #2a3530 72%, #1e2520 100%); box-shadow: inset 0 0 8px rgba(0,0,0,0.5); position: relative;">
+              <div style="position: absolute; inset: 12px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 40px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; inset: 68px; border-radius: 50%; border: 1px solid #4a6050;"></div>
+              <div style="position: absolute; bottom: 25px; left: 40px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); border: 1px solid #5a5450;"></div>
+              <div style="position: absolute; bottom: 45px; right: 35px; width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898);"></div>
+            </div>
+          </div>
+          <div style="position: absolute; bottom: 6px; left: 8px; z-index: 2; font-size: 7px; color: #8a8078; display: flex; align-items: center; gap: 2px;">
+            20s
+            <div style="width: 12px; height: 12px; border-radius: 50%; border: 1px dashed #3d362e; display: flex; align-items: center; justify-content: center; font-size: 8px; color: #5a524a;">+</div>
+          </div>
+          <div style="position: absolute; bottom: 6px; right: 8px; z-index: 2; font-size: 7px; color: #5a524a;">
+            swipe → done
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>P1 Locked, P2 Still Placing</h3>
+      <p>P1's board dimmed with lock icon + "Locked In" overlay. "← swipe to unlock" hint. P2 still active and placing. When P2 swipes right too, round auto-ends.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <h3 style="margin: 0 0 8px; font-size: 14px;">Summary of changes</h3>
+  <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #aaa; line-height: 1.8;">
+    <li><strong>Score bar:</strong> Opposing progress bar with integrated dual scores (your score bold, opponent muted). Shows committed game score only.</li>
+    <li><strong>Center bar:</strong> Score bar + tiny menu/R# row. No End Round button.</li>
+    <li><strong>Swipe right:</strong> Confirms "I'm done recording." Board dims, lock icon overlay appears.</li>
+    <li><strong>Swipe left:</strong> Un-confirms. Board becomes interactive again.</li>
+    <li><strong>Both confirmed:</strong> Round auto-ends, difference-based scoring calculates.</li>
+    <li><strong>End Round:</strong> Moved to menu for early-end edge cases.</li>
+    <li><strong>Undo button:</strong> Removed. Tap-to-remove handles disc corrections. Swipe-left unlocks confirmed state.</li>
+  </ul>
+</div>

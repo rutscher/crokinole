@@ -1,0 +1,149 @@
+<h2>Section 1: Game View — Updated</h2>
+<p class="subtitle">Earth tone ring buttons integrated into the board frame. Does this feel right as a whole?</p>
+
+<div class="mockup" style="max-width: 390px; margin: 0 auto;">
+  <div class="mockup-header">Game View — with earth tone discs</div>
+  <div class="mockup-body" style="padding: 0; background: #000; overflow: hidden;">
+    <div style="display: flex; flex-direction: column; height: 720px; font-family: -apple-system, system-ui, sans-serif;">
+
+      <!-- === PLAYER 1 HALF (top) === -->
+      <div style="flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+        <!-- Wood rail top edge -->
+        <div style="height: 7px; background: linear-gradient(90deg, #b59768, #cbb48a, #a8905c, #c4a87a, #b59768); position: relative;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.1), transparent);"></div>
+        </div>
+        <!-- Playing surface -->
+        <div style="flex: 1; background: #1f1b17; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px;">
+          <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%);"></div>
+          <div style="position: absolute; top: 0; left: 0; right: 0; height: 12px; background: linear-gradient(180deg, rgba(0,0,0,0.3), transparent);"></div>
+
+          <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;">
+            <!-- Name + badges -->
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; color: #8a8078; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;">Rob</span>
+              <span style="font-size: 10px; font-weight: 700; background: linear-gradient(135deg, #c8a862, #b09050); color: #1a1400; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.05em;">HAMMER</span>
+            </div>
+
+            <!-- Game score -->
+            <div style="font-size: 48px; font-weight: 700; color: #e8e0d6; font-variant-numeric: tabular-nums; line-height: 1;">25</div>
+
+            <!-- Round score -->
+            <div style="font-size: 28px; font-weight: 600; color: #b8a898; font-variant-numeric: tabular-nums;">+15</div>
+
+            <!-- Ring buttons — earth tones -->
+            <div style="display: flex; gap: 14px; margin-top: 6px;">
+              <!-- 5 - sage -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #ddd8d0; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #5a7560, #486050 50%, #3a5040);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);">5</div>
+              <!-- 10 - slate -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #ddd8d0; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #6a7580, #556570 50%, #485860);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);">10</div>
+              <!-- 15 - clay -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #ddd8d0; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #8e5548, #7a4438 50%, #663830);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);">15</div>
+              <!-- 20 - brass -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #1a1400; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #c8a862, #b09050 50%, #958040);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);">20</div>
+            </div>
+
+            <!-- Undo -->
+            <button style="margin-top: 6px; padding: 8px 24px; border-radius: 8px; border: 1px solid #3d362e; background: transparent; color: #8a8078; font-size: 14px; font-weight: 500; cursor: pointer; min-height: 40px;">Undo</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- === CENTER BAR === -->
+      <div style="position: relative; z-index: 2;">
+        <div style="background: linear-gradient(90deg, #b59768, #cbb48a, #a8905c, #c4a87a, #b59768); position: relative; padding: 1px 0;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 50%, rgba(0,0,0,0.08));"></div>
+        </div>
+
+        <div style="background: #1a1610; padding: 10px 14px;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 10px; font-size: 13px; margin-bottom: 8px;">
+            <span style="font-weight: 700; color: #c9a97a; font-variant-numeric: tabular-nums;">40</span>
+            <span style="color: #6b5f53;">Rob +10</span>
+            <span style="font-weight: 700; color: #6b5f53; font-variant-numeric: tabular-nums;">30</span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; gap: 6px;">
+              <button style="padding: 6px 10px; border: none; background: transparent; color: #6b5f53; font-size: 13px; cursor: pointer;">Menu</button>
+              <button style="padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(142,85,72,0.3); background: transparent; color: #8e5548; font-size: 12px; cursor: pointer;">Undo Round</button>
+            </div>
+
+            <button style="padding: 10px 28px; border-radius: 8px; border: none; font-weight: 700; font-size: 15px; cursor: pointer; min-height: 44px;
+              background: linear-gradient(135deg, #c9a97a, #b5935e);
+              color: #1a1400;
+              box-shadow: 0 2px 8px rgba(180,140,100,0.25);">End Round</button>
+
+            <span style="font-size: 13px; color: #6b5f53; font-weight: 500; min-width: 2rem; text-align: right;">R3</span>
+          </div>
+        </div>
+
+        <div style="background: linear-gradient(90deg, #b59768, #cbb48a, #a8905c, #c4a87a, #b59768); position: relative; padding: 1px 0;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 50%, rgba(0,0,0,0.08));"></div>
+        </div>
+      </div>
+
+      <!-- === PLAYER 2 HALF (bottom) === -->
+      <div style="flex: 1; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+        <div style="flex: 1; background: #1f1b17; position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; padding: 8px;">
+          <div style="position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.15) 100%);"></div>
+          <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 12px; background: linear-gradient(0deg, rgba(0,0,0,0.3), transparent);"></div>
+
+          <div style="position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; color: #8a8078; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500;">Alex</span>
+              <span style="font-size: 10px; font-weight: 700; background: rgba(90,117,96,0.25); color: #7a9e80; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.05em;">LEAD</span>
+            </div>
+
+            <div style="font-size: 48px; font-weight: 700; color: #7a9e80; font-variant-numeric: tabular-nums; line-height: 1;">30</div>
+
+            <div style="font-size: 28px; font-weight: 600; color: #b8a898; font-variant-numeric: tabular-nums;">+0</div>
+
+            <!-- Ring buttons — earth tones (reversed order for P2) -->
+            <div style="display: flex; gap: 14px; margin-top: 6px;">
+              <!-- 20 - brass -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #1a1400; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #c8a862, #b09050 50%, #958040);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2);">20</div>
+              <!-- 15 - clay -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #ddd8d0; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #8e5548, #7a4438 50%, #663830);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);">15</div>
+              <!-- 10 - slate -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #ddd8d0; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #6a7580, #556570 50%, #485860);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);">10</div>
+              <!-- 5 - sage -->
+              <div style="width: 64px; height: 64px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 20px; color: #ddd8d0; cursor: pointer;
+                background: radial-gradient(circle at 40% 32%, #5a7560, #486050 50%, #3a5040);
+                box-shadow: 0 3px 10px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.12);">5</div>
+            </div>
+
+            <button style="margin-top: 6px; padding: 8px 24px; border-radius: 8px; border: 1px solid #3d362e; background: transparent; color: #8a8078; font-size: 14px; font-weight: 500; cursor: pointer; opacity: 0.4; min-height: 40px;">Undo</button>
+          </div>
+        </div>
+        <!-- Wood rail bottom edge -->
+        <div style="height: 7px; background: linear-gradient(90deg, #b59768, #cbb48a, #a8905c, #c4a87a, #b59768); position: relative;">
+          <div style="position: absolute; inset: 0; background: linear-gradient(0deg, rgba(255,255,255,0.1), transparent);"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top: 24px;">
+  <h3>What changed from v1</h3>
+  <ul style="list-style: none; padding: 0; margin: 0;">
+    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);"><strong>Ring buttons</strong> → earth tones (sage 5, slate 10, clay 15, brass 20)</li>
+    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);"><strong>HAMMER badge</strong> → brass gradient instead of bright amber</li>
+    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06);"><strong>LEAD badge + score</strong> → muted sage green instead of bright emerald</li>
+    <li style="padding: 8px 0;"><strong>Undo Round</strong> → clay-toned instead of bright red</li>
+  </ul>
+</div>

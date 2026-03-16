@@ -1,0 +1,117 @@
+<h2>Corner Info Layout</h2>
+<p class="subtitle">Board maximized, info tucked into corners. Which info goes where?</p>
+
+<div class="cards">
+  <!-- Option A: Score corners, 20s bottom strip -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 12px; background: #1a1916;">
+      <div style="position: relative; width: 260px; height: 240px; margin: 0 auto;">
+        <!-- Top-left corner: Player name + hammer -->
+        <div style="position: absolute; top: 0; left: 0; z-index: 2;">
+          <div style="font-size: 10px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</div>
+          <div style="display: flex; align-items: center; gap: 4px; margin-top: 2px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="8" rx="2" fill="#b8a898"/><rect x="10" y="12" width="3.5" height="8" rx="1.5" fill="#8a8078"/></svg>
+          </div>
+        </div>
+
+        <!-- Top-right corner: Round score -->
+        <div style="position: absolute; top: 0; right: 0; text-align: right; z-index: 2;">
+          <div style="font-size: 28px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+          <div style="font-size: 10px; color: #8a8078;">5 of 8</div>
+        </div>
+
+        <!-- Board (centered, large) -->
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 190px; height: 190px;">
+          <div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 24%, #3a5040 24%, #486050 44%, #3a5040 60%, #2a3530 76%, #1e2520 100%); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);"></div>
+          <div style="position: absolute; inset: 30px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 28%, #485860 28%, #556570 58%, #485860 85%); box-shadow: inset 0 0 6px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; inset: 54px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 32%, #7a4438 32%, #8e5548 62%, #663830 90%); box-shadow: inset 0 0 4px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; inset: 74px; border-radius: 50%; background: radial-gradient(circle, #0a0800 0%, #1a1400 60%, #2a2010 100%); box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;">
+            <span style="color: #c8a862; font-size: 12px; font-weight: bold;">20</span>
+          </div>
+          <!-- Sample discs: light (own) and dark (opponent) -->
+          <div style="position: absolute; top: 12px; left: 58px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+          <div style="position: absolute; top: 8px; right: 50px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+          <div style="position: absolute; top: 46px; right: 34px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #5a5450;"></div>
+          <div style="position: absolute; top: 72px; left: 38px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+          <div style="position: absolute; bottom: 40px; right: 42px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #5a5450;"></div>
+        </div>
+
+        <!-- Bottom-left corner: 20s tray -->
+        <div style="position: absolute; bottom: 0; left: 0; z-index: 2;">
+          <div style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px;">20s</div>
+          <div style="display: flex; gap: 3px;">
+            <div style="width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c8a862, #b09050); box-shadow: 0 1px 2px rgba(0,0,0,0.4);"></div>
+            <div style="width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c8a862, #b09050); box-shadow: 0 1px 2px rgba(0,0,0,0.4);"></div>
+            <div style="width: 18px; height: 18px; border-radius: 50%; border: 1px dashed #3d362e;"></div>
+          </div>
+        </div>
+
+        <!-- Bottom-right corner: Undo -->
+        <div style="position: absolute; bottom: 0; right: 0; z-index: 2;">
+          <div style="padding: 5px 14px; border: 1px solid #3d362e; border-radius: 6px; font-size: 11px; color: #b8a898; cursor: pointer;">Undo</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: All Four Corners</h3>
+      <p>Name/hammer top-left, round score top-right, 20s tray bottom-left, undo bottom-right. Every corner used, board fully maximized.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Top corners only, bottom strip -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 12px; background: #1a1916;">
+      <div style="position: relative; width: 260px; height: 240px; margin: 0 auto;">
+        <!-- Top-left corner: Player name + score -->
+        <div style="position: absolute; top: 0; left: 0; z-index: 2;">
+          <div style="display: flex; align-items: baseline; gap: 6px;">
+            <span style="font-size: 10px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">ROB</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="5" y="4" width="14" height="8" rx="2" fill="#b8a898"/><rect x="10" y="12" width="3.5" height="8" rx="1.5" fill="#8a8078"/></svg>
+          </div>
+        </div>
+
+        <!-- Top-right corner: Round score + disc count -->
+        <div style="position: absolute; top: 0; right: 0; text-align: right; z-index: 2;">
+          <div style="font-size: 28px; font-weight: bold; color: #ddd8d0; line-height: 1;">+25</div>
+          <div style="font-size: 10px; color: #8a8078;">5 of 8</div>
+        </div>
+
+        <!-- Board (centered, large) -->
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 190px; height: 190px;">
+          <div style="position: absolute; inset: 0; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 24%, #3a5040 24%, #486050 44%, #3a5040 60%, #2a3530 76%, #1e2520 100%); box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3);"></div>
+          <div style="position: absolute; inset: 30px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 28%, #485860 28%, #556570 58%, #485860 85%); box-shadow: inset 0 0 6px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; inset: 54px; border-radius: 50%; background: radial-gradient(circle, transparent 0%, transparent 32%, #7a4438 32%, #8e5548 62%, #663830 90%); box-shadow: inset 0 0 4px rgba(0,0,0,0.4);"></div>
+          <div style="position: absolute; inset: 74px; border-radius: 50%; background: radial-gradient(circle, #0a0800 0%, #1a1400 60%, #2a2010 100%); box-shadow: inset 0 2px 6px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center;">
+            <span style="color: #c8a862; font-size: 12px; font-weight: bold;">20</span>
+          </div>
+          <!-- Sample discs -->
+          <div style="position: absolute; top: 12px; left: 58px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+          <div style="position: absolute; top: 46px; right: 34px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #4a4440, #2a2420); box-shadow: 0 1px 3px rgba(0,0,0,0.5); border: 1px solid #5a5450;"></div>
+          <div style="position: absolute; top: 72px; left: 38px; width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #e8dcc8, #c8b898); box-shadow: 0 1px 3px rgba(0,0,0,0.5);"></div>
+        </div>
+
+        <!-- Bottom strip: 20s + undo centered -->
+        <div style="position: absolute; bottom: 0; left: 0; right: 0; display: flex; align-items: center; justify-content: center; gap: 16px; z-index: 2;">
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 9px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px;">20s</span>
+            <div style="display: flex; gap: 3px;">
+              <div style="width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c8a862, #b09050); box-shadow: 0 1px 2px rgba(0,0,0,0.4);"></div>
+              <div style="width: 18px; height: 18px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #c8a862, #b09050); box-shadow: 0 1px 2px rgba(0,0,0,0.4);"></div>
+              <div style="width: 18px; height: 18px; border-radius: 50%; border: 1px dashed #3d362e;"></div>
+            </div>
+          </div>
+          <div style="width: 1px; height: 16px; background: #3d362e;"></div>
+          <div style="padding: 5px 14px; border: 1px solid #3d362e; border-radius: 6px; font-size: 11px; color: #b8a898; cursor: pointer;">Undo</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Top Corners + Bottom Strip</h3>
+      <p>Name/hammer top-left, score top-right. 20s tray and undo centered in a bottom strip below the board. Bottom corners stay open.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <p style="margin: 0; font-size: 13px; color: #888;">My recommendation: <strong>A (all four corners)</strong> — uses the dead space most efficiently and keeps nothing below the board, giving the board even more vertical room. Everything is at the perimeter where it won't compete with the tappable rings.</p>
+</div>

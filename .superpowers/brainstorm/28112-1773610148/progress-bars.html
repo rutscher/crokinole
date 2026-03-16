@@ -1,0 +1,136 @@
+<h2>Progress Bar Styles</h2>
+<p class="subtitle">Same layout (B), different bar visual treatments. All show P1 at 42% and P2 at 37%.</p>
+
+<div class="cards">
+  <!-- Style 1: Thin flat bars (current) -->
+  <div class="card" data-choice="thin-flat" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; transform: rotate(180deg);">
+          <div style="width: 42%; height: 100%; background: linear-gradient(90deg, #c8a862, #b09050); border-radius: 3px;"></div>
+        </div>
+        <div style="text-align: center; font-size: 10px; color: #5a524a;">End Round</div>
+        <div style="height: 5px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden;">
+          <div style="width: 37%; height: 100%; background: linear-gradient(90deg, #6a7580, #556570); border-radius: 3px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>1: Thin Flat</h3>
+      <p>5px bars, solid gradient fill. Minimal and clean.</p>
+    </div>
+  </div>
+
+  <!-- Style 2: Chunky with glow -->
+  <div class="card" data-choice="chunky-glow" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <div style="height: 10px; background: rgba(255,255,255,0.04); border-radius: 5px; overflow: hidden; transform: rotate(180deg); border: 1px solid rgba(255,255,255,0.05);">
+          <div style="width: 42%; height: 100%; background: linear-gradient(90deg, #c8a862, #dab872); border-radius: 4px; box-shadow: 0 0 8px rgba(200,168,98,0.4);"></div>
+        </div>
+        <div style="text-align: center; font-size: 10px; color: #5a524a;">End Round</div>
+        <div style="height: 10px; background: rgba(255,255,255,0.04); border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
+          <div style="width: 37%; height: 100%; background: linear-gradient(90deg, #6a7580, #8a95a0); border-radius: 4px; box-shadow: 0 0 8px rgba(106,117,128,0.4);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>2: Chunky + Glow</h3>
+      <p>10px bars with inner glow and subtle border. More visible, more presence.</p>
+    </div>
+  </div>
+
+  <!-- Style 3: Segmented (10 segments = 10 points each) -->
+  <div class="card" data-choice="segmented" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- P1: 42/100 = 4.2 segments filled -->
+        <div style="display: flex; gap: 2px; height: 8px; transform: rotate(180deg);">
+          <div style="flex: 1; background: #c8a862; border-radius: 2px;"></div>
+          <div style="flex: 1; background: #c8a862; border-radius: 2px;"></div>
+          <div style="flex: 1; background: #c8a862; border-radius: 2px;"></div>
+          <div style="flex: 1; background: #c8a862; border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(200,168,98,0.2); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+        </div>
+        <div style="text-align: center; font-size: 10px; color: #5a524a;">End Round</div>
+        <!-- P2: 37/100 = 3.7 segments -->
+        <div style="display: flex; gap: 2px; height: 8px;">
+          <div style="flex: 1; background: #6a7580; border-radius: 2px;"></div>
+          <div style="flex: 1; background: #6a7580; border-radius: 2px;"></div>
+          <div style="flex: 1; background: #6a7580; border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(106,117,128,0.3); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+          <div style="flex: 1; background: rgba(255,255,255,0.04); border-radius: 2px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>3: Segmented</h3>
+      <p>10 blocks = 10 points each. Partially filled block for remainder. Easy to read at a glance — "4 blocks filled = about 40".</p>
+    </div>
+  </div>
+
+  <!-- Style 4: Opposing arrows (bars grow toward each other) -->
+  <div class="card" data-choice="opposing" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <!-- Single bar, P1 grows from left, P2 grows from right -->
+        <div style="position: relative; height: 14px; background: rgba(255,255,255,0.04); border-radius: 7px; overflow: hidden;">
+          <!-- P1 from left -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.6)); border-radius: 7px 0 0 7px;"></div>
+          <!-- P2 from right -->
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.6)); border-radius: 0 7px 7px 0;"></div>
+          <!-- Center gap indicator -->
+          <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.1);"></div>
+        </div>
+        <div style="text-align: center; font-size: 10px; color: #5a524a;">End Round</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>4: Opposing</h3>
+      <p>Single bar — P1 (gold) grows from left, P2 (steel) from right. When they meet in the middle, someone's close to winning. Compact — just one bar.</p>
+    </div>
+  </div>
+
+  <!-- Style 5: Arc / semi-circle gauge -->
+  <div class="card" data-choice="arc" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px 20px; background: #12100e; text-align: center;">
+      <div style="display: flex; justify-content: center; gap: 20px; align-items: center;">
+        <!-- P1 arc -->
+        <div style="position: relative; width: 50px; height: 28px; overflow: hidden;">
+          <svg viewBox="0 0 100 55" style="width: 50px; height: 28px;">
+            <!-- Track -->
+            <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8" stroke-linecap="round"/>
+            <!-- Fill (42%) -->
+            <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#c8a862" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="72.8"/>
+          </svg>
+        </div>
+        <div style="font-size: 10px; color: #5a524a;">End Round</div>
+        <!-- P2 arc -->
+        <div style="position: relative; width: 50px; height: 28px; overflow: hidden;">
+          <svg viewBox="0 0 100 55" style="width: 50px; height: 28px;">
+            <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8" stroke-linecap="round"/>
+            <path d="M 10 50 A 40 40 0 0 1 90 50" fill="none" stroke="#6a7580" stroke-width="8" stroke-linecap="round" stroke-dasharray="125.6" stroke-dashoffset="79.1"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>5: Arc Gauges</h3>
+      <p>Semi-circle gauges, one per player. Compact, readable from both orientations since they're symmetrical shapes. Gaming feel.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <p style="margin: 0; font-size: 13px; color: #888;">My recommendation: <strong>3 (Segmented)</strong> — easiest to read at a glance from either orientation. The discrete blocks make it obvious how close someone is to winning without needing to read numbers. But <strong>4 (Opposing)</strong> is a close second for its compactness and the drama of the bars racing toward each other.</p>
+</div>

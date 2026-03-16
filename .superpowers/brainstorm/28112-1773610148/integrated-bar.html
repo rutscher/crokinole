@@ -1,0 +1,165 @@
+<h2>Scores Integrated Inside the Bar</h2>
+<p class="subtitle">One single bar element — scores sit inside their respective fill areas, mirrored for each player</p>
+
+<div class="cards">
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px 12px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <!-- The bar — taller to fit text -->
+        <div style="position: relative; height: 28px; background: rgba(255,255,255,0.04); border-radius: 14px; overflow: hidden;">
+          <!-- P1 fill from left (42%) -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.5)); border-radius: 14px 0 0 14px;"></div>
+          <!-- P2 fill from right (37%) -->
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.5)); border-radius: 0 14px 14px 0;"></div>
+
+          <!-- P1's readout (left side, rotated for P1) -->
+          <div style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 3px; z-index: 2;">
+            <span style="font-size: 12px; font-weight: bold; color: #1a1400;">42</span>
+            <span style="font-size: 9px; color: rgba(0,0,0,0.4);">-</span>
+            <span style="font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.5);">37</span>
+          </div>
+
+          <!-- P2's readout (right side, normal for P2) -->
+          <div style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 3px; z-index: 2;">
+            <span style="font-size: 12px; font-weight: bold; color: #ddd8d0;">37</span>
+            <span style="font-size: 9px; color: rgba(255,255,255,0.3);">-</span>
+            <span style="font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);">42</span>
+          </div>
+
+          <!-- Center line -->
+          <div style="position: absolute; left: 50%; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,0.15);"></div>
+        </div>
+
+        <!-- Controls row -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+          </button>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+            <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+          </div>
+          <div style="width: 24px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: Your Score Bold, Opponent Muted</h3>
+      <p>Each side: your score large+bold, dash, opponent score smaller+muted. P1 reads dark text on gold fill, P2 reads light text on steel fill. All inside one bar.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px 12px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <!-- The bar -->
+        <div style="position: relative; height: 28px; background: rgba(255,255,255,0.04); border-radius: 14px; overflow: hidden;">
+          <!-- P1 fill -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 42%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.5)); border-radius: 14px 0 0 14px;"></div>
+          <!-- P2 fill -->
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 37%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.5)); border-radius: 0 14px 14px 0;"></div>
+
+          <!-- P1's readout (rotated) — disc icons for clarity -->
+          <div style="position: absolute; left: 4px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 2px; z-index: 2;">
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle, #e8dcc8, #c8b898); flex-shrink: 0;"></div>
+            <span style="font-size: 11px; font-weight: bold; color: #1a1400;">42</span>
+            <span style="font-size: 8px; color: rgba(0,0,0,0.3);">:</span>
+            <span style="font-size: 11px; font-weight: bold; color: rgba(0,0,0,0.5);">37</span>
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle, #4a4440, #2a2420); border: 0.5px solid #6a6460; flex-shrink: 0;"></div>
+          </div>
+
+          <!-- P2's readout (normal) -->
+          <div style="position: absolute; right: 4px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; z-index: 2;">
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle, #4a4440, #2a2420); border: 0.5px solid #6a6460; flex-shrink: 0;"></div>
+            <span style="font-size: 11px; font-weight: bold; color: #ddd8d0;">37</span>
+            <span style="font-size: 8px; color: rgba(255,255,255,0.3);">:</span>
+            <span style="font-size: 11px; font-weight: bold; color: rgba(255,255,255,0.5);">42</span>
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle, #e8dcc8, #c8b898); flex-shrink: 0;"></div>
+          </div>
+
+          <!-- Center line -->
+          <div style="position: absolute; left: 50%; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,0.15);"></div>
+        </div>
+
+        <!-- Controls row -->
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <button style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; opacity: 0.5;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8a8078"><circle cx="12" cy="5" r="2.5"/><circle cx="12" cy="12" r="2.5"/><circle cx="12" cy="19" r="2.5"/></svg>
+          </button>
+          <div style="display: flex; align-items: center; gap: 6px;">
+            <span style="font-size: 10px; font-weight: 600; color: #8a8078; background: rgba(255,255,255,0.04); padding: 2px 6px; border-radius: 3px;">R3</span>
+            <button style="padding: 8px 18px; background: rgba(232,224,214,0.1); color: #e8e0d6; border: 1px solid #3d362e; border-radius: 6px; font-size: 12px; font-weight: bold;">End Round</button>
+          </div>
+          <div style="width: 24px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: With Tiny Disc Icons</h3>
+      <p>Same as A but with tiny disc color dots next to each number. Removes all ambiguity — ⚪42 : 37⚫ on each side. Slightly busier but zero confusion.</p>
+    </div>
+  </div>
+
+  <!-- Low score example -->
+  <div class="card" data-choice="low" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 20px 12px; background: #12100e;">
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <p style="font-size: 10px; color: #5a524a; margin: 0; text-align: center;">Early game: 5 vs 0</p>
+        <div style="position: relative; height: 28px; background: rgba(255,255,255,0.04); border-radius: 14px; overflow: hidden;">
+          <!-- P1 fill (5%) -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 5%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.5)); border-radius: 14px 0 0 14px;"></div>
+          <!-- P2 fill (0%) — nothing -->
+
+          <!-- P1's readout -->
+          <div style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 3px; z-index: 2;">
+            <span style="font-size: 12px; font-weight: bold; color: #ddd8d0; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">5</span>
+            <span style="font-size: 9px; color: rgba(255,255,255,0.3);">-</span>
+            <span style="font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4);">0</span>
+          </div>
+
+          <!-- P2's readout -->
+          <div style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 3px; z-index: 2;">
+            <span style="font-size: 12px; font-weight: bold; color: #ddd8d0; text-shadow: 0 1px 3px rgba(0,0,0,0.8);">0</span>
+            <span style="font-size: 9px; color: rgba(255,255,255,0.3);">-</span>
+            <span style="font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.4);">5</span>
+          </div>
+
+          <div style="position: absolute; left: 50%; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,0.1);"></div>
+        </div>
+
+        <p style="font-size: 10px; color: #5a524a; margin: 0; text-align: center;">Late game: 90 vs 85</p>
+        <div style="position: relative; height: 28px; background: rgba(255,255,255,0.04); border-radius: 14px; overflow: hidden;">
+          <!-- P1 fill (90%) -->
+          <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 90%; background: linear-gradient(90deg, #c8a862, rgba(200,168,98,0.5)); border-radius: 14px 0 0 14px;"></div>
+          <!-- P2 fill (85%) -->
+          <div style="position: absolute; right: 0; top: 0; bottom: 0; width: 85%; background: linear-gradient(270deg, #6a7580, rgba(106,117,128,0.5)); border-radius: 0 14px 14px 0;"></div>
+
+          <!-- Overlapping zone gets blended -->
+          <div style="position: absolute; left: 10%; right: 15%; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(200,168,98,0.3), rgba(106,117,128,0.3));"></div>
+
+          <div style="position: absolute; left: 6px; top: 50%; transform: translateY(-50%) rotate(180deg); display: flex; align-items: center; gap: 3px; z-index: 2;">
+            <span style="font-size: 12px; font-weight: bold; color: #1a1400;">90</span>
+            <span style="font-size: 9px; color: rgba(0,0,0,0.4);">-</span>
+            <span style="font-size: 10px; font-weight: 600; color: rgba(0,0,0,0.5);">85</span>
+          </div>
+
+          <div style="position: absolute; right: 6px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 3px; z-index: 2;">
+            <span style="font-size: 12px; font-weight: bold; color: #ddd8d0;">85</span>
+            <span style="font-size: 9px; color: rgba(255,255,255,0.3);">-</span>
+            <span style="font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.5);">90</span>
+          </div>
+
+          <div style="position: absolute; left: 50%; top: 3px; bottom: 3px; width: 1px; background: rgba(255,255,255,0.15);"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Edge Cases</h3>
+      <p>Shows how it looks early game (tiny fill, text on dark background with text-shadow) and late game (bars nearly overlapping — the tension!). Click to see these aren't options, just context.</p>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06);">
+  <p style="margin: 0; font-size: 13px; color: #888;">At low scores, text sits on the dark background so it uses light text with text-shadow. At high scores, the fills overlap in the middle creating visual tension. The scores always stay readable at the edges regardless of fill level.</p>
+</div>

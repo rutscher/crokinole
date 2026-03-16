@@ -1,0 +1,118 @@
+<h2>Player Selection: Prominent Matchup</h2>
+<p class="subtitle">Narrow column, big matchup hero at top, chips + search below</p>
+
+<div class="cards">
+  <div class="card" data-choice="v4" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #1a1610; max-width: 380px; margin: 0 auto;">
+      <div style="font-family: system-ui; color: #e8e0d6; max-width: 320px; margin: 0 auto; padding: 20px 0;">
+
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px; margin-bottom: 20px;">
+          <span style="font-size: 18px; font-weight: 700;">New Game</span>
+          <span style="font-size: 13px; color: #6b5f53;">Back</span>
+        </div>
+
+        <!-- Big matchup hero -->
+        <div style="background: linear-gradient(180deg, #2a2520 0%, #1a1610 100%); border: 1px solid #3d362e; border-radius: 14px; margin: 0 12px 24px; padding: 24px 16px; text-align: center;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+            <!-- P1 -->
+            <div style="flex: 1;">
+              <div style="font-size: 10px; color: #7a9e80; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;">Player 1</div>
+              <div style="font-size: 22px; font-weight: 700; color: #e8e0d6;">Rob</div>
+            </div>
+
+            <!-- VS divider -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="width: 1px; height: 16px; background: #3d362e;"></div>
+              <div style="font-size: 12px; font-weight: 700; color: #cbb48a; letter-spacing: 2px;">VS</div>
+              <div style="width: 1px; height: 16px; background: #3d362e;"></div>
+            </div>
+
+            <!-- P2 -->
+            <div style="flex: 1;">
+              <div style="font-size: 10px; color: #6b5f53; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;">Player 2</div>
+              <div style="font-size: 18px; color: #6b5f53;">select below</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent chips -->
+        <div style="padding: 0 16px; margin-bottom: 14px;">
+          <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <div style="padding: 10px 18px; border-radius: 20px; background: #7a9e80; color: #1a1610; font-weight: 600; font-size: 14px;">Rob ✓</div>
+            <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Dave</div>
+            <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Sarah</div>
+            <div style="padding: 10px 18px; border-radius: 20px; background: #2a2520; color: #e8e0d6; font-size: 14px;">Mike</div>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div style="padding: 0 16px;">
+          <div style="padding: 12px 14px; border-radius: 10px; background: #2a2520; border: 1px solid #3d362e; color: #6b5f53; font-size: 14px; display: flex; align-items: center; gap: 8px;">
+            <span>🔍</span>
+            <span>Search all players...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>One player selected</h3>
+      <p>Big matchup card dominates the top. P1 filled, P2 waiting. Chips and search below.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="v4-both" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 0; background: #1a1610; max-width: 380px; margin: 0 auto;">
+      <div style="font-family: system-ui; color: #e8e0d6; max-width: 320px; margin: 0 auto; padding: 20px 0;">
+
+        <!-- Header -->
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 16px; margin-bottom: 20px;">
+          <span style="font-size: 18px; font-weight: 700;">New Game</span>
+          <span style="font-size: 13px; color: #6b5f53;">Back</span>
+        </div>
+
+        <!-- Big matchup hero — both filled -->
+        <div style="background: linear-gradient(180deg, #2a2520 0%, #1a1610 100%); border: 1px solid #3d362e; border-radius: 14px; margin: 0 12px 24px; padding: 24px 16px; text-align: center;">
+          <div style="display: flex; align-items: center; justify-content: center; gap: 16px;">
+            <div style="flex: 1;">
+              <div style="font-size: 10px; color: #7a9e80; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;">Player 1</div>
+              <div style="font-size: 22px; font-weight: 700; color: #e8e0d6;">Rob</div>
+              <div style="font-size: 11px; color: #6b5f53; margin-top: 4px;">tap to change</div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="width: 1px; height: 16px; background: #3d362e;"></div>
+              <div style="font-size: 12px; font-weight: 700; color: #cbb48a; letter-spacing: 2px;">VS</div>
+              <div style="width: 1px; height: 16px; background: #3d362e;"></div>
+            </div>
+
+            <div style="flex: 1;">
+              <div style="font-size: 10px; color: #7a9e80; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px;">Player 2</div>
+              <div style="font-size: 22px; font-weight: 700; color: #e8e0d6;">Dave</div>
+              <div style="font-size: 11px; color: #6b5f53; margin-top: 4px;">tap to change</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hammer selection -->
+        <div style="padding: 0 16px; margin-bottom: 18px;">
+          <div style="font-size: 11px; color: #8a8078; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">First Hammer</div>
+          <div style="display: flex; gap: 6px;">
+            <div style="flex: 1; padding: 10px; border-radius: 8px; background: #2a2520; border: 1px solid #3d362e; text-align: center; font-size: 14px; color: #e8e0d6;">Rob</div>
+            <div style="flex: 1; padding: 10px; border-radius: 8px; background: #2a2520; border: 2px solid #cbb48a; text-align: center; font-size: 14px; color: #cbb48a; font-weight: 600;">🎲 Random</div>
+            <div style="flex: 1; padding: 10px; border-radius: 8px; background: #2a2520; border: 1px solid #3d362e; text-align: center; font-size: 14px; color: #e8e0d6;">Dave</div>
+          </div>
+        </div>
+
+        <!-- Start button -->
+        <div style="padding: 0 16px;">
+          <div style="padding: 14px; border-radius: 10px; background: linear-gradient(135deg, #cbb48a, #a8905c); text-align: center; font-size: 16px; font-weight: 700; color: #1a1400;">Start Game</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>Both selected — ready to go</h3>
+      <p>Matchup card fills in. Chips/search replaced by hammer toggle (3 buttons: P1 / Random / P2). Start Game appears.</p>
+    </div>
+  </div>
+</div>
